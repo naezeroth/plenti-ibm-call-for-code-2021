@@ -1,0 +1,24 @@
+{
+    "_id": "unique@test.com",
+    "name": "name",
+    "password": "hashed_password",
+    "inventory_list": [
+        {
+            "product_name": "Macro Organic Banana each",
+            "item_class": "Bananas",
+            "category": "Fruit",
+            "quantity": 5,
+		    "price": 2.0,
+            "purchase_date": "2020-03-09T22:18:26.625Z",
+            "expiry_date": "2020-07-09T22:18:26.625Z",
+            "frozen": true,
+            "status": "eaten/trashed/uneaten",
+            "state_date": "2020-07-09"
+        }
+    ],
+    "following": [
+	    "email1@test.com",
+        "email2@test.com"
+    ]    
+}
+

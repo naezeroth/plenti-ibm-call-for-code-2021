@@ -1,15 +1,17 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, StatusBar } from 'react-native';
+import { Header } from 'react-native-elements';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-// import Constants from 'expo-constants';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import Constants from 'expo-constants';
 
+import InventoryScreen from './screens/InventoryScreen';
 import InventoryList from './components/InventoryList';
-
 
 function ItemsScreen() {
   return (
-    InventoryList()
+    InventoryScreen()
     // <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
     //   {FlatList2()}
     //   {/* <Text>Home!</Text> */}
@@ -37,7 +39,7 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaProvider style={styles.container}>
       <NavigationContainer>
         <Tab.Navigator>
           <Tab.Screen name="Items" component={ItemsScreen} />
@@ -45,15 +47,20 @@ export default function App() {
           <Tab.Screen name="Dashboard" component={DashboardScreen} />
         </Tab.Navigator>
       </NavigationContainer>
-    </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 
 const styles = StyleSheet.create({
+  header: {
+    flex: 1,
+    marginTop: Constants.statusBarHeight
+  },
   container: {
     flex: 1,
     marginTop: 0,
-    marginHorizontal: 0,
+    marginTop: Constants.statusBarHeight,
+    // marginHorizontal: 0,
   },
   item: {
     backgroundColor: '#f9c2ff',
