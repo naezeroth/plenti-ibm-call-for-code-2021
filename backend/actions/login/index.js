@@ -28,15 +28,18 @@ async function main(params) {
   console.log("Result", result);
 
   if (!result) {
-    return returnError();
+    return {
+      error: "username or password is incorrect",
+    };
   }
 
   // //Check if pw correct
   const correct = bcrypt.compareSync(params.password, result.result.password);
 
   if (!correct) {
-    console.log("pw incorrect");
-    return returnError();
+    return {
+      error: "username or password is incorrect",
+    };
   }
 
   //return jwt
@@ -51,12 +54,6 @@ async function main(params) {
   return {
     message: `user ${result.result.name} logged in`,
     token: token,
-  };
-}
-
-function returnError() {
-  return {
-    error: "username or password is incorrect",
   };
 }
 
@@ -78,9 +75,9 @@ async function setupDb() {
   return service;
 }
 
-main({
-  email: "test@test.com",
-  password: "yolo",
-});
+// main({
+//   email: "test@test.com",
+//   password: "yolo2",
+// });
 
 global.main = main;
