@@ -12,6 +12,7 @@ async function main(params) {
   if (!params.name || !params.email || !params.password) {
     return {
       error: "payload must have email, password and name",
+      failed: true,
     };
   }
   const hashedPassword = bcrypt.hashSync(params.password, 8);
@@ -37,7 +38,8 @@ async function main(params) {
 
   if (!result) {
     return {
-      error: "email already exists",
+      message: "email already exists",
+      failed: true,
     };
   }
 

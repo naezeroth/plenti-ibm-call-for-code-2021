@@ -11,7 +11,8 @@ async function main(params) {
 
   if (!params.email || !params.password) {
     return {
-      error: "payload must have email and password",
+      message: "payload must have email and password",
+      failed: true,
     };
   }
 
@@ -29,7 +30,8 @@ async function main(params) {
 
   if (!result) {
     return {
-      error: "username or password is incorrect",
+      message: "username or password is incorrect",
+      failed: true,
     };
   }
 
@@ -39,6 +41,7 @@ async function main(params) {
   if (!correct) {
     return {
       error: "username or password is incorrect",
+      failed: true,
     };
   }
 
