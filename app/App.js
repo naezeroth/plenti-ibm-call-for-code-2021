@@ -4,10 +4,14 @@ import { Header } from 'react-native-elements';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { useFonts } from 'expo-font';
 import Constants from 'expo-constants';
+import { AntDesign } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import AppLoading from 'expo-app-loading';
 
 import InventoryScreen from './screens/InventoryScreen';
-import InventoryList from './components/InventoryList';
 
 function ItemsScreen() {
   return (
@@ -22,7 +26,7 @@ function ItemsScreen() {
 function ScannerScreen() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings!</Text>
+      <Text>Scanner!</Text>
     </View>
   );
 }
@@ -38,17 +42,56 @@ function DashboardScreen() {
 const Tab = createBottomTabNavigator();
 
 export default function App() {
-  return (
-    <SafeAreaProvider style={styles.container}>
-      <NavigationContainer>
-        <Tab.Navigator>
-          <Tab.Screen name="Items" component={ItemsScreen} />
-          <Tab.Screen name="Scanner" component={ScannerScreen} />
-          <Tab.Screen name="Dashboard" component={DashboardScreen} />
-        </Tab.Navigator>
-      </NavigationContainer>
-    </SafeAreaProvider>
-  );
+  let [fontsLoaded] = useFonts({
+    'SFProDisplay-Heavy': require('./assets/fonts/SFProDisplay/FontsFree-Net-SFProDisplay-Heavy.ttf'),
+    'SFProDisplay-Semibold': require('./assets/fonts/SFProDisplay/FontsFree-Net-SFProDisplay-Semibold.ttf'),
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  } else {
+    return (
+      <SafeAreaProvider style={styles.container}>
+        <NavigationContainer>
+          <Tab.Navigator
+            screenOptions={({ route }) => ({
+              tabBarIcon: ({ focused, color, size }) => {
+                let icon;
+                if (route.name === 'Items') {
+                  icon = focused
+                    ? <FontAwesome5 name="list-alt" size={32} color="#4AC79F" />
+                    : <FontAwesome5 name="list-alt" size={32} color="black" />
+                } else if (route.name === 'Scanner') {
+                  icon = focused
+                    ? <AntDesign name="scan1" size={32} color="#4AC79F" />
+                    : <AntDesign name="scan1" size={32} color="black" />;
+                } else if (route.name === 'Dashboard') {
+                  icon = focused
+                    ? <MaterialCommunityIcons name="view-dashboard-outline" size={32} color="#4AC79F" />
+                    : <MaterialCommunityIcons name="view-dashboard-outline" size={32} color="black" />;
+                }
+                return icon;
+              },
+            })}
+            tabBarOptions={{
+              showLabel: false,
+              activeTintColor: '#4AC79F',
+              inactiveTintColor: 'gray',
+              style: {
+                backgroundColor: '#FAF6ED',
+            },
+            }}
+          >
+            <Tab.Screen name="Items" component={ItemsScreen} />
+            <Tab.Screen name="Scanner" component={ScannerScreen} />
+            <Tab.Screen name="Dashboard" component={DashboardScreen} />
+          </Tab.Navigator>
+        </NavigationContainer>
+      </SafeAreaProvider>
+    );
+  }
+
+  
 }
 
 const styles = StyleSheet.create({
@@ -72,22 +115,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   title: {
-    fontSize: 24,
+    fontSize: 24, 
   },
 });
 
-// import { StatusBar } from 'expo-status-bar';
-// import React from 'react';
-// import { StyleSheet, Text, View } from 'react-native';
-
-// export default function App() {
-//   return (
-//     <View style={styles.container}>
-//       <Text>Open up App.js to start working on your app!</Text>
-//       <StatusBar style="auto" />
-//     </View>
-//   );
-// }
 
 // const styles = StyleSheet.create({
 //   container: {

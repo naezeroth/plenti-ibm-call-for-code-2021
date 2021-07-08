@@ -1,5 +1,5 @@
 import React from 'react';
-import { RefreshControl, FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { ListItem, Avatar } from 'react-native-elements'
 import TouchableScale from 'react-native-touchable-scale';
 
@@ -87,96 +87,56 @@ const list = [
   },
 ]
 
-keyExtractor = (item, index) => index.toString()
+keyExtractor2 = (item, index) => index.toString()
 
-renderItem = ({item}) => (
+renderItem2 = ({item}) => (
   <ListItem
-    // bottomDivider
-    containerStyle={styles.listItem}
-    Component={TouchableScale} 
-    friction={90}
-    tension={100}
-    activeScale={0.95}
+    containerStyle={styles.categoryItem}
   >
-    <Avatar rounded title={item.name[0]} source={item.avatar_url && { uri: item.avatar_url }}/>
-    <ListItem.Content>
-      <ListItem.Title><Text style={styles.text}>{item.name}</Text></ListItem.Title>
-      <ListItem.Subtitle>{item.subtitle}</ListItem.Subtitle>
-    </ListItem.Content>
-    {/* <ListItem.Chevron /> */}
+    <Text style={styles.text}>{item.name}</Text>
+    {/* <ListItem.Content>
+      <ListItem.Title>{item.name}</ListItem.Title>
+    </ListItem.Content> */}
   </ListItem>
 )
 
-const InventoryList = () => {
-  const [refreshing, setRefreshing] = React.useState(false);
-
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    setRefreshing(false);
-  }, []);
-
+const CategoryList = () => {
   return (
     <View style={styles.container}>
       <FlatList
-        keyExtractor={keyExtractor}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        keyExtractor={keyExtractor2}
         data={list}
-        renderItem={renderItem}
-        // extraData={this.state}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-          />
-        }
+        renderItem={renderItem2}
         contentContainerStyle={styles.list}
       />
     </View>
   );
 }
 
-
-// const onRefresh = React.useCallback(async () => {
-//   setRefreshing(true);
-//   if (listData.length < 10) {
-//     try {
-//       let response = await fetch(
-//         'http://www.mocky.io/v2/5e3315753200008abe94d3d8?mocky-delay=2000ms',
-//       );
-//       let responseJson = await response.json();
-//       console.log(responseJson);
-//       setListData(responseJson.result.concat(initialData));
-//       setRefreshing(false)
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   }
-//   else{
-//     ToastAndroid.show('No more new data available', ToastAndroid.SHORT);
-//     setRefreshing(false)
-//   }
-// }, [refreshing]);
-
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 0,
-    marginLeft: 30,
-    marginRight: 30
+    // paddingTop: 0,
+    // marginLeft: 30,
+    // marginRight: 30
+    paddingTop: 5,
+    maxHeight: 50,
   },
   list: {
     // borderRadius: 20,
     // paddingTop: 50
   },
-  listItem: {
-    borderRadius: 10,
-    marginRight: 15,
-    marginTop: 7,
-    marginBottom: 7,
-    // shadowOffset:{  width: 10,  height: 10,  },
-    // shadowColor: '#FFFFFF',
-    // shadowRadius: 100,
-    // shadowOpacity: 1,
+  categoryItem: {
+    borderRadius: 30,
+    marginLeft: 10,
+    // marginTop: 7,
+    // marginBottom: 7,
+    borderWidth: 2,
+    borderColor: "black",
+    paddingHorizontal: 10,
+    paddingVertical: 3,
   },
   text: {
     fontFamily: 'SFProDisplay-Semibold',
@@ -186,4 +146,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default InventoryList;
+export default CategoryList;
