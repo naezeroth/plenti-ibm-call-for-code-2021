@@ -1,0 +1,126 @@
+{
+	"info": {
+		"_postman_id": "24a35d1c-8849-4bc0-8c4f-14fbfbf663a9",
+		"name": "IBM-call-for-code-2021",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://02f401bd.au-syd.apigw.appdomain.cloud/api/register?email=test@ibm.com&password=cleartext&name=Jane",
+					"protocol": "https",
+					"host": [
+						"02f401bd",
+						"au-syd",
+						"apigw",
+						"appdomain",
+						"cloud"
+					],
+					"path": [
+						"api",
+						"register"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "test@ibm.com"
+						},
+						{
+							"key": "password",
+							"value": "cleartext"
+						},
+						{
+							"key": "name",
+							"value": "Jane"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://02f401bd.au-syd.apigw.appdomain.cloud/api/login?email=test@ibm.com&password=cleartext",
+					"protocol": "https",
+					"host": [
+						"02f401bd",
+						"au-syd",
+						"apigw",
+						"appdomain",
+						"cloud"
+					],
+					"path": [
+						"api",
+						"login"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "test@ibm.com"
+						},
+						{
+							"key": "password",
+							"value": "cleartext"
+						},
+						{
+							"key": "password",
+							"value": "cleartext2",
+							"description": "wrongpw",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "max_ocr",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"contentType": "image/jpeg",
+							"type": "file",
+							"src": "/home/apurva/Downloads/v3imagesbind9e125e1247b0957a23843ee46d01a22-or68cunbfsvco7y8uu2_t1880.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://max-ocr.codait-prod-41208c73af8fca213512856c7a09db52-0000.us-east.containers.appdomain.cloud/model/predict?image",
+					"protocol": "http",
+					"host": [
+						"max-ocr",
+						"codait-prod-41208c73af8fca213512856c7a09db52-0000",
+						"us-east",
+						"containers",
+						"appdomain",
+						"cloud"
+					],
+					"path": [
+						"model",
+						"predict"
+					],
+					"query": [
+						{
+							"key": "image",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
