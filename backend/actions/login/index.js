@@ -78,3 +78,35 @@ async function setupDb() {
 // });
 
 global.main = main;
+
+// service
+//   .putDocument({
+//     db: "users",
+//     docId: params.email,
+//     document: userDoc,
+//   })
+//   .then((response) => {
+//     console.log(response.result);
+//     // var token = jwt.sign({ foo: 'bar' }, 'shhhhh');
+//   });
+
+// console.log("does this work?");
+// service
+//   .postAllDocs({
+//     db: "users",
+//     includeDocs: true,
+//     limit: 10,
+//   })
+//   .then((response) => {
+//     console.log(response.result);
+//   });
+
+// return {
+//   doc: {
+//     createdAt: new Date(),
+//     name: params.name,
+//     email: params.email,
+//     password: hashedPassword,
+//     _id: params.email,
+//   },
+// };
