@@ -12,6 +12,7 @@ main = (params) => {
       name: params.name,
       email: params.email,
       password: hashedPassword,
+      _id: params.email,
     },
   };
 };
