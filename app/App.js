@@ -1,11 +1,12 @@
-import * as React from 'react';
-import { Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import * as React from "react";
+import { Text, View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import AuthScreen from "./AuthScreen";
 
 function ItemsScreen() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text>Home!</Text>
     </View>
   );
@@ -13,7 +14,7 @@ function ItemsScreen() {
 
 function ScannerScreen() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text>Settings!</Text>
     </View>
   );
@@ -21,7 +22,7 @@ function ScannerScreen() {
 
 function DashboardScreen() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text>DASHBOARD</Text>
     </View>
   );
@@ -36,11 +37,11 @@ export default function App() {
         <Tab.Screen name="Items" component={ItemsScreen} />
         <Tab.Screen name="Scanner" component={ScannerScreen} />
         <Tab.Screen name="Dashboard" component={DashboardScreen} />
+        <Tab.Screen name="Auth" component={AuthScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );
 }
-
 
 // import { StatusBar } from 'expo-status-bar';
 // import React from 'react';

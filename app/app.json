@@ -1,7 +1,8 @@
 {
   "expo": {
     "name": "app",
-    "slug": "app",
+    "owner": "aywjuowa",
+    "slug": "ibm-call-for-code-2021",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
