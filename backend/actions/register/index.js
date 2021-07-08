@@ -37,7 +37,7 @@ async function main(params) {
 
   if (!result) {
     return {
-      message: "email already exists",
+      error: "email already exists",
     };
   }
 

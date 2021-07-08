@@ -13,7 +13,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@ibm-cloud/cloudant": "0.0.16",
     "bcryptjs": "^2.4.3",
+    "ibm-cloud-sdk-core": "^2.11.3",
+    "jsonwebtoken": "^8.5.1",
     "util": "^0.12.4"
   },
   "devDependencies": {

@@ -9,47 +9,54 @@ async function main(params) {
     service = await setupDb();
   }
 
-  if (!params.name || !params.email || !params.password) {
+  if (!params.email || !params.password) {
     return {
-      error: "payload must have email, password and name",
+      error: "payload must have email and password",
     };
   }
-  const hashedPassword = bcrypt.hashSync(params.password, 8);
 
-  const userDoc = {
-    createdAt: new Date(),
-    name: params.name,
-    email: params.email,
-    password: hashedPassword,
-    _id: params.email,
-  };
-
+  //Get user from db
   const result = await service
-    .putDocument({
+    .getDocument({
       db: "users",
       docId: params.email,
-      document: userDoc,
     })
-    .catch((error) => {
-      console.log("Error", error);
+    .catch((err) => {
       return false;
     });
 
-  if (!result) {
-    return {
-      message: "email already exists",
-    };
-  }
-
   console.log("Result", result);
 
-  var token = jwt.sign({ email: params.email, name: params.name }, secret, {
-    expiresIn: "1h",
-  });
+  if (!result) {
+    return returnError();
+  }
+
+  // //Check if pw correct
+  const correct = bcrypt.compareSync(params.password, result.result.password);
+
+  if (!correct) {
+    console.log("pw incorrect");
+    return returnError();
+  }
+
+  //return jwt
+  var token = jwt.sign(
+    { email: result.result.email, name: result.result.name },
+    secret,
+    {
+      expiresIn: "1h",
+    }
+  );
 
   return {
-    message: `user ${params.name} successfully created`,
+    message: `user ${result.result.name} logged in`,
     token: token,
+  };
+}
+
+function returnError() {
+  return {
+    error: "username or password is incorrect",
   };
 }
 
@@ -71,42 +78,9 @@ async function setupDb() {
   return service;
 }
 
-// main({
-//   name: "Apurva",
-//   email: "test@test.com",
-//   password: "yolo",
-// });
+main({
+  email: "test@test.com",
+  password: "yolo",
+});
 
 global.main = main;
-
-// service
-//   .putDocument({
-//     db: "users",
-//     docId: params.email,
-//     document: userDoc,
-//   })
-//   .then((response) => {
-//     console.log(response.result);
-//     // var token = jwt.sign({ foo: 'bar' }, 'shhhhh');
-//   });
-
-// console.log("does this work?");
-// service
-//   .postAllDocs({
-//     db: "users",
-//     includeDocs: true,
-//     limit: 10,
-//   })
-//   .then((response) => {
-//     console.log(response.result);
-//   });
-
-// return {
-//   doc: {
-//     createdAt: new Date(),
-//     name: params.name,
-//     email: params.email,
-//     password: hashedPassword,
-//     _id: params.email,
-//   },
-// };
