@@ -1,0 +1,27 @@
+{
+  "name": "ibm-functions",
+  "version": "1.0.0",
+  "description": "",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack.config.js",
+    "deploy": "ibmcloud fn action update register dist/bundle.js --kind nodejs:12"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@ibm-cloud/cloudant": "0.0.16",
+    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
+    "ibm-cloud-sdk-core": "^2.11.3",
+    "jsonwebtoken": "^8.5.1",
+    "util": "^0.12.4"
+  },
+  "devDependencies": {
+    "webpack": "^5.43.0",
+    "webpack-cli": "^4.7.2"
+  }
+}
