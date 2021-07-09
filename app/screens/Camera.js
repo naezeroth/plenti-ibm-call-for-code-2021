@@ -6,7 +6,7 @@ import { Button, Text } from "react-native-elements";
 
 //https://github.com/hayanisaid/expo-camera-tutorial/tree/master
 
-export default function App() {
+export default function Camera(props) {
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
   const isFocused = useIsFocused();
