@@ -10,6 +10,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AppLoading from "expo-app-loading";
 
+import Camera from "./screens/Camera";
 import InventoryScreen from "./screens/InventoryScreen";
 import Auth from "./screens/Auth";
 import * as SecureStore from "expo-secure-store";
@@ -111,7 +112,7 @@ export default function App() {
             />
             <Tab.Screen
               name="Scanner"
-              children={() => <ScannerScreen token={token} />}
+              children={() => <Camera token={token} />}
             />
             <Tab.Screen
               name="Dashboard"
