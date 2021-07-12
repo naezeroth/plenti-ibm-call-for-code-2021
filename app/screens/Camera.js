@@ -12,6 +12,8 @@ import {
 } from "react-native";
 import { Camera } from "expo-camera";
 import { Header } from "react-native-elements";
+import * as Sharing from "expo-sharing";
+import * as ImageManipulator from "expo-image-manipulator";
 
 let camera;
 
@@ -34,15 +36,43 @@ export default function App() {
     }
   };
   const __takePicture = async () => {
-    const photo = await camera.takePictureAsync();
-    console.log(photo);
+    let photo = await camera.takePictureAsync({ quality: 0.2, exif: true });
     setPreviewVisible(true);
     //setStartCamera(false)
     setCapturedImage(photo);
   };
+
+  let openShareDialogAsync = async (uri) => {
+    if (!(await Sharing.isAvailableAsync())) {
+      alert(`Uh oh, sharing isn't available on your platform`);
+      return;
+    }
+
+    await Sharing.shareAsync(uri);
+  };
+
   const __sendPhoto = async () => {
-    console.log("Inside _sendPhoto", capturedImage);
-    let localUri = capturedImage.uri;
+    let photo = capturedImage;
+    //Crop based on yellow highlight
+    let maninpOptions = [
+      {
+        crop: {
+          originX: photo.width * 0.05,
+          originY: photo.height * 0.05,
+          width: photo.width * 0.9,
+          height: photo.height * 0.8,
+        },
+      },
+    ];
+    if (Platform.OS === "ios" && capturedImage.exif.Orientation === -90) {
+      console.log("Flipping!", photo.uri);
+      //Fix iOS specific issue to send image
+      maninpOptions.push({
+        rotate: -photo.exif.Orientation,
+      });
+    }
+    photo = await ImageManipulator.manipulateAsync(photo.uri, maninpOptions);
+    let localUri = photo.uri;
     let filename = localUri.split("/").pop();
     let formData = new FormData();
     formData.append("image", {
@@ -68,7 +98,10 @@ export default function App() {
     }
     const text = result.text;
     console.log("Text from OCR", result);
-    //Send to our API to parse
+    // openShareDialogAsync(photo.uri);
+    //TODO Send to our API to parse
+    //Get result and add  to state
+    //Show different view
   };
   const __retakePicture = () => {
     setCapturedImage(null);
