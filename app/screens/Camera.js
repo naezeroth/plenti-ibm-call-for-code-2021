@@ -8,6 +8,7 @@ import {
   Alert,
   ImageBackground,
   Image,
+  Platform,
 } from "react-native";
 import { Camera } from "expo-camera";
 import { Header } from "react-native-elements";
@@ -45,24 +46,29 @@ export default function App() {
     let filename = localUri.split("/").pop();
     let formData = new FormData();
     formData.append("image", {
-      uri: localUri,
+      uri: Platform.OS === "ios" ? localUri.replace("file://", "") : localUri,
       name: filename,
       type: "image/jpg",
     });
-    console.log("Sending", formData);
-    const result = await fetch(
+    const fetchResult = await fetch(
       "http://max-ocr.codait-prod-41208c73af8fca213512856c7a09db52-0000.us-east.containers.appdomain.cloud/model/predict",
       {
         method: "POST",
         body: formData,
         header: {
           "content-type": "multipart/form-data",
+          accept: "application/json",
         },
       }
     );
-    console.log("after fetch");
-    console.log(JSON.stringify(result));
-    console.log("after result");
+    const result = await fetchResult.json();
+    if (result.status !== "ok") {
+      Alert.alert("Something went wrong scanning your image");
+      return;
+    }
+    const text = result.text;
+    console.log("Text from OCR", result);
+    //Send to our API to parse
   };
   const __retakePicture = () => {
     setCapturedImage(null);
@@ -248,9 +254,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    // flex: 1,
     paddingTop: 0,
-    // backgroundColor: "#FAF6ED",
   },
   title: {
     fontFamily: "SFProDisplay-Heavy",
