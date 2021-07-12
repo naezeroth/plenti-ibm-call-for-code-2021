@@ -295,8 +295,8 @@ const CameraPreview = ({ photo, retakePicture, savePhoto }) => {
             justifyContent: "space-between",
             backgroundColor: "#FAF6ED",
             height: 70,
-            borderTopLeftRadius: "50",
-            borderTopRightRadius: "50",
+            borderTopLeftRadius: 50,
+            borderTopRightRadius: 50,
           }}
         ></View>
         <View

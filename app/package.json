@@ -13,6 +13,8 @@
     "@react-navigation/native": "^5.9.4",
     "expo": "~42.0.0",
     "expo-app-loading": "^1.1.2",
+    "expo-camera": "^11.2.1",
+    "expo-secure-store": "~10.2.0",
     "expo-status-bar": "~1.0.4",
     "jwt-decode": "^3.1.2",
     "react": "16.13.1",
@@ -24,9 +26,7 @@
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.4.0",
     "react-native-touchable-scale": "^2.1.2",
-    "react-native-web": "~0.13.12",
-    "expo-secure-store": "~10.2.0",
-    "expo-camera": "~11.2.1"
+    "react-native-web": "~0.13.12"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"
