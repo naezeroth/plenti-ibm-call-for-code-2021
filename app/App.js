@@ -19,14 +19,6 @@ function ItemsScreen() {
   return InventoryScreen();
 }
 
-function ScannerScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Scanner!</Text>
-    </View>
-  );
-}
-
 function DashboardScreen(props) {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -41,6 +33,8 @@ export default function App() {
   let [fontsLoaded] = useFonts({
     "SFProDisplay-Heavy": require("./assets/fonts/SFProDisplay/FontsFree-Net-SFProDisplay-Heavy.ttf"),
     "SFProDisplay-Semibold": require("./assets/fonts/SFProDisplay/FontsFree-Net-SFProDisplay-Semibold.ttf"),
+    "SFProDisplay-Light": require("./assets/fonts/SFProDisplay/FontsFree-Net-SFProDisplay-Light.ttf"),
+    "SFProDisplay-Regular": require("./assets/fonts/SFProDisplay/FontsFree-Net-SFProDisplay-Regular.ttf"),
   });
   const [loggedIn, setLoggedIn] = useState(false);
   const [token, setToken] = useState("");
@@ -126,35 +120,8 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  header: {
-    flex: 1,
-    marginTop: Constants.statusBarHeight,
-  },
   container: {
     flex: 1,
     marginTop: 0,
-    marginTop: Constants.statusBarHeight,
-    // marginHorizontal: 0,
-  },
-  item: {
-    backgroundColor: "#f9c2ff",
-    padding: 20,
-    marginVertical: 8,
-  },
-  header: {
-    fontSize: 32,
-    backgroundColor: "#fff",
-  },
-  title: {
-    fontSize: 24,
   },
 });
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });

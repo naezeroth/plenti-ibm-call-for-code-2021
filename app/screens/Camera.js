@@ -10,6 +10,7 @@ import {
   Image,
 } from "react-native";
 import { Camera } from "expo-camera";
+import { Header } from "react-native-elements";
 
 let camera;
 
@@ -68,24 +69,86 @@ export default function App() {
     setPreviewVisible(false);
     __startCamera();
   };
-  const __handleFlashMode = () => {
-    if (flashMode === "on") {
-      setFlashMode("off");
-    } else if (flashMode === "off") {
-      setFlashMode("on");
-    } else {
-      setFlashMode("auto");
-    }
+
+  const CenterHeader = () => {
+    return (
+      <View
+        style={{
+          alignItems: "center",
+        }}
+      >
+        <Text style={styles.title}> Scanner</Text>
+        <Text style={styles.secondTitle}> Scan your barcode or receipt</Text>
+      </View>
+    );
   };
-  const __switchCamera = () => {
-    if (cameraType === "back") {
-      setCameraType("front");
-    } else {
-      setCameraType("back");
-    }
+
+  const YellowOutline = () => {
+    return (
+      <>
+        <View
+          style={{
+            width: 100,
+            height: 100,
+            position: "absolute",
+            left: "7.5%",
+            top: "5%",
+            borderWidth: 2,
+            borderLeftColor: "#FECC66",
+            borderBottomColor: "transparent",
+            borderRightColor: "transparent",
+            borderTopColor: "#FECC66",
+          }}
+        />
+        <View
+          style={{
+            width: 100,
+            height: 100,
+            position: "absolute",
+            right: "7.5%",
+            top: "5%",
+            borderWidth: 2,
+            borderLeftColor: "transparent",
+            borderBottomColor: "transparent",
+            borderRightColor: "#FECC66",
+            borderTopColor: "#FECC66",
+          }}
+        />
+        <View
+          style={{
+            width: 100,
+            height: 100,
+            position: "absolute",
+            right: "7.5%",
+            bottom: "15%",
+            borderWidth: 2,
+            borderLeftColor: "transparent",
+            borderBottomColor: "#FECC66",
+            borderRightColor: "#FECC66",
+            borderTopColor: "transparent",
+          }}
+        />
+        <View
+          style={{
+            width: 100,
+            height: 100,
+            position: "absolute",
+            left: "7.5%",
+            bottom: "15%",
+            borderWidth: 2,
+            borderLeftColor: "#FECC66",
+            borderBottomColor: "#FECC66",
+            borderRightColor: "transparent",
+            borderTopColor: "transparent",
+          }}
+        />
+      </>
+    );
   };
+
   return (
     <View style={styles.container}>
+      <Header backgroundColor="#FAF6ED" centerComponent={<CenterHeader />} />
       {startCamera ? (
         <View
           style={{
@@ -108,87 +171,35 @@ export default function App() {
                 camera = r;
               }}
             >
+              <YellowOutline />
               <View
                 style={{
+                  position: "absolute",
+                  bottom: 0,
+                  flexDirection: "row",
                   flex: 1,
                   width: "100%",
-                  backgroundColor: "transparent",
-                  flexDirection: "row",
+                  padding: 20,
+                  justifyContent: "space-between",
                 }}
               >
                 <View
                   style={{
-                    position: "absolute",
-                    left: "5%",
-                    top: "10%",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <TouchableOpacity
-                    onPress={__handleFlashMode}
-                    style={{
-                      backgroundColor: flashMode === "off" ? "#000" : "#fff",
-                      borderRadius: "50%",
-                      height: 25,
-                      width: 25,
-                    }}
-                  >
-                    <Text
-                      style={{
-                        fontSize: 20,
-                      }}
-                    >
-                      ⚡️
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={__switchCamera}
-                    style={{
-                      marginTop: 20,
-                      borderRadius: "50%",
-                      height: 25,
-                      width: 25,
-                    }}
-                  >
-                    <Text
-                      style={{
-                        fontSize: 20,
-                      }}
-                    >
-                      {cameraType === "front" ? "🤳" : "📷"}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                <View
-                  style={{
-                    position: "absolute",
-                    bottom: 0,
-                    flexDirection: "row",
+                    alignSelf: "center",
                     flex: 1,
-                    width: "100%",
-                    padding: 20,
-                    justifyContent: "space-between",
+                    alignItems: "center",
                   }}
                 >
-                  <View
+                  <TouchableOpacity
+                    onPress={__takePicture}
                     style={{
-                      alignSelf: "center",
-                      flex: 1,
-                      alignItems: "center",
+                      width: 70,
+                      height: 70,
+                      bottom: 0,
+                      borderRadius: 50,
+                      backgroundColor: "#fff",
                     }}
-                  >
-                    <TouchableOpacity
-                      onPress={__takePicture}
-                      style={{
-                        width: 70,
-                        height: 70,
-                        bottom: 0,
-                        borderRadius: 50,
-                        backgroundColor: "#fff",
-                      }}
-                    />
-                  </View>
+                  />
                 </View>
               </View>
             </Camera>
@@ -227,8 +238,7 @@ export default function App() {
           </TouchableOpacity>
         </View>
       )}
-
-      <StatusBar style="auto" />
+      <StatusBar style="auto" backgroundColor="#FAF6ED" />
     </View>
   );
 }
@@ -236,14 +246,26 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+    // flex: 1,
+    paddingTop: 0,
+    // backgroundColor: "#FAF6ED",
+  },
+  title: {
+    fontFamily: "SFProDisplay-Heavy",
+    fontSize: 24,
+    color: "#000",
+  },
+  secondTitle: {
+    fontFamily: "SFProDisplay-Regular",
+    fontSize: 15,
+    color: "#000",
   },
 });
 
 const CameraPreview = ({ photo, retakePicture, savePhoto }) => {
-  console.log("sdsfds", photo);
+  console.log("photo is", photo);
   return (
     <View
       style={{
@@ -261,9 +283,22 @@ const CameraPreview = ({ photo, retakePicture, savePhoto }) => {
       >
         <View
           style={{
+            position: "absolute",
+            bottom: 0,
+            flexDirection: "row",
+            flex: 1,
+            width: "100%",
+            justifyContent: "space-between",
+            backgroundColor: "#FAF6ED",
+            height: 70,
+            borderTopLeftRadius: "50",
+            borderTopRightRadius: "50",
+          }}
+        ></View>
+        <View
+          style={{
             flex: 1,
             flexDirection: "column",
-            padding: 15,
             justifyContent: "flex-end",
           }}
         >
@@ -285,7 +320,7 @@ const CameraPreview = ({ photo, retakePicture, savePhoto }) => {
             >
               <Text
                 style={{
-                  color: "#fff",
+                  color: "black",
                   fontSize: 20,
                 }}
               >
@@ -304,11 +339,11 @@ const CameraPreview = ({ photo, retakePicture, savePhoto }) => {
             >
               <Text
                 style={{
-                  color: "#fff",
+                  color: "black",
                   fontSize: 20,
                 }}
               >
-                save photo
+                Scan
               </Text>
             </TouchableOpacity>
           </View>
