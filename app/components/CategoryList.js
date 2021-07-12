@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     flex: 1,
     // paddingTop: 0,
     // marginLeft: 30,
-    // marginRight: 30
+    // marginRight: 30,
     paddingTop: 5,
     maxHeight: 50,
   },
@@ -137,6 +137,7 @@ const styles = StyleSheet.create({
     borderColor: "black",
     paddingHorizontal: 10,
     paddingVertical: 3,
+    backgroundColor: '#FAF6ED',
   },
   text: {
     fontFamily: 'SFProDisplay-Semibold',
