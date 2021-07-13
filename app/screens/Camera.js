@@ -9,11 +9,17 @@ import {
   ImageBackground,
   Image,
   Platform,
+  Button,
+  Dimensions,
 } from "react-native";
 import { Camera } from "expo-camera";
 import { Header } from "react-native-elements";
 import * as Sharing from "expo-sharing";
 import * as ImageManipulator from "expo-image-manipulator";
+import { AntDesign } from "@expo/vector-icons";
+import SlidingUpPanel from "rn-sliding-up-panel";
+
+const { height } = Dimensions.get("window");
 
 let camera;
 
@@ -25,6 +31,10 @@ export default function App() {
     Camera.Constants.Type.back
   );
   const [flashMode, setFlashMode] = React.useState("off");
+  const [loading, setLoading] = React.useState(false);
+  const [ocrsend, setOcrsend] = React.useState(false);
+  const [arrow, setArrow] = React.useState("arrowup");
+  const panelRef = React.useRef(null);
 
   const __startCamera = async () => {
     const { status } = await Camera.requestPermissionsAsync();
@@ -40,6 +50,7 @@ export default function App() {
     setPreviewVisible(true);
     //setStartCamera(false)
     setCapturedImage(photo);
+    setOcrsend(false);
   };
 
   let openShareDialogAsync = async (uri) => {
@@ -52,6 +63,7 @@ export default function App() {
   };
 
   const __sendPhoto = async () => {
+    setOcrsend(true);
     let photo = capturedImage;
     //Crop based on yellow highlight
     let maninpOptions = [
@@ -100,8 +112,8 @@ export default function App() {
     console.log("Text from OCR", result);
     // openShareDialogAsync(photo.uri);
     //TODO Send to our API to parse
-    //Get result and add  to state
-    //Show different view
+    //TODO Get result and add  to state
+    //TODO Show different view
   };
   const __retakePicture = () => {
     setCapturedImage(null);
@@ -200,6 +212,10 @@ export default function App() {
               photo={capturedImage}
               savePhoto={__sendPhoto}
               retakePicture={__retakePicture}
+              ocrsend={ocrsend}
+              panelRef={panelRef}
+              arrow={arrow}
+              setArrow={setArrow}
             />
           ) : (
             <Camera
@@ -301,8 +317,15 @@ const styles = StyleSheet.create({
   },
 });
 
-const CameraPreview = ({ photo, retakePicture, savePhoto }) => {
-  console.log("photo is", photo);
+const CameraPreview = ({
+  photo,
+  retakePicture,
+  savePhoto,
+  ocrsend,
+  panelRef,
+  arrow,
+  setArrow,
+}) => {
   return (
     <View
       style={{
@@ -320,70 +343,114 @@ const CameraPreview = ({ photo, retakePicture, savePhoto }) => {
       >
         <View
           style={{
-            position: "absolute",
-            bottom: 0,
-            flexDirection: "row",
             flex: 1,
-            width: "100%",
-            justifyContent: "space-between",
-            backgroundColor: "#FAF6ED",
-            height: 70,
             borderTopLeftRadius: 50,
             borderTopRightRadius: 50,
           }}
-        ></View>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: "column",
-            justifyContent: "flex-end",
-          }}
         >
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
+          <SlidingUpPanel
+            ref={(c) => (panelRef = c)}
+            draggableRange={{ top: height / 1.5, bottom: 50 }}
+            onDragEnd={(position, gestureState) => {
+              if (gestureState.dy < 0) {
+                setArrow("arrowdown");
+              } else {
+                setArrow("arrowup");
+              }
             }}
           >
-            <TouchableOpacity
-              onPress={retakePicture}
+            <View
               style={{
-                width: 130,
-                height: 40,
-
-                alignItems: "center",
-                borderRadius: 4,
+                flex: 1,
+                backgroundColor: "#FAF6ED",
+                position: "relative",
+                borderTopLeftRadius: 50,
+                borderTopRightRadius: 50,
               }}
             >
-              <Text
+              <View
                 style={{
-                  color: "black",
-                  fontSize: 20,
+                  height: 50,
+                  backgroundColor: "#FAF6ED",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  borderTopLeftRadius: 50,
+                  borderTopRightRadius: 50,
+                  flexDirection: "row",
                 }}
               >
-                Re-take
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={savePhoto}
-              style={{
-                width: 130,
-                height: 40,
-
-                alignItems: "center",
-                borderRadius: 4,
-              }}
-            >
-              <Text
-                style={{
-                  color: "black",
-                  fontSize: 20,
-                }}
-              >
-                Scan
-              </Text>
-            </TouchableOpacity>
-          </View>
+                <TouchableOpacity
+                  onPress={retakePicture}
+                  style={{
+                    paddingHorizontal: 40,
+                    alignItems: "center",
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: "black",
+                      fontSize: 20,
+                    }}
+                  >
+                    Re-take
+                  </Text>
+                </TouchableOpacity>
+                {arrow === "arrowdown" && (
+                  <TouchableOpacity
+                    onPress={() => {
+                      console.log("Opening modal");
+                    }}
+                    style={{
+                      marginLeft: 100,
+                      padding: 10,
+                      alignItems: "center",
+                    }}
+                  >
+                    <AntDesign name="pluscircleo" size={30} color="black" />
+                  </TouchableOpacity>
+                )}
+                {ocrsend ? (
+                  <TouchableOpacity
+                    onPress={() => {
+                      if (arrow === "arrowup") {
+                        panelRef.show();
+                        setArrow("arrowdown");
+                      } else {
+                        panelRef.hide();
+                        setArrow("arrowup");
+                      }
+                    }}
+                    style={{
+                      paddingRight: 40,
+                      alignItems: "center",
+                    }}
+                  >
+                    <AntDesign name={arrow} size={30} color="black" />
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity
+                    onPress={savePhoto}
+                    style={{
+                      paddingRight: 40,
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: "black",
+                        fontSize: 20,
+                      }}
+                    >
+                      Scan
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+              <View style={styles.container}>
+                <Text>Bottom Sheet Content</Text>
+              </View>
+            </View>
+          </SlidingUpPanel>
         </View>
       </ImageBackground>
     </View>
