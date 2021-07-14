@@ -697,6 +697,17 @@ const CameraPreview = ({
                         inventoryList={inventoryList}
                         deleteInventoryItem={deleteInventoryItem}
                       />
+                      <Text
+                        style={{
+                          fontFamily: "SFProDisplay-Semibold",
+                          fontSize: 18,
+                          color: "#000",
+                          textAlign: "center",
+                          padding: 10,
+                        }}
+                      >
+                        no more items 👀
+                      </Text>
                     </View>
                   </ScrollView>
                 )}
@@ -744,3 +755,8 @@ const ListItems = ({ inventoryList, deleteInventoryItem }) => {
     );
   });
 };
+
+//TODO Quick add
+//TODO click modal (edit)
+//TODO clear all
+//TODO add all items
