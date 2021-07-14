@@ -7,11 +7,14 @@ import {
   TouchableOpacity,
   Alert,
   ImageBackground,
-  Image,
   Platform,
-  Button,
   Dimensions,
+  ScrollView,
+  ActivityIndicator,
 } from "react-native";
+import TouchableScale from "react-native-touchable-scale";
+import { ListItem, Avatar } from "react-native-elements";
+
 import { Camera } from "expo-camera";
 import { Header } from "react-native-elements";
 import * as Sharing from "expo-sharing";
@@ -23,17 +26,174 @@ const { height } = Dimensions.get("window");
 
 let camera;
 
+const testInventory = [
+  {
+    category: "dairy",
+    expiry_date: null,
+    frozen: false,
+    item_class: null,
+    name: "Milk",
+    emoji: "🐮",
+    price: 3,
+    purchase_date: null,
+    quantity: 2,
+    remove_date: null,
+    status: "uneaten",
+  },
+  {
+    category: "meat",
+    expiry_date: null,
+    frozen: false,
+    emoji: "🥩",
+    item_class: null,
+    name: "Chicken tenders",
+    price: 3,
+    purchase_date: null,
+    quantity: 2,
+    remove_date: null,
+    status: "uneaten",
+  },
+  {
+    category: "grain",
+    expiry_date: null,
+    frozen: false,
+    item_class: null,
+    // emoji: "🌾",
+    name: "Bread",
+    price: 3,
+    purchase_date: null,
+    quantity: 2,
+    remove_date: null,
+    status: "uneaten",
+  },
+  {
+    category: "beverage",
+    expiry_date: null,
+    emoji: "🥤",
+    frozen: false,
+    item_class: null,
+    name: "Coca-cola",
+    price: 3,
+    purchase_date: null,
+    quantity: 2,
+    remove_date: null,
+    status: "uneaten",
+  },
+  {
+    category: "dairy",
+    expiry_date: null,
+    frozen: false,
+    item_class: null,
+    name: "Milk",
+    emoji: "🐮",
+    price: 3,
+    purchase_date: null,
+    quantity: 2,
+    remove_date: null,
+    status: "uneaten",
+  },
+  {
+    category: "meat",
+    expiry_date: null,
+    frozen: false,
+    emoji: "🥩",
+    item_class: null,
+    name: "Chicken tenders",
+    price: 3,
+    purchase_date: null,
+    quantity: 2,
+    remove_date: null,
+    status: "uneaten",
+  },
+  {
+    category: "grain",
+    expiry_date: null,
+    frozen: false,
+    item_class: null,
+    // emoji: "🌾",
+    name: "Bread",
+    price: 3,
+    purchase_date: null,
+    quantity: 2,
+    remove_date: null,
+    status: "uneaten",
+  },
+  {
+    category: "beverage",
+    expiry_date: null,
+    emoji: "🥤",
+    frozen: false,
+    item_class: null,
+    name: "Coca-cola",
+    price: 3,
+    purchase_date: null,
+    quantity: 2,
+    remove_date: null,
+    status: "uneaten",
+  },
+  {
+    category: "dairy",
+    expiry_date: null,
+    frozen: false,
+    item_class: null,
+    name: "Milk",
+    emoji: "🐮",
+    price: 3,
+    purchase_date: null,
+    quantity: 2,
+    remove_date: null,
+    status: "uneaten",
+  },
+  {
+    category: "meat",
+    expiry_date: null,
+    frozen: false,
+    emoji: "🥩",
+    item_class: null,
+    name: "Chicken tenders",
+    price: 3,
+    purchase_date: null,
+    quantity: 2,
+    remove_date: null,
+    status: "uneaten",
+  },
+  {
+    category: "grain",
+    expiry_date: null,
+    frozen: false,
+    item_class: null,
+    // emoji: "🌾",
+    name: "Bread",
+    price: 3,
+    purchase_date: null,
+    quantity: 2,
+    remove_date: null,
+    status: "uneaten",
+  },
+  {
+    category: "beverage",
+    expiry_date: null,
+    emoji: "🥤",
+    frozen: false,
+    item_class: null,
+    name: "Coca-cola",
+    price: 3,
+    purchase_date: null,
+    quantity: 2,
+    remove_date: null,
+    status: "uneaten",
+  },
+];
+
 export default function App() {
   const [startCamera, setStartCamera] = React.useState(false);
   const [previewVisible, setPreviewVisible] = React.useState(false);
   const [capturedImage, setCapturedImage] = React.useState(null);
-  const [cameraType, setCameraType] = React.useState(
-    Camera.Constants.Type.back
-  );
-  const [flashMode, setFlashMode] = React.useState("off");
   const [loading, setLoading] = React.useState(false);
   const [ocrsend, setOcrsend] = React.useState(false);
   const [arrow, setArrow] = React.useState("arrowup");
+  const [inventoryList, setInventoryList] = React.useState([]);
+  const [allowDragging, setAllowDragging] = React.useState(true);
   const panelRef = React.useRef(null);
 
   const __startCamera = async () => {
@@ -64,6 +224,7 @@ export default function App() {
 
   const __sendPhoto = async () => {
     setOcrsend(true);
+    setLoading(true);
     let photo = capturedImage;
     //Crop based on yellow highlight
     let maninpOptions = [
@@ -92,7 +253,7 @@ export default function App() {
       name: filename,
       type: "image/jpg",
     });
-    const fetchResult = await fetch(
+    const ocrResult = await fetch(
       "http://max-ocr.codait-prod-41208c73af8fca213512856c7a09db52-0000.us-east.containers.appdomain.cloud/model/predict",
       {
         method: "POST",
@@ -103,22 +264,49 @@ export default function App() {
         },
       }
     );
-    const result = await fetchResult.json();
-    if (result.status !== "ok") {
+    const ocrResultObject = await ocrResult.json();
+    if (ocrResultObject.status !== "ok") {
       Alert.alert("Something went wrong scanning your image");
+      setLoading(false);
       return;
     }
-    const text = result.text;
-    console.log("Text from OCR", result);
+    const text = ocrResultObject.text;
+    console.log("Text from OCR", ocrResultObject);
     // openShareDialogAsync(photo.uri);
-    //TODO Send to our API to parse
-    //TODO Get result and add  to state
-    //TODO Show different view
+    const parseResult = await fetch(
+      "https://02f401bd.au-syd.apigw.appdomain.cloud/api/parseImageText",
+      {
+        method: "POST",
+        body: { text: text },
+        header: {
+          "content-type": "application/json",
+          accept: "application/json",
+        },
+      }
+    );
+    const parseResultObject = await parseResult.json();
+    if (parseResultObject.error) {
+      Alert.alert("Something went wrong parsing your image, please re-scan");
+      setInventoryList(testInventory);
+      setLoading(false);
+      return;
+    }
+    console.log(parseResultObject);
+    setInventoryList(parseResultObject.inventoryList);
+    setLoading(false);
   };
   const __retakePicture = () => {
     setCapturedImage(null);
     setPreviewVisible(false);
     __startCamera();
+  };
+
+  const deleteInventoryItem = (id) => {
+    const currentInventory = inventoryList;
+    console.log("Deleting item", id, currentInventory[id].name);
+    delete currentInventory[id];
+    // currentInventory.delete(id);
+    setInventoryList(currentInventory);
   };
 
   const CenterHeader = () => {
@@ -216,11 +404,16 @@ export default function App() {
               panelRef={panelRef}
               arrow={arrow}
               setArrow={setArrow}
+              loading={loading}
+              allowDragging={allowDragging}
+              setAllowDragging={setAllowDragging}
+              inventoryList={inventoryList}
+              deleteInventoryItem={deleteInventoryItem}
             />
           ) : (
             <Camera
-              type={cameraType}
-              flashMode={flashMode}
+              type={Camera.Constants.Type.back}
+              flashMode={"off"}
               style={{ flex: 1 }}
               ref={(r) => {
                 camera = r;
@@ -315,6 +508,23 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "#000",
   },
+  listItem: {
+    borderRadius: 10,
+    // marginRight: 30,
+    marginHorizontal: 30,
+    marginTop: 7,
+    marginBottom: 7,
+    // flex: 1,
+    // shadowOffset:{  width: 10,  height: 10,  },
+    // shadowColor: '#FFFFFF',
+    // shadowRadius: 100,
+    // shadowOpacity: 1,
+  },
+  text: {
+    fontFamily: "SFProDisplay-Semibold",
+    fontSize: 18,
+    color: "#000",
+  },
 });
 
 const CameraPreview = ({
@@ -325,6 +535,11 @@ const CameraPreview = ({
   panelRef,
   arrow,
   setArrow,
+  loading,
+  allowDragging,
+  setAllowDragging,
+  inventoryList,
+  deleteInventoryItem,
 }) => {
   return (
     <View
@@ -358,6 +573,7 @@ const CameraPreview = ({
                 setArrow("arrowup");
               }
             }}
+            allowDragging={allowDragging}
           >
             <View
               style={{
@@ -366,6 +582,7 @@ const CameraPreview = ({
                 position: "relative",
                 borderTopLeftRadius: 50,
                 borderTopRightRadius: 50,
+                maxHeight: height / 1.5,
               }}
             >
               <View
@@ -380,7 +597,11 @@ const CameraPreview = ({
                 }}
               >
                 <TouchableOpacity
-                  onPress={retakePicture}
+                  onPress={() => {
+                    panelRef.hide();
+                    setArrow("arrowup");
+                    retakePicture();
+                  }}
                   style={{
                     paddingHorizontal: 40,
                     alignItems: "center",
@@ -395,7 +616,7 @@ const CameraPreview = ({
                     Re-take
                   </Text>
                 </TouchableOpacity>
-                {arrow === "arrowdown" && (
+                {arrow === "arrowdown" && ocrsend && (
                   <TouchableOpacity
                     onPress={() => {
                       console.log("Opening modal");
@@ -446,8 +667,39 @@ const CameraPreview = ({
                   </TouchableOpacity>
                 )}
               </View>
-              <View style={styles.container}>
-                <Text>Bottom Sheet Content</Text>
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  paddingTop: 0,
+                }}
+              >
+                {loading ? (
+                  <ActivityIndicator
+                    style={{ marginBottom: 250 }}
+                    size="large"
+                    color="black"
+                  />
+                ) : (
+                  <ScrollView
+                    onTouchStart={() => setAllowDragging(false)}
+                    onTouchEnd={() => setAllowDragging(true)}
+                    onTouchCancel={() => setAllowDragging(false)}
+                  >
+                    {/* For each object in inventoryList render listItem, add handlers for object click (modal) and delete (array position) */}
+                    <View
+                      style={{
+                        flex: 1,
+                        flexDirection: "column",
+                      }}
+                    >
+                      <ListItems
+                        inventoryList={inventoryList}
+                        deleteInventoryItem={deleteInventoryItem}
+                      />
+                    </View>
+                  </ScrollView>
+                )}
               </View>
             </View>
           </SlidingUpPanel>
@@ -455,4 +707,40 @@ const CameraPreview = ({
       </ImageBackground>
     </View>
   );
+};
+
+const ListItems = ({ inventoryList, deleteInventoryItem }) => {
+  // console.log("inside ListItems", inventoryList);
+  return inventoryList.map((item, key) => {
+    console.log("KEY", key, item);
+    return (
+      <ListItem
+        key={key}
+        containerStyle={styles.listItem}
+        Component={TouchableScale}
+        friction={90}
+        tension={100}
+        activeScale={0.95}
+      >
+        {item.emoji ? (
+          <Text style={{ fontSize: 30 }}>{item.emoji}</Text>
+        ) : (
+          <Text>{"      "}</Text>
+        )}
+        <ListItem.Content>
+          <ListItem.Title>
+            <Text style={styles.text}>{item.name}</Text>
+          </ListItem.Title>
+        </ListItem.Content>
+        <TouchableOpacity
+          onPress={() => deleteInventoryItem(key)}
+          style={{
+            paddingRight: 5,
+          }}
+        >
+          <AntDesign name="close" size={30} color="black" />
+        </TouchableOpacity>
+      </ListItem>
+    );
+  });
 };
