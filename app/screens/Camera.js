@@ -11,16 +11,19 @@ import {
   Dimensions,
   ScrollView,
   ActivityIndicator,
+  Modal,
+  KeyboardAvoidingView,
 } from "react-native";
 import TouchableScale from "react-native-touchable-scale";
 import { ListItem, Avatar } from "react-native-elements";
 
 import { Camera } from "expo-camera";
-import { Header } from "react-native-elements";
+import { Header, Input } from "react-native-elements";
 import * as Sharing from "expo-sharing";
 import * as ImageManipulator from "expo-image-manipulator";
 import { AntDesign } from "@expo/vector-icons";
 import SlidingUpPanel from "rn-sliding-up-panel";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const { height } = Dimensions.get("window");
 
@@ -194,6 +197,8 @@ export default function App() {
   const [arrow, setArrow] = React.useState("arrowup");
   const [inventoryList, setInventoryList] = React.useState([]);
   const [allowDragging, setAllowDragging] = React.useState(true);
+  const [selectedItem, setSelectedItem] = React.useState(-1);
+  const [modalVisible, setModalVisible] = React.useState(false);
   const panelRef = React.useRef(null);
 
   const __startCamera = async () => {
@@ -409,6 +414,11 @@ export default function App() {
               setAllowDragging={setAllowDragging}
               inventoryList={inventoryList}
               deleteInventoryItem={deleteInventoryItem}
+              selectedItem={selectedItem}
+              setSelectedItem={setSelectedItem}
+              modalVisible={modalVisible}
+              setModalVisible={setModalVisible}
+              setInventoryList={setInventoryList}
             />
           ) : (
             <Camera
@@ -540,6 +550,11 @@ const CameraPreview = ({
   setAllowDragging,
   inventoryList,
   deleteInventoryItem,
+  selectedItem,
+  setSelectedItem,
+  modalVisible,
+  setModalVisible,
+  setInventoryList,
 }) => {
   return (
     <View
@@ -563,6 +578,23 @@ const CameraPreview = ({
             borderTopRightRadius: 50,
           }}
         >
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+              setModalVisible(!modalVisible);
+            }}
+          >
+            <ModalContent
+              selectedItem={selectedItem}
+              inventoryList={inventoryList}
+              setSelectedItem={setSelectedItem}
+              setModalVisible={setModalVisible}
+              setInventoryList={setInventoryList}
+            />
+          </Modal>
           <SlidingUpPanel
             ref={(c) => (panelRef = c)}
             draggableRange={{ top: height / 1.5, bottom: 50 }}
@@ -620,6 +652,8 @@ const CameraPreview = ({
                   <TouchableOpacity
                     onPress={() => {
                       console.log("Opening modal");
+                      setSelectedItem(-1);
+                      setModalVisible(!modalVisible);
                     }}
                     style={{
                       marginLeft: 100,
@@ -681,35 +715,96 @@ const CameraPreview = ({
                     color="black"
                   />
                 ) : (
-                  <ScrollView
-                    onTouchStart={() => setAllowDragging(false)}
-                    onTouchEnd={() => setAllowDragging(true)}
-                    onTouchCancel={() => setAllowDragging(false)}
-                  >
-                    {/* For each object in inventoryList render listItem, add handlers for object click (modal) and delete (array position) */}
-                    <View
-                      style={{
-                        flex: 1,
-                        flexDirection: "column",
-                      }}
-                    >
-                      <ListItems
-                        inventoryList={inventoryList}
-                        deleteInventoryItem={deleteInventoryItem}
-                      />
-                      <Text
+                  <View style={{ flex: 1 }}>
+                    {Object.keys(inventoryList).length > 0 && (
+                      <View
                         style={{
-                          fontFamily: "SFProDisplay-Semibold",
-                          fontSize: 18,
-                          color: "#000",
-                          textAlign: "center",
-                          padding: 10,
+                          flexDirection: "row",
+                          direction: "rtl",
                         }}
                       >
-                        no more items 👀
-                      </Text>
-                    </View>
-                  </ScrollView>
+                        <TouchableOpacity
+                          onPress={() => {
+                            console.log("Sending inventoryList to API to save");
+                          }}
+                          style={{
+                            borderRadius: 20,
+                            borderWidth: 2,
+                            paddingHorizontal: 30,
+                            borderColor: "black",
+                            flexDirection: "row",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            marginLeft: 30,
+                          }}
+                        >
+                          <Text
+                            style={{
+                              fontWeight: "bold",
+                              textAlign: "center",
+                            }}
+                          >
+                            add all items
+                          </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() => {
+                            console.log("Clearing all inventoryList");
+                            setInventoryList([]);
+                          }}
+                          style={{
+                            width: 130,
+                            borderRadius: 4,
+                            flexDirection: "row",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            height: 40,
+                          }}
+                        >
+                          <Text
+                            style={{
+                              color: "black",
+                              fontWeight: "bold",
+                              textAlign: "center",
+                            }}
+                          >
+                            clear all
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                    )}
+                    <ScrollView
+                      onTouchStart={() => setAllowDragging(false)}
+                      onTouchEnd={() => setAllowDragging(true)}
+                      onTouchCancel={() => setAllowDragging(false)}
+                    >
+                      <View
+                        style={{
+                          flex: 1,
+                          flexDirection: "column",
+                        }}
+                      >
+                        <ListItems
+                          inventoryList={inventoryList}
+                          deleteInventoryItem={deleteInventoryItem}
+                          setSelectedItem={setSelectedItem}
+                          setModalVisible={setModalVisible}
+                          modalVisible={modalVisible}
+                        />
+                        <Text
+                          style={{
+                            fontFamily: "SFProDisplay-Semibold",
+                            fontSize: 18,
+                            color: "#000",
+                            textAlign: "center",
+                            padding: 10,
+                          }}
+                        >
+                          no more items 👀
+                        </Text>
+                      </View>
+                    </ScrollView>
+                  </View>
                 )}
               </View>
             </View>
@@ -720,10 +815,17 @@ const CameraPreview = ({
   );
 };
 
-const ListItems = ({ inventoryList, deleteInventoryItem }) => {
-  // console.log("inside ListItems", inventoryList);
+const ListItems = ({
+  inventoryList,
+  deleteInventoryItem,
+  setSelectedItem,
+  setModalVisible,
+  modalVisible,
+}) => {
+  if (Object.keys(inventoryList).length === 0) {
+    return null;
+  }
   return inventoryList.map((item, key) => {
-    console.log("KEY", key, item);
     return (
       <ListItem
         key={key}
@@ -732,6 +834,10 @@ const ListItems = ({ inventoryList, deleteInventoryItem }) => {
         friction={90}
         tension={100}
         activeScale={0.95}
+        onPress={() => {
+          setSelectedItem(key);
+          setModalVisible(!modalVisible);
+        }}
       >
         {item.emoji ? (
           <Text style={{ fontSize: 30 }}>{item.emoji}</Text>
@@ -756,7 +862,162 @@ const ListItems = ({ inventoryList, deleteInventoryItem }) => {
   });
 };
 
+const ModalContent = ({
+  selectedItem,
+  inventoryList,
+  setSelectedItem,
+  setModalVisible,
+  setInventoryList,
+}) => {
+  const [item, setItem] = React.useState(
+    selectedItem === -1
+      ? {
+          category: "",
+          expiry_date: null, //Might need to change this from int to string?
+          frozen: false,
+          item_class: null,
+          name: "",
+          emoji: "",
+          price: 0,
+          purchase_date: null,
+          quantity: 0,
+          remove_date: null,
+          status: "uneaten",
+        }
+      : inventoryList[selectedItem]
+  );
+  return (
+    <View
+      style={{
+        alignItems: "center",
+        flex: 1,
+        justifyContent: "center",
+        backgroundColor: "rgba(0,0,0,0.5)",
+      }}
+    >
+      <KeyboardAwareScrollView
+        style={{
+          flex: 1,
+          width: "100%",
+          paddingTop: 100,
+        }}
+      >
+        <View
+          style={{
+            marginHorizontal: 20, //can change this number
+            backgroundColor: "white",
+            borderRadius: 20,
+            padding: 15,
+            alignItems: "center",
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 2,
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 4,
+            elevation: 5,
+            width: "90%",
+            backgroundColor: "#FAF6ED",
+          }}
+        >
+          <Input
+            placeholder="name"
+            label="name"
+            onChangeText={(text) => setItem({ ...item, name: text })}
+            value={item.name}
+          />
+          <Input
+            placeholder="category"
+            label="category"
+            onChangeText={(text) => setItem({ ...item, category: text })}
+            value={item.category}
+          />
+          <Input
+            placeholder="price"
+            label="price"
+            keyboardType="numeric"
+            onChangeText={(text) => setItem({ ...item, price: Number(text) })}
+            value={String(item.price)}
+          />
+          <Input
+            placeholder="quantity"
+            label="quantity"
+            keyboardType="numeric"
+            onChangeText={(text) =>
+              setItem({ ...item, quantity: Number(text) })
+            }
+            value={String(item.quantity)}
+          />
+          <Input
+            placeholder="expiry date"
+            label="expiry date"
+            onChangeText={(text) => setItem({ ...item, expiry_date: text })}
+            value={item.expiry_date}
+          />
+          <View style={{ flexDirection: "row" }}>
+            <TouchableOpacity
+              onPress={() => {
+                setSelectedItem(-1);
+                setModalVisible(false);
+              }}
+              style={{
+                width: 130,
+                borderRadius: 4,
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                height: 40,
+              }}
+            >
+              <Text
+                style={{
+                  color: "black",
+                  fontWeight: "bold",
+                  textAlign: "center",
+                }}
+              >
+                cancel
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                if (selectedItem === -1) {
+                  //new item - concat to array
+                  setInventoryList(inventoryList.concat(item));
+                } else {
+                  inventoryList[selectedItem] = item;
+                  setInventoryList(inventoryList);
+                }
+                setSelectedItem(-1);
+                setModalVisible(false);
+              }}
+              style={{
+                borderRadius: 20,
+                borderWidth: 2,
+                paddingHorizontal: 30,
+                borderColor: "black",
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  textAlign: "center",
+                }}
+              >
+                save
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </KeyboardAwareScrollView>
+    </View>
+  );
+};
 //TODO Quick add
 //TODO click modal (edit)
 //TODO clear all
-//TODO add all items
+//TODO add all items (save + send to API)
