@@ -8,7 +8,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config webpack.config.js",
-    "deploy": "ibmcloud fn action update getUserData dist/bundle.js --kind nodejs:12"
+    "deploy": "ibmcloud fn action update updateInventory dist/bundle.js --kind nodejs:12"
   },
   "author": "",
   "license": "ISC",

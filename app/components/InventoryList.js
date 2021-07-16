@@ -1,106 +1,64 @@
-import React from "react";
+import React, { useState } from "react";
 import { RefreshControl, FlatList, StyleSheet, Text, View } from "react-native";
 import { ListItem, Avatar } from "react-native-elements";
 import TouchableScale from "react-native-touchable-scale";
 
-const list = [
-  {
-    name: "🍌bananas🍌",
-    avatar_url:
-      "https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg",
-    subtitle: "2",
-  },
-  {
-    name: "🍌bananas🍌",
-    avatar_url:
-      "https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg",
-    subtitle: "5",
-  },
-  {
-    name: "🍌bananas🍌",
-    avatar_url:
-      "https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg",
-    subtitle: "2",
-  },
-  {
-    name: "🍌bananas🍌",
-    avatar_url:
-      "https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg",
-    subtitle: "5",
-  },
-  {
-    name: "🍌bananas🍌",
-    avatar_url:
-      "https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg",
-    subtitle: "2",
-  },
-  {
-    name: "🍌bananas🍌",
-    avatar_url:
-      "https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg",
-    subtitle: "5",
-  },
-  {
-    name: "🍌bananas🍌",
-    avatar_url:
-      "https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg",
-    subtitle: "2",
-  },
-  {
-    name: "🍌bananas🍌",
-    avatar_url:
-      "https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg",
-    subtitle: "5",
-  },
-  {
-    name: "🍌bananas🍌",
-    avatar_url:
-      "https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg",
-    subtitle: "2",
-  },
-  {
-    name: "🍌bananas🍌",
-    avatar_url:
-      "https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg",
-    subtitle: "5",
-  },
-  {
-    name: "🍌bananas🍌",
-    avatar_url:
-      "https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg",
-    subtitle: "2",
-  },
-  {
-    name: "🍌bananas🍌",
-    avatar_url:
-      "https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg",
-    subtitle: "5",
-  },
-  {
-    name: "🍌bananas🍌",
-    avatar_url:
-      "https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg",
-    subtitle: "2",
-  },
-  {
-    name: "🍌bananas🍌",
-    avatar_url:
-      "https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg",
-    subtitle: "5",
-  },
-  {
-    name: "🍌bananas🍌",
-    avatar_url:
-      "https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg",
-    subtitle: "2",
-  },
-  {
-    name: "🍌bananas🍌",
-    avatar_url:
-      "https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg",
-    subtitle: "5",
-  },
-];
+import { Alert } from "react-native";
+
+
+// async function updateInventory() {
+//   const result = await fetch(
+//     "https://02f401bd.au-syd.apigw.appdomain.cloud/api/updateInventory?" +
+//       new URLSearchParams({
+//         email: email,
+//         password: password,
+//       })
+//   );
+//   if (!result.ok) {
+//     const message = `An error has occured: ${result.status}`;
+//     console.log(message);
+//     Alert.alert("Username or email was incorrect");
+//     return;
+//   }
+//   const jsonResult = await result.json();
+//   if (jsonResult.failed) {
+//     Alert.alert("Username or email was incorrect");
+//   } else {
+//     console.log("logged in", jsonResult);
+//     console.log(jwt_decode(jsonResult.token));
+//     save("token", jsonResult.token);
+//     setEmail("");
+//     setPassword("");
+//     props.setLoggedIn(true);
+//   }
+// }
+
+
+async function getInventory(setInventory) {
+  const result = await fetch(
+    "https://02f401bd.au-syd.apigw.appdomain.cloud/api/getInventory?" +
+      new URLSearchParams({
+        email: "6"
+      })
+  );
+  if (!result.ok) {
+    const message = `An error has occured: ${result.status}`;
+    console.log(message);
+    Alert.alert("Username or email was incorrect");
+    return;
+  }
+  const jsonResult = await result.json();
+  if (jsonResult.failed) {
+    Alert.alert("Username or email was incorrect");
+  } else {
+    console.log("result:", jsonResult);
+    // inventory = jsonResult.inventory;
+    setInventory(jsonResult.inventory);
+  }
+}
+
+
+
 
 keyExtractor = (item, index) => index.toString();
 
@@ -113,6 +71,7 @@ renderItem = ({ item }) => (
     tension={100}
     activeScale={0.95}
   >
+    <Text> {item.emoji} </Text>
     <Avatar
       rounded
       title={item.name[0]}
@@ -129,18 +88,26 @@ renderItem = ({ item }) => (
 );
 
 const InventoryList = () => {
+
+  const [inventory, setInventory] = useState([]);
+
+  // getInventory();
+
   const [refreshing, setRefreshing] = React.useState(false);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
+    getInventory(setInventory);
     setRefreshing(false);
   }, []);
+
+  // getInventory();
 
   return (
     <View style={styles.container}>
       <FlatList
         keyExtractor={keyExtractor}
-        data={list}
+        data={inventory}
         renderItem={renderItem}
         // extraData={this.state}
         refreshControl={

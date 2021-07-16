@@ -6,6 +6,8 @@ import { Ionicons } from '@expo/vector-icons';
 import CategoryList from '../components/CategoryList';
 import { Feather } from '@expo/vector-icons';
 
+
+
 export default function InventoryScreen() {
   return (
     <View style={styles.container}>

@@ -1,5 +1,4 @@
 let service;
-const secret = "C.a~9J?w>pfh&?ke94|4Mcs2;2Jl!F";
 
 async function main(params)
 {
@@ -17,27 +16,15 @@ async function main(params)
   // };
 
   const result = await service
-  .getDocument({
-    db: "users",
-    docId: params.email,
-  })
-  .catch((err) => {
-    return false;
-  });
-
-  console.log(result);
-
-
-  const result = await service
-    .putDocument({
+    .getDocument({
       db: "users",
       docId: params.email,
-      document: userDoc,
     })
-    .catch((error) => {
-      console.log("Error", error);
+    .catch((err) => {
       return false;
     });
+
+  console.log("Result", result);
 
   if (!result) {
     return {
@@ -49,7 +36,7 @@ async function main(params)
   console.log("Result", result);
 
   return {
-    result: result
+    inventory: result.result.inventory
   };
 }
 
