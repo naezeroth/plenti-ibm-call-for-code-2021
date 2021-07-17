@@ -76,6 +76,8 @@ export default function App() {
     setRefreshInventoryToggle(!refreshInventoryToggle);
   };
 
+  //Fn to update inventory if InventoryList changes
+
   if (!fontsLoaded) {
     return <AppLoading />;
   } else if (loggedIn === false) {

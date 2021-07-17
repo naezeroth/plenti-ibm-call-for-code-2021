@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -24,6 +24,7 @@ import * as ImageManipulator from "expo-image-manipulator";
 import { AntDesign } from "@expo/vector-icons";
 import SlidingUpPanel from "rn-sliding-up-panel";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { useFocusEffect } from "@react-navigation/native";
 
 const { height } = Dimensions.get("window");
 
@@ -187,7 +188,6 @@ const testInventory = [
     status: "uneaten",
   },
 ];
-
 export default function App(props) {
   const { inventoryList, setInventoryList } = props;
   const [startCamera, setStartCamera] = React.useState(false);
@@ -201,6 +201,19 @@ export default function App(props) {
   const [selectedItem, setSelectedItem] = React.useState(-1);
   const [modalVisible, setModalVisible] = React.useState(false);
   const panelRef = React.useRef(null);
+
+  //Automatically start camera and disable camera upon using scanner tab
+  useFocusEffect(
+    React.useCallback(() => {
+      async function start() {
+        await __startCamera();
+      }
+      start();
+      return () => {
+        setStartCamera(false);
+      };
+    }, [])
+  );
 
   const __startCamera = async () => {
     const { status } = await Camera.requestPermissionsAsync();
@@ -425,6 +438,8 @@ export default function App(props) {
               modalVisible={modalVisible}
               setModalVisible={setModalVisible}
               setLocalInventoryList={setLocalInventoryList}
+              inventoryList={inventoryList}
+              setInventoryList={setInventoryList}
             />
           ) : (
             <Camera
@@ -561,6 +576,8 @@ const CameraPreview = ({
   modalVisible,
   setModalVisible,
   setLocalInventoryList,
+  inventoryList,
+  setInventoryList,
 }) => {
   return (
     <View
@@ -731,7 +748,10 @@ const CameraPreview = ({
                       >
                         <TouchableOpacity
                           onPress={() => {
-                            console.log("Sending inventoryList to API to save");
+                            setInventoryList(
+                              inventoryList.concat(localInventoryList)
+                            );
+                            retakePicture();
                           }}
                           style={{
                             borderRadius: 20,
