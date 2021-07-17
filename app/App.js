@@ -10,20 +10,13 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AppLoading from "expo-app-loading";
 
+import Camera from "./screens/Camera";
 import InventoryScreen from "./screens/InventoryScreen";
 import Auth from "./screens/Auth";
 import * as SecureStore from "expo-secure-store";
 
-function ItemsScreen() {
-  return InventoryScreen();
-}
-
-function ScannerScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Scanner!</Text>
-    </View>
-  );
+function ItemsScreen(props) {
+  return InventoryScreen(props);
 }
 
 function DashboardScreen(props) {
@@ -40,9 +33,14 @@ export default function App() {
   let [fontsLoaded] = useFonts({
     "SFProDisplay-Heavy": require("./assets/fonts/SFProDisplay/FontsFree-Net-SFProDisplay-Heavy.ttf"),
     "SFProDisplay-Semibold": require("./assets/fonts/SFProDisplay/FontsFree-Net-SFProDisplay-Semibold.ttf"),
+    "SFProDisplay-Light": require("./assets/fonts/SFProDisplay/FontsFree-Net-SFProDisplay-Light.ttf"),
+    "SFProDisplay-Regular": require("./assets/fonts/SFProDisplay/FontsFree-Net-SFProDisplay-Regular.ttf"),
   });
+
   const [loggedIn, setLoggedIn] = useState(false);
   const [token, setToken] = useState("");
+  const [inventoryList, setInventoryList] = useState([]);
+  const [refreshInventoryToggle, setRefreshInventoryToggle] = useState(false);
 
   useEffect(() => {
     async function getToken() {
@@ -53,6 +51,62 @@ export default function App() {
     }
     getToken();
   }, [loggedIn]);
+
+  useEffect(() => {
+    async function getInventory() {
+      const result = await fetch(
+        "https://02f401bd.au-syd.apigw.appdomain.cloud/api/getInventory?" +
+          new URLSearchParams({
+            token: token,
+          })
+      );
+      if (!result.ok) {
+        const message = `An error has occured: ${result.status}`;
+        console.log(message);
+        return;
+      }
+      const jsonResult = await result.json();
+      console.log("GetInventory:", jsonResult);
+      setInventoryList(jsonResult.inventory);
+    }
+    getInventory();
+  }, [token, refreshInventoryToggle]);
+
+  const refreshInventory = () => {
+    setRefreshInventoryToggle(!refreshInventoryToggle);
+  };
+
+  //Fn to update inventory if InventoryList changes
+  useEffect(() => {
+    async function updateInventory() {
+      const result = await fetch(
+        "https://02f401bd.au-syd.apigw.appdomain.cloud/api/updateInventory?" +
+          new URLSearchParams({
+            token: token,
+          }),
+        {
+          method: "POST",
+          body: JSON.stringify({ inventory: inventoryList }),
+          header: {
+            "content-type": "application/json",
+            accept: "application/json",
+          },
+        }
+      );
+      if (!result.ok) {
+        const message = `An error has occured: ${result.status}`;
+        console.log(message);
+        return;
+      }
+      const jsonResult = await result.json();
+      console.log("updateInventory:", jsonResult);
+    }
+
+    if (!inventoryList || inventoryList.length === 0 || !loggedIn) {
+      return;
+    }
+    updateInventory();
+  }, [inventoryList, loggedIn]);
 
   if (!fontsLoaded) {
     return <AppLoading />;
@@ -107,15 +161,34 @@ export default function App() {
           >
             <Tab.Screen
               name="Items"
-              children={() => <ItemsScreen token={token} />}
+              children={() => (
+                <ItemsScreen
+                  token={token}
+                  inventoryList={inventoryList}
+                  setInventoryList={setInventoryList}
+                  refreshInventory={refreshInventory}
+                />
+              )}
             />
             <Tab.Screen
               name="Scanner"
-              children={() => <ScannerScreen token={token} />}
+              children={() => (
+                <Camera
+                  token={token}
+                  inventoryList={inventoryList}
+                  setInventoryList={setInventoryList}
+                />
+              )}
             />
             <Tab.Screen
               name="Dashboard"
-              children={() => <DashboardScreen token={token} />}
+              children={() => (
+                <DashboardScreen
+                  token={token}
+                  inventoryList={inventoryList}
+                  setInventoryList={setInventoryList}
+                />
+              )}
             />
           </Tab.Navigator>
         </NavigationContainer>
@@ -125,35 +198,8 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  header: {
-    flex: 1,
-    marginTop: Constants.statusBarHeight,
-  },
   container: {
     flex: 1,
     marginTop: 0,
-    marginTop: Constants.statusBarHeight,
-    // marginHorizontal: 0,
-  },
-  item: {
-    backgroundColor: "#f9c2ff",
-    padding: 20,
-    marginVertical: 8,
-  },
-  header: {
-    fontSize: 32,
-    backgroundColor: "#fff",
-  },
-  title: {
-    fontSize: 24,
   },
 });
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });

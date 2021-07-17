@@ -27,7 +27,9 @@ export default function Auth(props) {
     );
     if (!result.ok) {
       const message = `An error has occured: ${result.status}`;
-      throw new Error(message);
+      console.log(message);
+      Alert.alert("Username or email was incorrect");
+      return;
     }
     const jsonResult = await result.json();
     if (jsonResult.failed) {
@@ -59,7 +61,9 @@ export default function Auth(props) {
     ).catch((err) => err);
     if (!result.ok) {
       const message = `An error has occured: ${result.status}`;
-      throw new Error(message);
+      Alert.alert("Email is already taken");
+      console.log(message);
+      return;
     }
     const jsonResult = await result.json();
     if (jsonResult.failed) {
@@ -76,7 +80,6 @@ export default function Auth(props) {
     }
   }
 
-  console.log("AuthsTate", authState);
   return (
     <View style={styles.container}>
       {authState === false ? (
