@@ -1,24 +1,38 @@
 let service;
+const secret = "C.a~9J?w>pfh&?ke94|4Mcs2;2Jl!F";
 
-async function main(params)
-{
+async function main(params) {
+  const jwt = require("jsonwebtoken");
   console.log("Service", !service);
+
   if (!service) {
     service = await setupDb();
   }
+  if (!params.token) {
+    return {
+      message: "Please supply JWT",
+      failed: true,
+    };
+  }
 
-  // const userDoc = {
-  //   createdAt: new Date(),
-  //   name: params.name,
-  //   email: params.email,
-  //   password: hashedPassword,
-  //   _id: params.email,
-  // };
+  console.log("Jwt is", params.token);
+
+  try {
+    var decoded = jwt.verify(params.token, secret);
+  } catch {
+    return {
+      message: "JWT validation failed",
+      failed: true,
+    };
+  }
+  const email = decoded.email;
+  console.log("Decoded email", email, decoded);
+  // update inventory db with email
 
   const result = await service
     .getDocument({
       db: "users",
-      docId: params.email,
+      docId: email,
     })
     .catch((err) => {
       return false;
@@ -36,10 +50,9 @@ async function main(params)
   console.log("Result", result);
 
   return {
-    inventory: result.result.inventory
+    inventory: result.result.inventory,
   };
 }
-
 
 async function setupDb() {
   const { CloudantV1 } = require("@ibm-cloud/cloudant");

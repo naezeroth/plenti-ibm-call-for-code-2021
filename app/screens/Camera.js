@@ -188,14 +188,15 @@ const testInventory = [
   },
 ];
 
-export default function App() {
+export default function App(props) {
+  const { inventoryList, setInventoryList } = props;
   const [startCamera, setStartCamera] = React.useState(false);
   const [previewVisible, setPreviewVisible] = React.useState(false);
   const [capturedImage, setCapturedImage] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
   const [ocrsend, setOcrsend] = React.useState(false);
   const [arrow, setArrow] = React.useState("arrowup");
-  const [inventoryList, setInventoryList] = React.useState([]);
+  const [localInventoryList, setLocalInventoryList] = React.useState([]); //change to localinventory - hook into props
   const [allowDragging, setAllowDragging] = React.useState(true);
   const [selectedItem, setSelectedItem] = React.useState(-1);
   const [modalVisible, setModalVisible] = React.useState(false);
@@ -282,7 +283,7 @@ export default function App() {
       "https://02f401bd.au-syd.apigw.appdomain.cloud/api/parseImageText",
       {
         method: "POST",
-        body: { text: text },
+        body: JSON.stringify({ text: text }),
         header: {
           "content-type": "application/json",
           accept: "application/json",
@@ -290,14 +291,19 @@ export default function App() {
       }
     );
     const parseResultObject = await parseResult.json();
-    if (parseResultObject.error) {
+    if (
+      parseResultObject.error ||
+      parseResultObject.failed ||
+      (parseResultObject.inventory_list &&
+        parseResultObject.inventory_list.length === 0)
+    ) {
       Alert.alert("Something went wrong parsing your image, please re-scan");
-      setInventoryList(testInventory);
+      setLocalInventoryList(testInventory);
       setLoading(false);
       return;
     }
     console.log(parseResultObject);
-    setInventoryList(parseResultObject.inventoryList);
+    setLocalInventoryList(parseResultObject.inventory_list);
     setLoading(false);
   };
   const __retakePicture = () => {
@@ -307,11 +313,11 @@ export default function App() {
   };
 
   const deleteInventoryItem = (id) => {
-    const currentInventory = inventoryList;
+    const currentInventory = localInventoryList;
     console.log("Deleting item", id, currentInventory[id].name);
     delete currentInventory[id];
     // currentInventory.delete(id);
-    setInventoryList(currentInventory);
+    setLocalInventoryList(currentInventory);
   };
 
   const CenterHeader = () => {
@@ -412,13 +418,13 @@ export default function App() {
               loading={loading}
               allowDragging={allowDragging}
               setAllowDragging={setAllowDragging}
-              inventoryList={inventoryList}
+              localInventoryList={localInventoryList}
               deleteInventoryItem={deleteInventoryItem}
               selectedItem={selectedItem}
               setSelectedItem={setSelectedItem}
               modalVisible={modalVisible}
               setModalVisible={setModalVisible}
-              setInventoryList={setInventoryList}
+              setLocalInventoryList={setLocalInventoryList}
             />
           ) : (
             <Camera
@@ -548,13 +554,13 @@ const CameraPreview = ({
   loading,
   allowDragging,
   setAllowDragging,
-  inventoryList,
+  localInventoryList,
   deleteInventoryItem,
   selectedItem,
   setSelectedItem,
   modalVisible,
   setModalVisible,
-  setInventoryList,
+  setLocalInventoryList,
 }) => {
   return (
     <View
@@ -589,10 +595,10 @@ const CameraPreview = ({
           >
             <ModalContent
               selectedItem={selectedItem}
-              inventoryList={inventoryList}
+              localInventoryList={localInventoryList}
               setSelectedItem={setSelectedItem}
               setModalVisible={setModalVisible}
-              setInventoryList={setInventoryList}
+              setLocalInventoryList={setLocalInventoryList}
             />
           </Modal>
           <SlidingUpPanel
@@ -716,7 +722,7 @@ const CameraPreview = ({
                   />
                 ) : (
                   <View style={{ flex: 1 }}>
-                    {Object.keys(inventoryList).length > 0 && (
+                    {Object.keys(localInventoryList).length > 0 && (
                       <View
                         style={{
                           flexDirection: "row",
@@ -750,7 +756,7 @@ const CameraPreview = ({
                         <TouchableOpacity
                           onPress={() => {
                             console.log("Clearing all inventoryList");
-                            setInventoryList([]);
+                            setLocalInventoryList([]);
                           }}
                           style={{
                             width: 130,
@@ -785,7 +791,7 @@ const CameraPreview = ({
                         }}
                       >
                         <ListItems
-                          inventoryList={inventoryList}
+                          localInventoryList={localInventoryList}
                           deleteInventoryItem={deleteInventoryItem}
                           setSelectedItem={setSelectedItem}
                           setModalVisible={setModalVisible}
@@ -816,16 +822,16 @@ const CameraPreview = ({
 };
 
 const ListItems = ({
-  inventoryList,
+  localInventoryList,
   deleteInventoryItem,
   setSelectedItem,
   setModalVisible,
   modalVisible,
 }) => {
-  if (Object.keys(inventoryList).length === 0) {
+  if (Object.keys(localInventoryList).length === 0) {
     return null;
   }
-  return inventoryList.map((item, key) => {
+  return localInventoryList.map((item, key) => {
     return (
       <ListItem
         key={key}
@@ -864,10 +870,10 @@ const ListItems = ({
 
 const ModalContent = ({
   selectedItem,
-  inventoryList,
+  localInventoryList,
   setSelectedItem,
   setModalVisible,
-  setInventoryList,
+  setLocalInventoryList,
 }) => {
   const [item, setItem] = React.useState(
     selectedItem === -1
@@ -884,7 +890,7 @@ const ModalContent = ({
           remove_date: null,
           status: "uneaten",
         }
-      : inventoryList[selectedItem]
+      : localInventoryList[selectedItem]
   );
   return (
     <View
@@ -984,10 +990,10 @@ const ModalContent = ({
               onPress={() => {
                 if (selectedItem === -1) {
                   //new item - concat to array
-                  setInventoryList(inventoryList.concat(item));
+                  setLocalInventoryList(localInventoryList.concat(item));
                 } else {
-                  inventoryList[selectedItem] = item;
-                  setInventoryList(inventoryList);
+                  localInventoryList[selectedItem] = item;
+                  setLocalInventoryList(localInventoryList);
                 }
                 setSelectedItem(-1);
                 setModalVisible(false);
@@ -1017,7 +1023,3 @@ const ModalContent = ({
     </View>
   );
 };
-//TODO Quick add
-//TODO click modal (edit)
-//TODO clear all
-//TODO add all items (save + send to API)
