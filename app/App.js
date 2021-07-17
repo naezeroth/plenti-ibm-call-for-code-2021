@@ -66,7 +66,7 @@ export default function App() {
         return;
       }
       const jsonResult = await result.json();
-      console.log("result:", jsonResult);
+      console.log("GetInventory:", jsonResult);
       setInventoryList(jsonResult.inventory);
     }
     getInventory();
@@ -77,6 +77,36 @@ export default function App() {
   };
 
   //Fn to update inventory if InventoryList changes
+  useEffect(() => {
+    async function updateInventory() {
+      const result = await fetch(
+        "https://02f401bd.au-syd.apigw.appdomain.cloud/api/updateInventory?" +
+          new URLSearchParams({
+            token: token,
+          }),
+        {
+          method: "POST",
+          body: JSON.stringify({ inventory: inventoryList }),
+          header: {
+            "content-type": "application/json",
+            accept: "application/json",
+          },
+        }
+      );
+      if (!result.ok) {
+        const message = `An error has occured: ${result.status}`;
+        console.log(message);
+        return;
+      }
+      const jsonResult = await result.json();
+      console.log("updateInventory:", jsonResult);
+    }
+
+    if (!inventoryList || inventoryList.length === 0 || !loggedIn) {
+      return;
+    }
+    updateInventory();
+  }, [inventoryList, loggedIn]);
 
   if (!fontsLoaded) {
     return <AppLoading />;

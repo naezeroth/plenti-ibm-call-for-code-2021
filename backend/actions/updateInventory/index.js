@@ -2,99 +2,79 @@ let service;
 const secret = "C.a~9J?w>pfh&?ke94|4Mcs2;2Jl!F";
 
 async function main(params) {
-
   const jwt = require("jsonwebtoken");
   console.log("Service", !service);
+
   if (!service) {
     service = await setupDb();
   }
-
-  if (!params.name || !params.email || !params.password) {
+  if (!params.token) {
     return {
-      error: "payload must have email, password and name",
+      message: "Please supply JWT",
+      failed: true,
+    };
+  }
+  if (!JSON.parse(params.__ow_body).inventory) {
+    return {
+      message: "Must supply inventory in body",
       failed: true,
     };
   }
 
-  const userDoc = {
-    createdAt: new Date(),
-    name: params.name,
-    email: params.email,
-    password: hashedPassword,
-    _id: params.email,
-  };
+  const inventory = JSON.parse(params.__ow_body).inventory;
+  console.log("New inventory is", inventory);
+  try {
+    var decoded = jwt.verify(params.token, secret);
+  } catch {
+    return {
+      message: "JWT validation failed",
+      failed: true,
+    };
+  }
 
-  service
-    .getDocument({
-      db: "users",
-      docId: params.email,
-    })
-    .then((docResult) => {
-      // // using OrderDocument on getDocument result:
-      // const document: OrderDocument = docResult.result;
-      let document = docResult.result;
+  const email = decoded.email;
 
-      console.log(document);
+  // update inventory db with email
 
-      // Update the document in the database
-      service
-        .postDocument({ db: exampleDbName, document: document })
-        .then((res) => {
-          // Keeping track with the revision number of the document object:
-          document._rev = res.result.rev;
-          console.log(
-            'You have updated the document:\n' + JSON.stringify(document, null, 2)
-          );
-        });
-    })
+  const document = await service
+    .getDocument({ db: "users", docId: email })
     .catch((err) => {
-      if (err.code === 404) {
-        console.log(
-          'Cannot update document because either "' +
-            exampleDbName +
-            '" database or the "example" ' +
-            'document was not found.'
-        );
-      }
-    });
-
-
-
-
-
-
-
-
-  const result = await service
-    .putDocument({
-      db: "users",
-      docId: params.email,
-      document: userDoc,
-    })
-    .catch((error) => {
-      console.log("Error", error);
+      console.log(err);
       return false;
     });
 
-  if (!result) {
+  if (!document) {
     return {
-      message: "email already exists",
+      message: "Something went wrong getting user information",
       failed: true,
     };
   }
 
-  console.log("Result", result);
+  let result = document.result;
 
-  var token = jwt.sign({ email: params.email, name: params.name }, secret, {
-    expiresIn: "1h",
-  });
+  // console.log("Result from databse is", result);
+
+  document.result.inventory = inventory;
+
+  let update = await service
+    .putDocument({ db: "users", document: document.result, docId: email })
+    .catch((err) => {
+      console.log("Something went wrong updating database with inventory", err);
+      return false;
+    });
+  if (!update) {
+    return {
+      message: "something went wrong updating database with inventory",
+      failed: true,
+    };
+  }
+  console.log("Updated database: ", update);
 
   return {
-    message: `user ${params.name} successfully created`,
-    token: token,
+    message: "updated database successfully",
+    update: update,
   };
 }
-
 
 async function setupDb() {
   const { CloudantV1 } = require("@ibm-cloud/cloudant");
@@ -113,11 +93,5 @@ async function setupDb() {
   );
   return service;
 }
-
-// main({
-//   name: "Apurva",
-//   email: "test@test.com",
-//   password: "yolo",
-// });
 
 global.main = main;

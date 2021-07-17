@@ -328,8 +328,7 @@ export default function App(props) {
   const deleteInventoryItem = (id) => {
     const currentInventory = localInventoryList;
     console.log("Deleting item", id, currentInventory[id].name);
-    delete currentInventory[id];
-    // currentInventory.delete(id);
+    currentInventory.splice(id, 1);
     setLocalInventoryList(currentInventory);
   };
 
@@ -748,6 +747,8 @@ const CameraPreview = ({
                       >
                         <TouchableOpacity
                           onPress={() => {
+                            let localInventoryWithou;
+
                             setInventoryList(
                               inventoryList.concat(localInventoryList)
                             );

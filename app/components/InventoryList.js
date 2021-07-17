@@ -16,7 +16,7 @@ renderItem = ({ item }) => (
     tension={100}
     activeScale={0.95}
   >
-    <Text> {item.emoji} </Text>
+    {item.emoji && <Text> {item.emoji} </Text>}
     <Avatar
       rounded
       title={item.name[0]}
