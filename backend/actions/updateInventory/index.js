@@ -68,11 +68,9 @@ async function main(params) {
       failed: true,
     };
   }
-  console.log("Updated database: ", update);
 
   return {
     message: "updated database successfully",
-    update: update,
   };
 }
 
