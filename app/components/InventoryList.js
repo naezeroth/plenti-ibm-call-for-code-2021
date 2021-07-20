@@ -7,28 +7,22 @@ import { Alert } from "react-native";
 
 keyExtractor = (item, index) => index.toString();
 
+//if item.status = uneaten or frozen, rest like expired or thrown out should only appear in bin
 renderItem = ({ item }) => (
   <ListItem
-    // bottomDivider
     containerStyle={styles.listItem}
     Component={TouchableScale}
     friction={90}
     tension={100}
     activeScale={0.95}
   >
-    {item.emoji && <Text> {item.emoji} </Text>}
-    <Avatar
-      rounded
-      title={item.name[0]}
-      source={item.avatar_url && { uri: item.avatar_url }}
-    />
+    {item.emoji !== "" && <Text> {item.emoji} </Text>}
     <ListItem.Content>
       <ListItem.Title>
         <Text style={styles.text}>{item.name}</Text>
       </ListItem.Title>
       <ListItem.Subtitle>{item.subtitle}</ListItem.Subtitle>
     </ListItem.Content>
-    {/* <ListItem.Chevron /> */}
   </ListItem>
 );
 

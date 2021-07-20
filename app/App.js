@@ -13,19 +13,9 @@ import AppLoading from "expo-app-loading";
 import Camera from "./screens/Camera";
 import InventoryScreen from "./screens/InventoryScreen";
 import Auth from "./screens/Auth";
+import Dashboard from "./screens/Dashboard";
+
 import * as SecureStore from "expo-secure-store";
-
-function ItemsScreen(props) {
-  return InventoryScreen(props);
-}
-
-function DashboardScreen(props) {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>DASHBOARD</Text>
-    </View>
-  );
-}
 
 const Tab = createBottomTabNavigator();
 
@@ -35,6 +25,7 @@ export default function App() {
     "SFProDisplay-Semibold": require("./assets/fonts/SFProDisplay/FontsFree-Net-SFProDisplay-Semibold.ttf"),
     "SFProDisplay-Light": require("./assets/fonts/SFProDisplay/FontsFree-Net-SFProDisplay-Light.ttf"),
     "SFProDisplay-Regular": require("./assets/fonts/SFProDisplay/FontsFree-Net-SFProDisplay-Regular.ttf"),
+    "SFProDisplay-Medium": require("./assets/fonts/SFProDisplay/FontsFree-Net-SFProDisplay-Medium.ttf"),
   });
 
   const [loggedIn, setLoggedIn] = useState(false);
@@ -162,7 +153,7 @@ export default function App() {
             <Tab.Screen
               name="Items"
               children={() => (
-                <ItemsScreen
+                <InventoryScreen
                   token={token}
                   inventoryList={inventoryList}
                   setInventoryList={setInventoryList}
@@ -183,7 +174,7 @@ export default function App() {
             <Tab.Screen
               name="Dashboard"
               children={() => (
-                <DashboardScreen
+                <Dashboard
                   token={token}
                   inventoryList={inventoryList}
                   setInventoryList={setInventoryList}
