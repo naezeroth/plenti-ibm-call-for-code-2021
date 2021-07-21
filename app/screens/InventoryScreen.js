@@ -6,7 +6,42 @@ import { Ionicons } from "@expo/vector-icons";
 import CategoryList from "../components/CategoryList";
 import { Feather } from "@expo/vector-icons";
 
+
+const categories = [
+  'meats', 'dairy', 'fruits', 'vegetables', 'grains', 'beverages'
+]
+
+
 export default function InventoryScreen(props) {
+
+  const { inventoryList, refreshInventory } = props;
+
+  const [activeCategory, setActiveCategory] = React.useState(null);
+
+  const [inventoryOrder, setInventoryOrder] = React.useState(null);
+
+  const visibleInventoryInit = () => (activeCategory == null ? inventoryList : item => item.category == categories[activeCategory]);
+
+  const [visibleInventory, setVisibleInventory] = React.useState( visibleInventoryInit );
+
+  // const filterInventory = React.useCallback(() => {
+  //   if (activeCategory == null) { setVisibleInventory(inventoryList); }
+  //   else { setVisibleInventory(inventoryList.filter(item => item.category == categories[activeCategory])); }
+  // })
+
+  // filterInventory();
+  
+
+  
+
+  let updated_props = Object.assign({}, props, {
+    activeCategory: activeCategory,
+    setActiveCategory: setActiveCategory,
+    inventoryOrder: inventoryOrder,
+    setInventoryOrder: setInventoryOrder,
+    visibleInventory, setVisibleInventory,
+  })
+
   return (
     <View style={styles.container}>
       <Header
@@ -32,8 +67,8 @@ export default function InventoryScreen(props) {
         }
       />
 
-      {CategoryList(props)}
-      {InventoryList(props)}
+      {CategoryList(updated_props)}
+      {InventoryList(updated_props)}
     </View>
   );
 }

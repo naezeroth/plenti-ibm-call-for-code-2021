@@ -1,115 +1,114 @@
-import React from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import React, { useCallback } from 'react';
+import { FlatList, StyleSheet, Text, View, Button } from 'react-native';
 import { ListItem, Avatar } from 'react-native-elements'
 import TouchableScale from 'react-native-touchable-scale';
+import { categoryEmoji } from './emoji';
+import InventoryList from './InventoryList';
 
 
-const list = [
-  {
-    name: '🍌bananas🍌',
-    avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg',
-    subtitle: '2'
-  },
-  {
-    name: '🍌bananas🍌',
-    avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg',
-    subtitle: '5'
-  },
-  {
-    name: '🍌bananas🍌',
-    avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg',
-    subtitle: '2'
-  },
-  {
-    name: '🍌bananas🍌',
-    avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg',
-    subtitle: '5'
-  },
-  {
-    name: '🍌bananas🍌',
-    avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg',
-    subtitle: '2'
-  },
-  {
-    name: '🍌bananas🍌',
-    avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg',
-    subtitle: '5'
-  },
-  {
-    name: '🍌bananas🍌',
-    avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg',
-    subtitle: '2'
-  },
-  {
-    name: '🍌bananas🍌',
-    avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg',
-    subtitle: '5'
-  },
-  {
-    name: '🍌bananas🍌',
-    avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg',
-    subtitle: '2'
-  },
-  {
-    name: '🍌bananas🍌',
-    avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg',
-    subtitle: '5'
-  },
-  {
-    name: '🍌bananas🍌',
-    avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg',
-    subtitle: '2'
-  },
-  {
-    name: '🍌bananas🍌',
-    avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg',
-    subtitle: '5'
-  },
-  {
-    name: '🍌bananas🍌',
-    avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg',
-    subtitle: '2'
-  },
-  {
-    name: '🍌bananas🍌',
-    avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg',
-    subtitle: '5'
-  },
-  {
-    name: '🍌bananas🍌',
-    avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg',
-    subtitle: '2'
-  },
-  {
-    name: '🍌bananas🍌',
-    avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg',
-    subtitle: '5'
-  },
+// const categories = [
+//   {
+//     name: 'meat',
+//     emoji: 'hi',
+//   },
+//   {
+//     name: 'dairy',
+//     emoji: '',
+//   },
+//   {
+//     name: 'grain',
+//     emoji: '',
+//   },
+//   {
+//     name: 'fruit',
+//     emoji: '',
+//   },
+//   {
+//     name: 'vegetables',
+//     emoji: '',
+//   },
+//   {
+//     name: 'beverages',
+//     emoji: '',
+//   },
+// ]
+
+const categories = [
+  'meats', 'dairy', 'fruits', 'vegetables', 'grains', 'beverages'
 ]
 
-keyExtractor2 = (item, index) => index.toString()
 
-renderItem2 = ({item}) => (
-  <ListItem
-    containerStyle={styles.categoryItem}
-  >
-    <Text style={styles.text}>{item.name}</Text>
-    {/* <ListItem.Content>
-      <ListItem.Title>{item.name}</ListItem.Title>
-    </ListItem.Content> */}
-  </ListItem>
-)
+const CategoryList = (props) => {
 
-const CategoryList = () => {
+  const { inventoryList, refreshInventory,
+    visibleInventory, setVisibleInventory,
+    inventoryOrder, setInventoryOrder,
+    activeCategory, setActiveCategory } = props;
+
+  const keyExtractor = (item, index) => index.toString();
+
+  const renderItem = ({ item, index, activeCategory, setActiveCategory }) => (
+    <ListItem
+      underlayColor='transparent'
+      containerStyle={ (activeCategory == index) ? styles.categoryItemSelected : styles.categoryItem }
+      onPress={item => {
+        console.log("ITEM CLICKED " + index.toString());
+
+
+
+        console.log('active: ', activeCategory);
+        if (activeCategory == index) {
+          setActiveCategory(null);
+          setVisibleInventory(inventoryList);
+        }
+        else {
+          console.log('setting ' + index.toString()); 
+          setActiveCategory(index);
+          setVisibleInventory(inventoryList.filter(item => item.category == categories[index]));
+          console.log('active2: ', activeCategory);
+        }
+          
+        // if (activeCategory == null) { console.log('null'); setVisibleInventory(inventoryList); }
+        // else { setVisibleInventory(inventoryList.filter(item => item.category == categories[activeCategory])); }
+        
+
+        <Text style={styles.text}>{item + " " + categoryEmoji[item]}</Text>
+      }}
+    >
+      {/* <Button onPress={item => {
+        if (activeCategory == index) { setActiveCategory(null); }
+        else { setActiveCategory(index); }
+
+        <Text style={styles.text}>{item + " " + categoryEmoji[item]}</Text>
+
+      }} title="h">
+      
+      </Button> */}
+      <Text style={styles.text}>{item + " " + categoryEmoji[item]}</Text>
+  
+      
+      {/* <ListItem.Content>
+        <ListItem.Title>{item.name}</ListItem.Title>
+      </ListItem.Content> */}
+    </ListItem>
+  );
+
+  const renderItemCallback = useCallback( ({ item, index }) =>
+    renderItem({ item, index, activeCategory, setActiveCategory })
+  )
+
+
   return (
     <View style={styles.container}>
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
-        keyExtractor={keyExtractor2}
-        data={list}
-        renderItem={renderItem2}
+        keyExtractor={keyExtractor}
+        data={categories}
+        extraData={activeCategory}
+        renderItem={renderItemCallback}
         contentContainerStyle={styles.list}
+        ItemSeparatorComponent={ () => (<View style={{width: 10, }}/>) }
       />
     </View>
   );
@@ -127,10 +126,12 @@ const styles = StyleSheet.create({
   list: {
     // borderRadius: 20,
     // paddingTop: 50
+    paddingLeft:30,
+    paddingRight:30,
   },
   categoryItem: {
     borderRadius: 30,
-    marginLeft: 10,
+    // marginLeft: 10,
     // marginTop: 7,
     // marginBottom: 7,
     borderWidth: 2,
@@ -138,6 +139,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 3,
     backgroundColor: '#FAF6ED',
+  },
+  categoryItemSelected: {
+    borderRadius: 30,
+    // marginLeft: 10,
+    // marginTop: 7,
+    // marginBottom: 7,
+    borderWidth: 2,
+    borderColor: "#4AC79F",
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    backgroundColor: '#4AC79F',
   },
   text: {
     fontFamily: 'SFProDisplay-Semibold',
