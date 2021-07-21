@@ -16,8 +16,9 @@ function main(params) {
     category: null,
     quantity: 1,
     price: null,
-    purchase_date: null,
+    purchase_date: new Date(),
     expiry_date: null,
+    days_to_expiry: 0, //TODO implement logic
     frozen: false,
     status: "uneaten",
     remove_date: null,

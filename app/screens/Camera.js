@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -16,6 +16,7 @@ import {
 } from "react-native";
 import TouchableScale from "react-native-touchable-scale";
 import { ListItem, Avatar } from "react-native-elements";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 import { Camera } from "expo-camera";
 import { Header, Input } from "react-native-elements";
@@ -900,19 +901,45 @@ const ModalContent = ({
     selectedItem === -1
       ? {
           category: "",
-          expiry_date: null, //Might need to change this from int to string?
+          expiry_date: null, //Stored like '2021-07-22T07:31:00.000Z'
+          days_to_expiry: 0,
           frozen: false,
           item_class: null,
           name: "",
           emoji: "",
           price: 0,
-          purchase_date: null,
+          purchase_date: new Date(),
           quantity: 0,
           remove_date: null,
           status: "uneaten",
         }
       : localInventoryList[selectedItem]
   );
+
+  Date.prototype.addDays = function (days) {
+    const date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+  };
+
+  const [dateValue, setDateValue] = useState(
+    item && item.days_to_expiry ? new Date().addDays(expiry_date) : new Date()
+  );
+
+  const DatePickerComponent = () => (
+    <DateTimePicker
+      style={{ width: 200 }}
+      value={dateValue}
+      mode="date"
+      is24Hour={true}
+      display="default"
+      onChange={(e, selectedDate) => {
+        setDateValue(selectedDate);
+        setItem({ ...item, expiry_date: selectedDate });
+      }}
+    />
+  );
+
   return (
     <View
       style={{
@@ -955,6 +982,12 @@ const ModalContent = ({
             value={item.name}
           />
           <Input
+            placeholder="😎"
+            label="emoji"
+            onChangeText={(text) => setItem({ ...item, emoji: text })}
+            value={item.emoji}
+          />
+          <Input
             placeholder="category"
             label="category"
             onChangeText={(text) => setItem({ ...item, category: text })}
@@ -976,12 +1009,7 @@ const ModalContent = ({
             }
             value={String(item.quantity)}
           />
-          <Input
-            placeholder="expiry date"
-            label="expiry date"
-            onChangeText={(text) => setItem({ ...item, expiry_date: text })}
-            value={item.expiry_date}
-          />
+          <Input label="expiry date" InputComponent={DatePickerComponent} />
           <View style={{ flexDirection: "row" }}>
             <TouchableOpacity
               onPress={() => {
