@@ -1,35 +1,25 @@
 import React, { useState } from "react";
-import { RefreshControl, FlatList, StyleSheet, Text, View } from "react-native";
+import { Alert, RefreshControl, FlatList, StyleSheet, Text, View } from "react-native";
 import { ListItem, Avatar } from "react-native-elements";
 import TouchableScale from "react-native-touchable-scale";
 
-import { Alert } from "react-native";
 
-keyExtractor = (item, index) => index.toString();
 
-//if item.status = uneaten or frozen, rest like expired or thrown out should only appear in bin
-renderItem = ({ item }) => (
-  <ListItem
-    containerStyle={styles.listItem}
-    Component={TouchableScale}
-    friction={90}
-    tension={100}
-    activeScale={0.95}
-  >
-    {item.emoji !== "" && <Text> {item.emoji} </Text>}
-    <ListItem.Content>
-      <ListItem.Title>
-        <Text style={styles.text}>{item.name}</Text>
-      </ListItem.Title>
-      <ListItem.Subtitle>{item.subtitle}</ListItem.Subtitle>
-    </ListItem.Content>
-  </ListItem>
-);
+
+
+
+
 
 const InventoryList = (props) => {
-  const { inventoryList, refreshInventory } = props;
+
+  const { inventoryList, refreshInventory,
+    visibleInventory, setVisibleInventory,
+    inventoryOrder, setInventoryOrder,
+    activeCategory, setActiveCategory } = props;
 
   const [refreshing, setRefreshing] = React.useState(false);
+
+  // const [inventorySort, setInventorySort] = React.useState( (a, b) => (a.) );
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -38,13 +28,45 @@ const InventoryList = (props) => {
     setRefreshing(false);
   }, []);
 
+
+  const keyExtractor = (item, index) => index.toString();
+
+  const renderItem = ({ item }) => (
+    <ListItem
+      containerStyle={styles.listItem}
+      Component={TouchableScale}
+      friction={90}
+      tension={100}
+      activeScale={0.95}
+    >
+      {item.emoji !== "" && <Text> {item.emoji} </Text>}
+      <ListItem.Content>
+        <ListItem.Title>
+          <Text style={styles.text}>{item.name}</Text>
+        </ListItem.Title>
+        <ListItem.Subtitle>{item.subtitle}</ListItem.Subtitle>
+      </ListItem.Content>
+    </ListItem>
+  );
+
+  const inventoryFilter = () => {
+    if (activeCategory == null) { return inventoryList; }
+    else { return inventoryList.filter(item => item.category == categories[activeCategory]); }
+  }
+
+  
+  // const filterInventory = React.useCallback(() => {
+  //   if (activeCategory == null) { setVisibleInventory(inventoryList); }
+  //   else { setVisibleInventory(inventoryList.filter(item => item.category == categories[activeCategory])); }
+  // })
+
   return (
     <View style={styles.container}>
       <FlatList
         keyExtractor={keyExtractor}
-        data={inventoryList}
+        data={visibleInventory}
+        extraData={visibleInventory}
         renderItem={renderItem}
-        // extraData={this.state}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
@@ -53,6 +75,12 @@ const InventoryList = (props) => {
     </View>
   );
 };
+
+
+// const ItemPage = (props, item) => {
+
+// }
+
 
 const styles = StyleSheet.create({
   container: {

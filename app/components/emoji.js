@@ -1,6 +1,7 @@
 export const categoryEmoji = {
   meats: "🥩",
-  fruit: "🍑",
+  fruits: "🍑",
+  vegetables: "🥬",
   dairy: "🐮",
   beverages: "🥤",
   grains: "🌾",

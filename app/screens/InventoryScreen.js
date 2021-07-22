@@ -6,7 +6,67 @@ import { Ionicons } from "@expo/vector-icons";
 import CategoryList from "../components/CategoryList";
 import { Feather } from "@expo/vector-icons";
 
+
+const categories = [
+  'meats', 'dairy', 'fruits', 'vegetables', 'grains', 'beverages'
+]
+
+
+const purchaseDateComparator = (a, b) => (a.purchase_date - b.purchase_date);
+const recentComparator = (a, b) => (b.purchase_date - a.purchase_date)
+
+const expiryComparator = (a, b) => (a.expiry_date - b.expiry_date);
+
+
+const uneatenFilter = item => (item.status == "uneaten");
+
+
 export default function InventoryScreen(props) {
+
+  const { inventoryList, refreshInventory } = props;
+
+  const [activeCategory, setActiveCategory] = React.useState(null);
+
+  const [inventoryOrder, setInventoryOrder] = React.useState(null);
+
+  const visibleInventoryInit = () => (activeCategory == null ? inventoryList : item => item.category == categories[activeCategory]);
+
+  const [visibleInventory, setVisibleInventory] = React.useState( visibleInventoryInit );
+
+  const [sortComparator, setSortComparator] = React.useState( recentComparator )
+
+  // const updateVisibleInventory = React.useCallback((category) => {
+  //   let filteredList = inventoryList.filter(item =>  (category==null ? true : item.category==categories[category]));
+  //   filteredList.sort(purchaseDateComparator);
+  //   setVisibleInventory(filteredList);
+  // })
+
+
+  // const filterInventory = React.useCallback(() => {
+  //   if (activeCategory == null) { setVisibleInventory(inventoryList); }
+  //   else { setVisibleInventory(inventoryList.filter(item => item.category == categories[activeCategory])); }
+  // })
+
+  // filterInventory();
+  
+  React.useEffect(() => {
+    let filteredList = inventoryList.filter(item => (activeCategory==null ? true : item.category==categories[activeCategory]));
+    filteredList.sort(purchaseDateComparator);
+    setVisibleInventory(filteredList);
+  }, [inventoryList, activeCategory])
+
+  
+
+  let updated_props = Object.assign({}, props, {
+    activeCategory: activeCategory,
+    setActiveCategory: setActiveCategory,
+    inventoryOrder: inventoryOrder,
+    setInventoryOrder: setInventoryOrder,
+    visibleInventory: visibleInventory,
+    setVisibleInventory: setVisibleInventory,
+    // updateVisibleInventory: updateVisibleInventory,
+  })
+
   return (
     <View style={styles.container}>
       <Header
@@ -32,8 +92,8 @@ export default function InventoryScreen(props) {
         }
       />
 
-      {CategoryList(props)}
-      {InventoryList(props)}
+      {CategoryList(updated_props)}
+      {InventoryList(updated_props)}
     </View>
   );
 }
