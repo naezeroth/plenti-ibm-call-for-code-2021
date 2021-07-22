@@ -5,6 +5,11 @@ import TouchableScale from "react-native-touchable-scale";
 
 
 
+
+
+
+
+
 const InventoryList = (props) => {
 
   const { inventoryList, refreshInventory,
@@ -14,7 +19,7 @@ const InventoryList = (props) => {
 
   const [refreshing, setRefreshing] = React.useState(false);
 
-  
+  // const [inventorySort, setInventorySort] = React.useState( (a, b) => (a.) );
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -22,6 +27,7 @@ const InventoryList = (props) => {
     refreshInventory();
     setRefreshing(false);
   }, []);
+
 
   const keyExtractor = (item, index) => index.toString();
 
@@ -43,6 +49,17 @@ const InventoryList = (props) => {
     </ListItem>
   );
 
+  const inventoryFilter = () => {
+    if (activeCategory == null) { return inventoryList; }
+    else { return inventoryList.filter(item => item.category == categories[activeCategory]); }
+  }
+
+  
+  // const filterInventory = React.useCallback(() => {
+  //   if (activeCategory == null) { setVisibleInventory(inventoryList); }
+  //   else { setVisibleInventory(inventoryList.filter(item => item.category == categories[activeCategory])); }
+  // })
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -58,6 +75,12 @@ const InventoryList = (props) => {
     </View>
   );
 };
+
+
+// const ItemPage = (props, item) => {
+
+// }
+
 
 const styles = StyleSheet.create({
   container: {

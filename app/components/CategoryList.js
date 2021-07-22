@@ -43,7 +43,8 @@ const CategoryList = (props) => {
   const { inventoryList, refreshInventory,
     visibleInventory, setVisibleInventory,
     inventoryOrder, setInventoryOrder,
-    activeCategory, setActiveCategory } = props;
+    activeCategory, setActiveCategory,
+     } = props;
 
   const keyExtractor = (item, index) => index.toString();
 
@@ -51,41 +52,21 @@ const CategoryList = (props) => {
     <ListItem
       underlayColor='transparent'
       containerStyle={ (activeCategory == index) ? styles.categoryItemSelected : styles.categoryItem }
-      onPress={item => {
-        console.log("ITEM CLICKED " + index.toString());
-
-
-
-        console.log('active: ', activeCategory);
+      onPress={() => {
         if (activeCategory == index) {
           setActiveCategory(null);
-          setVisibleInventory(inventoryList);
+          // setVisibleInventory(inventoryList);
+          // updateVisibleInventory(null);
         }
         else {
-          console.log('setting ' + index.toString()); 
           setActiveCategory(index);
-          setVisibleInventory(inventoryList.filter(item => item.category == categories[index]));
-          console.log('active2: ', activeCategory);
+          // setVisibleInventory(inventoryList.filter(item => item.category == categories[index]));
+          // updateVisibleInventory(index);
         }
-          
-        // if (activeCategory == null) { console.log('null'); setVisibleInventory(inventoryList); }
-        // else { setVisibleInventory(inventoryList.filter(item => item.category == categories[activeCategory])); }
-        
-
-        <Text style={styles.text}>{item + " " + categoryEmoji[item]}</Text>
       }}
     >
-      {/* <Button onPress={item => {
-        if (activeCategory == index) { setActiveCategory(null); }
-        else { setActiveCategory(index); }
 
-        <Text style={styles.text}>{item + " " + categoryEmoji[item]}</Text>
-
-      }} title="h">
-      
-      </Button> */}
       <Text style={styles.text}>{item + " " + categoryEmoji[item]}</Text>
-  
       
       {/* <ListItem.Content>
         <ListItem.Title>{item.name}</ListItem.Title>

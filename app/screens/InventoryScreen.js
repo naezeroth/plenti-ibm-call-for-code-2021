@@ -12,6 +12,15 @@ const categories = [
 ]
 
 
+const purchaseDateComparator = (a, b) => (a.purchase_date - b.purchase_date);
+const recentComparator = (a, b) => (b.purchase_date - a.purchase_date)
+
+const expiryComparator = (a, b) => (a.expiry_date - b.expiry_date);
+
+
+const uneatenFilter = item => (item.status == "uneaten");
+
+
 export default function InventoryScreen(props) {
 
   const { inventoryList, refreshInventory } = props;
@@ -24,6 +33,15 @@ export default function InventoryScreen(props) {
 
   const [visibleInventory, setVisibleInventory] = React.useState( visibleInventoryInit );
 
+  const [sortComparator, setSortComparator] = React.useState( recentComparator )
+
+  // const updateVisibleInventory = React.useCallback((category) => {
+  //   let filteredList = inventoryList.filter(item =>  (category==null ? true : item.category==categories[category]));
+  //   filteredList.sort(purchaseDateComparator);
+  //   setVisibleInventory(filteredList);
+  // })
+
+
   // const filterInventory = React.useCallback(() => {
   //   if (activeCategory == null) { setVisibleInventory(inventoryList); }
   //   else { setVisibleInventory(inventoryList.filter(item => item.category == categories[activeCategory])); }
@@ -31,6 +49,11 @@ export default function InventoryScreen(props) {
 
   // filterInventory();
   
+  React.useEffect(() => {
+    let filteredList = inventoryList.filter(item => (activeCategory==null ? true : item.category==categories[activeCategory]));
+    filteredList.sort(purchaseDateComparator);
+    setVisibleInventory(filteredList);
+  }, [inventoryList, activeCategory])
 
   
 
@@ -39,7 +62,9 @@ export default function InventoryScreen(props) {
     setActiveCategory: setActiveCategory,
     inventoryOrder: inventoryOrder,
     setInventoryOrder: setInventoryOrder,
-    visibleInventory, setVisibleInventory,
+    visibleInventory: visibleInventory,
+    setVisibleInventory: setVisibleInventory,
+    // updateVisibleInventory: updateVisibleInventory,
   })
 
   return (
