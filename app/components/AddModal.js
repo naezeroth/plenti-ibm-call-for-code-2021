@@ -13,6 +13,8 @@ export const AddModal = ({
   setSelectedItem,
   setModalVisible,
   setLocalInventoryList,
+  updateInventoryToggle,
+  setUpdateInventoryToggle,
 }) => {
   const [item, setItem] = useState(
     selectedItem === -1
@@ -42,7 +44,7 @@ export const AddModal = ({
   //TODO implement lookup table for
   const [expiryDateValue, setExpiryDateValue] = useState(
     item && item.days_to_expiry
-      ? new Date().addDays(days_to_expiry)
+      ? new Date().addDays(item.days_to_expiry)
       : new Date()
   );
 
@@ -191,6 +193,7 @@ export const AddModal = ({
                 } else {
                   localInventoryList[selectedItem] = item;
                   setLocalInventoryList(localInventoryList);
+                  setUpdateInventoryToggle(!updateInventoryToggle);
                 }
                 setSelectedItem(-1);
                 setModalVisible(false);

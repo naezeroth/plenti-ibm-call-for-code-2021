@@ -825,7 +825,7 @@ const ModalContent = ({
 
   const [dateValue, setDateValue] = useState(
     item && item.days_to_expiry
-      ? new Date().addDays(days_to_expiry)
+      ? new Date().addDays(item.days_to_expiry)
       : new Date()
   );
 

@@ -20,6 +20,8 @@ const InventoryList = (props) => {
     setInventoryOrder,
     activeCategory,
     setActiveCategory,
+    setSelectedItem,
+    setAddModalVisible,
   } = props;
 
   const [refreshing, setRefreshing] = React.useState(false);
@@ -42,6 +44,10 @@ const InventoryList = (props) => {
       friction={90}
       tension={100}
       activeScale={0.95}
+      onPress={() => {
+        setSelectedItem(item.global_key);
+        setAddModalVisible(true);
+      }}
     >
       {item.emoji !== "" && <Text> {item.emoji} </Text>}
       <ListItem.Content>

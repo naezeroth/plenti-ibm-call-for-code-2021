@@ -32,6 +32,7 @@ export default function App() {
   const [token, setToken] = useState("");
   const [inventoryList, setInventoryList] = useState([]);
   const [refreshInventoryToggle, setRefreshInventoryToggle] = useState(false);
+  const [updateInventoryToggle, setUpdateInventoryToggle] = useState(false);
 
   useEffect(() => {
     async function getToken() {
@@ -67,7 +68,9 @@ export default function App() {
     setRefreshInventoryToggle(!refreshInventoryToggle);
   };
 
-  //Fn to update inventory if InventoryList changes
+  //Fn to update inventory if InventoryList changes (either by adding/removing item) because of
+  //inventoryList dependency but also update (updating specific item) because of
+  //updateInventoryToggle dependency
   useEffect(() => {
     async function updateInventory() {
       const result = await fetch(
@@ -97,7 +100,7 @@ export default function App() {
       return;
     }
     updateInventory();
-  }, [inventoryList, loggedIn]);
+  }, [inventoryList, loggedIn, updateInventoryToggle]);
 
   if (!fontsLoaded) {
     return <AppLoading />;
@@ -158,6 +161,8 @@ export default function App() {
                   inventoryList={inventoryList}
                   setInventoryList={setInventoryList}
                   refreshInventory={refreshInventory}
+                  updateInventoryToggle={updateInventoryToggle}
+                  setUpdateInventoryToggle={setUpdateInventoryToggle}
                 />
               )}
             />

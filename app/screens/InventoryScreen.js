@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View, Modal, TouchableOpacity } from "react-native";
 import InventoryList from "../components/InventoryList";
 import { Header } from "react-native-elements";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import CategoryList from "../components/CategoryList";
 import { Feather } from "@expo/vector-icons";
 import { AddModal } from "../components/AddModal";
@@ -16,40 +16,6 @@ const categories = [
   "beverages",
 ];
 
-const purchaseDateComparator = (a, b) => a.purchase_date - b.purchase_date;
-const recentComparator = (a, b) => b.purchase_date - a.purchase_date;
-
-// const priceComparator = (a,b) => {
-//   console.log(a, b);
-//   if (a !== undefined && b != undefined)
-//   {
-//     if ('price' in a && 'price' in b)
-//     {
-//       console.log('PRICE FOUND');
-//       return (a.price - b.price);
-//     }
-//   }
-//   for (let i=0; i<10; i++)
-//   {
-//     console.log('PRICE NOT FOUND');
-//   }
-
-//   // console.log(a.price, b.price);
-//   return 0;
-// }
-
-// const priceComparator = (a,b) => {
-//   // if (a === undefined || b === undefined)
-//   // {
-//   //   for (let i=0; i<10; i++)
-//   //   {
-//   //     console.log('PRICE NOT FOUND');
-//   //   }
-//   //   return 0;
-//   // }
-//   return a.price - b.price;
-// }
-
 const priceComparator = (a, b) => b.price - a.price;
 
 const purchaseDateComparator = (a, b) => a.purchase_date - b.purchase_date;
@@ -58,7 +24,13 @@ const recentComparator = (a, b) => b.purchase_date - a.purchase_date;
 const uneatenFilter = (item) => item.status == "uneaten";
 
 export default function InventoryScreen(props) {
-  const { inventoryList, refreshInventory, setInventoryList } = props;
+  const {
+    inventoryList,
+    refreshInventory,
+    setInventoryList,
+    updateInventoryToggle,
+    setUpdateInventoryToggle,
+  } = props;
 
   const [activeCategory, setActiveCategory] = React.useState(null);
 
@@ -101,10 +73,10 @@ export default function InventoryScreen(props) {
             : item.category == categories[activeCategory])
       );
       visibleList.sort(sortComparator);
-      console.log(visibleList);
+      // console.log(visibleList);
       setVisibleInventory(visibleList);
     }
-  }, [inventoryList, activeCategory, sortComparator]);
+  }, [inventoryList, activeCategory, sortComparator, addModalVisible]);
 
   let updated_props = Object.assign({}, props, {
     activeCategory: activeCategory,
@@ -113,6 +85,8 @@ export default function InventoryScreen(props) {
     setInventoryOrder: setInventoryOrder,
     visibleInventory: visibleInventory,
     setVisibleInventory: setVisibleInventory,
+    setSelectedItem: setSelectedItem,
+    setAddModalVisible: setAddModalVisible,
     // updateVisibleInventory: updateVisibleInventory,
   });
 
@@ -163,6 +137,8 @@ export default function InventoryScreen(props) {
           setSelectedItem={setSelectedItem}
           setModalVisible={setAddModalVisible}
           setLocalInventoryList={setInventoryList}
+          setUpdateInventoryToggle={setUpdateInventoryToggle}
+          updateInventoryToggle={updateInventoryToggle}
         />
       </Modal>
       {CategoryList(updated_props)}
