@@ -78,7 +78,13 @@ export default function InventoryScreen(props) {
       // console.log(visibleList);
       setVisibleInventory(visibleList);
     }
-  }, [inventoryList, activeCategory, sortComparator, addModalVisible]);
+  }, [
+    inventoryList,
+    activeCategory,
+    sortComparator,
+    addModalVisible,
+    updateInventoryToggle,
+  ]);
 
   let updated_props = Object.assign({}, props, {
     activeCategory: activeCategory,
@@ -89,7 +95,10 @@ export default function InventoryScreen(props) {
     setVisibleInventory: setVisibleInventory,
     setSelectedItem: setSelectedItem,
     setAddModalVisible: setAddModalVisible,
-    // updateVisibleInventory: updateVisibleInventory,
+    setInventoryList: setInventoryList,
+    inventoryList: inventoryList,
+    setUpdateInventoryToggle: setUpdateInventoryToggle,
+    updateInventoryToggle: updateInventoryToggle,
   });
 
   return (
@@ -145,11 +154,7 @@ export default function InventoryScreen(props) {
       </Modal>
       {CategoryList(updated_props)}
 
-
-
-      <View
-        style={styles.sortMethodRow}
-      >
+      <View style={styles.sortMethodRow}>
         {/* <Button
           style={{backgroundColor: "#FAF6ED"}}
           color="#FAF6ED"
@@ -159,20 +164,20 @@ export default function InventoryScreen(props) {
         <FontAwesome name="sort-amount-asc" size={18} color="black" />
 
         <TouchableOpacity
-            // style={{}}
-            onPress={() => console.log("Pressed")}
-          >
-        </TouchableOpacity>
+          // style={{}}
+          onPress={() => console.log("Pressed")}
+        ></TouchableOpacity>
 
-        <Text style={styles.sortMethodHeader}>
-          Recently added
-        </Text>
-        
-        <View style={{flex:1}}>
-          <FontAwesome name="list" size={18} color="black" style={{alignSelf: 'flex-end'}}/>
+        <Text style={styles.sortMethodHeader}>Recently added</Text>
+
+        <View style={{ flex: 1 }}>
+          <FontAwesome
+            name="list"
+            size={18}
+            color="black"
+            style={{ alignSelf: "flex-end" }}
+          />
         </View>
-        
-        
       </View>
 
       {InventoryList(updated_props)}
@@ -203,5 +208,5 @@ const styles = StyleSheet.create({
     fontFamily: "SFProDisplay-Semibold",
     fontSize: 14,
     color: "#000",
-  }
+  },
 });

@@ -7,16 +7,10 @@ import {
   ScrollView,
   Modal,
 } from "react-native";
-import { Header, Image } from "react-native-elements";
-import { Ionicons } from "@expo/vector-icons";
-import CategoryList from "../components/CategoryList";
-import { Feather } from "@expo/vector-icons";
+import { Image } from "react-native-elements";
 import jwt_decode from "jwt-decode";
 import { AntDesign } from "@expo/vector-icons";
-import DropDownPicker from "react-native-dropdown-picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
-// dateFormat="MMMM d, yyyy h:mm aa"
-import DatePicker from "react-native-date-picker";
 
 export default function DashboardScreen(props) {
   const { token, inventoryList, setInventoryList } = props;
