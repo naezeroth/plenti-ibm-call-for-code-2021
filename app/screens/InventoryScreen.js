@@ -8,12 +8,16 @@ import { Feather } from "@expo/vector-icons";
 import { AddModal } from "../components/AddModal";
 
 const categories = [
-  'meats', 'dairy', 'fruits', 'vegetables', 'grains', 'beverages'
-]
+  "meats",
+  "dairy",
+  "fruits",
+  "vegetables",
+  "grains",
+  "beverages",
+];
 
-
-const purchaseDateComparator = (a, b) => (a.purchase_date - b.purchase_date);
-const recentComparator = (a, b) => (b.purchase_date - a.purchase_date);
+const purchaseDateComparator = (a, b) => a.purchase_date - b.purchase_date;
+const recentComparator = (a, b) => b.purchase_date - a.purchase_date;
 
 // const priceComparator = (a,b) => {
 //   console.log(a, b);
@@ -29,7 +33,7 @@ const recentComparator = (a, b) => (b.purchase_date - a.purchase_date);
 //   {
 //     console.log('PRICE NOT FOUND');
 //   }
-  
+
 //   // console.log(a.price, b.price);
 //   return 0;
 // }
@@ -46,19 +50,12 @@ const recentComparator = (a, b) => (b.purchase_date - a.purchase_date);
 //   return a.price - b.price;
 // }
 
-const priceComparator = (a,b) => (b.price - a.price);
+const priceComparator = (a, b) => b.price - a.price;
 
 const purchaseDateComparator = (a, b) => a.purchase_date - b.purchase_date;
 const recentComparator = (a, b) => b.purchase_date - a.purchase_date;
 
-<<<<<<< HEAD
-const expiryComparator = (a, b) => a.expiry_date - b.expiry_date;
-
 const uneatenFilter = (item) => item.status == "uneaten";
-=======
-const uneatenFilter = item => (item.status == "uneaten");
-
->>>>>>> a71754a6b9ee990ee3ffc6896d2a1cb7c2b9a505
 
 export default function InventoryScreen(props) {
   const { inventoryList, refreshInventory, setInventoryList } = props;
@@ -67,13 +64,15 @@ export default function InventoryScreen(props) {
 
   const [inventoryOrder, setInventoryOrder] = React.useState(null);
 
-const [addModalVisible, setAddModalVisible] = useState(false);
-//selectedItem of -1 means new item being added, otherwise editing exisiting item
-const [selectedItem, setSelectedItem] = React.useState(-1);
+  const [addModalVisible, setAddModalVisible] = useState(false);
+  //selectedItem of -1 means new item being added, otherwise editing exisiting item
+  const [selectedItem, setSelectedItem] = React.useState(-1);
 
-  const [visibleInventory, setVisibleInventory] = React.useState( [] );
+  const [visibleInventory, setVisibleInventory] = React.useState([]);
 
-  const [sortComparator, setSortComparator] = React.useState( () => recentComparator );
+  const [sortComparator, setSortComparator] = React.useState(
+    () => recentComparator
+  );
 
   // const updateVisibleInventory = React.useCallback((category) => {
   //   let filteredList = inventoryList.filter(item =>  (category==null ? true : item.category==categories[category]));
@@ -89,20 +88,23 @@ const [selectedItem, setSelectedItem] = React.useState(-1);
   // filterInventory();
 
   React.useEffect(() => {
-    if (inventoryList !== undefined)
-    {
+    if (inventoryList !== undefined) {
       let visibleList = JSON.parse(JSON.stringify(inventoryList));
       visibleList.map((element, index) => {
-        element.global_key= index;
-      })
-      visibleList = visibleList.filter(item => uneatenFilter(item) && (activeCategory==null ? true : item.category==categories[activeCategory]));
+        element.global_key = index;
+      });
+      visibleList = visibleList.filter(
+        (item) =>
+          uneatenFilter(item) &&
+          (activeCategory == null
+            ? true
+            : item.category == categories[activeCategory])
+      );
       visibleList.sort(sortComparator);
       console.log(visibleList);
       setVisibleInventory(visibleList);
     }
-  }, [inventoryList, activeCategory, sortComparator])
-
-  
+  }, [inventoryList, activeCategory, sortComparator]);
 
   let updated_props = Object.assign({}, props, {
     activeCategory: activeCategory,
@@ -165,11 +167,7 @@ const [selectedItem, setSelectedItem] = React.useState(-1);
       </Modal>
       {CategoryList(updated_props)}
 
-
-
-      <View
-        style={{height:30, flexDirection: "row", marginHorizontal:30}}
-      >
+      <View style={{ height: 30, flexDirection: "row", marginHorizontal: 30 }}>
         {/* <Button
           style={{backgroundColor: "#FAF6ED"}}
           color="#FAF6ED"
@@ -179,18 +177,11 @@ const [selectedItem, setSelectedItem] = React.useState(-1);
         <FontAwesome name="sort-amount-asc" size={18} color="black" />
 
         <TouchableOpacity
-            // style={{}}
-            onPress={() => console.log("Pressed")}
-          >
-        </TouchableOpacity>
+          // style={{}}
+          onPress={() => console.log("Pressed")}
+        ></TouchableOpacity>
 
-        <Text>
-          Recently Added
-        </Text>
-
-        
-          
-        
+        <Text>Recently Added</Text>
       </View>
 
       {InventoryList(updated_props)}
