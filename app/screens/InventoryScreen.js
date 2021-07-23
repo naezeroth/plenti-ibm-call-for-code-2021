@@ -53,6 +53,9 @@ const expiryComparator = (a, b) => (a.expiry_date - b.expiry_date);
 const uneatenFilter = item => (item.status == "uneaten");
 
 
+// const comparatorNames = ["Recently added", "Expiring soon"]
+
+
 export default function InventoryScreen(props) {
 
   const { inventoryList, refreshInventory } = props;
@@ -68,6 +71,8 @@ export default function InventoryScreen(props) {
 
   const [sortComparator, setSortComparator] = React.useState( () => recentComparator );
 
+  // const [comparatorIndex, setComparatorIndex] = React.useState(0);
+
   // const updateVisibleInventory = React.useCallback((category) => {
   //   let filteredList = inventoryList.filter(item =>  (category==null ? true : item.category==categories[category]));
   //   filteredList.sort(purchaseDateComparator);
@@ -81,7 +86,8 @@ export default function InventoryScreen(props) {
   // })
 
   // filterInventory();
-  
+
+
   React.useEffect(() => {
     if (inventoryList !== undefined)
     {
@@ -140,7 +146,7 @@ export default function InventoryScreen(props) {
 
 
       <View
-        style={{height:30, flexDirection: "row", marginHorizontal:30}}
+        style={styles.sortMethodRow}
       >
         {/* <Button
           style={{backgroundColor: "#FAF6ED"}}
@@ -156,12 +162,14 @@ export default function InventoryScreen(props) {
           >
         </TouchableOpacity>
 
-        <Text>
-          Recently Added
+        <Text style={styles.sortMethodHeader}>
+          Recently added
         </Text>
-
         
-          
+        <View style={{flex:1}}>
+          <FontAwesome name="list" size={18} color="black" style={{alignSelf: 'flex-end'}}/>
+        </View>
+        
         
       </View>
 
@@ -186,4 +194,16 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: "#000",
   },
+  sortMethodRow: {
+    marginTop: 5,
+    height: 30,
+    flexDirection: "row",
+    marginHorizontal: 30,
+  },
+  sortMethodHeader: {
+    marginLeft: 10,
+    fontFamily: "SFProDisplay-Semibold",
+    fontSize: 14,
+    color: "#000",
+  }
 });

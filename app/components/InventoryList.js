@@ -17,17 +17,6 @@ const InventoryList = (props) => {
     inventoryOrder, setInventoryOrder,
     activeCategory, setActiveCategory } = props;
 
-  const [refreshing, setRefreshing] = React.useState(false);
-
-  // const [inventorySort, setInventorySort] = React.useState( (a, b) => (a.) );
-
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    //Refreshing inventory by toggling a boolean
-    refreshInventory();
-    setRefreshing(false);
-  }, []);
-
 
   const keyExtractor = (item, index) => index.toString();
 
@@ -54,11 +43,6 @@ const InventoryList = (props) => {
     else { return inventoryList.filter(item => item.category == categories[activeCategory]); }
   }
 
-  
-  // const filterInventory = React.useCallback(() => {
-  //   if (activeCategory == null) { setVisibleInventory(inventoryList); }
-  //   else { setVisibleInventory(inventoryList.filter(item => item.category == categories[activeCategory])); }
-  // })
 
   return (
     <View style={styles.container}>
@@ -67,9 +51,6 @@ const InventoryList = (props) => {
         data={visibleInventory}
         extraData={visibleInventory}
         renderItem={renderItem}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
         contentContainerStyle={styles.list}
       />
     </View>
