@@ -103,24 +103,38 @@ export default function InventoryScreen(props) {
 
   return (
     <View style={styles.container}>
+      {/* <View style={styles.header}>
+        <Text style={styles.title}>Your Inventory</Text>
+        <Feather name="search" size={32} color="black" />
+        <TouchableOpacity
+          onPress={() => {
+            console.log("Opening modal");
+            setSelectedItem(-1);
+            setAddModalVisible(!addModalVisible);
+          }}
+        >
+          <AntDesign name="pluscircleo" size={30} color="black" />
+        </TouchableOpacity>
+      </View> */}
+
       <Header
         // style={styles.header}
         placement="left"
         backgroundColor="#FAF6ED"
-        // leftComponent={{ icon: 'menu', color: '#fff' }}
-        centerComponent={{
+        leftComponent={{
           text: "Your Inventory",
           style: styles.title,
         }}
-        rightComponent={
+        centerComponent={
           <View
             style={{
               flex: 1,
               flexDirection: "row",
               justifyContent: "space-between",
+              paddingRight: 20,
             }}
           >
-            <Feather name="search" size={32} color="black" />
+            {/* <Feather name="search" size={32} color="black" /> */}
             <TouchableOpacity
               onPress={() => {
                 console.log("Opening modal");
@@ -128,8 +142,21 @@ export default function InventoryScreen(props) {
                 setAddModalVisible(!addModalVisible);
               }}
             >
-              <AntDesign name="pluscircleo" size={30} color="black" />
+              <View
+                style={{paddingRight: 12}}
+              >
+                <AntDesign name="pluscircleo" size={34} color="black" />
+              </View>
+              
             </TouchableOpacity>
+
+            <TouchableOpacity>
+              <View style={styles.selectButton}>
+                <Text style={{fontSize: 18, fontFamily: "SFProDisplay-Semibold"}} >select</Text>
+              </View>
+            </TouchableOpacity>
+
+
           </View>
         }
       />
@@ -186,9 +213,16 @@ export default function InventoryScreen(props) {
 }
 
 const styles = StyleSheet.create({
+  header: {
+    // marginVertical: 10,
+    // marginHorizontal: 30,
+    // // flex: 1,
+    // flexDirection: "row",
+    // justifyContent: "space-between",
+    // backgroundColor: "#FAF6ED",
+  },
   container: {
     flex: 1,
-    paddingTop: 0,
     backgroundColor: "#FAF6ED",
   },
   title: {
@@ -196,6 +230,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: "#000",
     paddingBottom: 1,
+    paddingLeft: 20,
   },
   sortMethodRow: {
     marginTop: 5,
@@ -208,5 +243,18 @@ const styles = StyleSheet.create({
     fontFamily: "SFProDisplay-Semibold",
     fontSize: 14,
     color: "#000",
+  },
+  selectButton: {
+    borderRadius: 30,
+    // marginLeft: 10,
+    // marginTop: 7,
+    // marginBottom: 7,
+    borderWidth: 2,
+    borderColor: "black",
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    backgroundColor: '#FAF6ED',
+    // justifyContent: 'center',
+    marginRight: 30,
   },
 });

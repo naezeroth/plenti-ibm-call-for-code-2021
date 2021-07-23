@@ -26,12 +26,23 @@ const InventoryList = (props) => {
   const keyExtractor = (item, index) => String(item.global_key);
 
   const renderItem = ({ item }) => {
-    const style = item.frozen
+    const itemStyle = item.frozen
       ? { ...styles.listItem, backgroundColor: "#CDE7FB" }
       : styles.listItem;
+
+    const expiryStyle = (() => {
+      let daysLeft = Math.round((new Date(item.expiry_date) - new Date())/(1000*60*60*24))
+      console.log("DAYS LEFT ", daysLeft);
+
+      if (daysLeft <= 2) { return { ...styles.expiryCircle, backgroundColor: "#F76D60" } }
+      else if (daysLeft <= 7) { return { ...styles.expiryCircle, backgroundColor: "#FECC66" } }
+      else { return { ...styles.expiryCircle, backgroundColor: "#4AC79F" } }
+    })();
+
+
     return (
       <ListItem
-        containerStyle={style}
+        containerStyle={itemStyle}
         Component={TouchableScale}
         friction={90}
         tension={100}
@@ -41,25 +52,16 @@ const InventoryList = (props) => {
           setAddModalVisible(true);
         }}
       >
-        {item.emoji !== "" && <Text> {item.emoji} </Text>}
+        {item.emoji !== "" && <Text style={{fontSize:24}}> {item.emoji} </Text>}
         <ListItem.Content>
           <ListItem.Title>
             <Text style={styles.text}>{item.name}</Text>
           </ListItem.Title>
-          <ListItem.Subtitle>{item.subtitle}</ListItem.Subtitle>
+          {/* <ListItem.Subtitle>{item.subtitle}</ListItem.Subtitle> */}
         </ListItem.Content>
+        <View style={expiryStyle} />
       </ListItem>
     );
-  };
-
-  const inventoryFilter = () => {
-    if (activeCategory == null) {
-      return inventoryList;
-    } else {
-      return inventoryList.filter(
-        (item) => item.category == categories[activeCategory]
-      );
-    }
   };
 
   return (
@@ -137,9 +139,6 @@ const InventoryList = (props) => {
   );
 };
 
-// const ItemPage = (props, item) => {
-
-// }
 
 const styles = StyleSheet.create({
   container: {
@@ -159,6 +158,7 @@ const styles = StyleSheet.create({
     marginRight: 15,
     marginTop: 7,
     marginBottom: 7,
+    // justifyContent: "center",
     // shadowOffset:{  width: 10,  height: 10,  },
     // shadowColor: '#FFFFFF',
     // shadowRadius: 100,
@@ -169,6 +169,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "#000",
   },
+  expiryCircle: {
+    width: 20,
+    height: 20,
+    borderRadius: 20/2,
+    backgroundColor: "red",
+  }
 });
 
 export default InventoryList;

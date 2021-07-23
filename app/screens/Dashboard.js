@@ -10,7 +10,7 @@ import {
 import { Image } from "react-native-elements";
 import jwt_decode from "jwt-decode";
 import { AntDesign } from "@expo/vector-icons";
-import DateTimePicker from "@react-native-community/datetimepicker";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 export default function DashboardScreen(props) {
   const { token, inventoryList, setInventoryList } = props;
@@ -18,6 +18,7 @@ export default function DashboardScreen(props) {
   const [dateValue, setDateValue] = useState(new Date());
   const [binModalVisible, setBinModalVisible] = React.useState(false);
   const [rankingModalVisible, setRankingModalVisible] = React.useState(false);
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -163,15 +164,24 @@ export default function DashboardScreen(props) {
               >
                 Your food waste in
               </Text>
-              <DateTimePicker
+              <DateTimePickerModal
+                isVisible={isDatePickerVisible}
                 style={{ marginLeft: 10, width: 75 }}
                 value={dateValue}
                 mode="date"
                 is24Hour={true}
                 display="default"
-                onChange={(e, selectedDate) => {
+                // onChange={(e, selectedDate) => {
+                //   console.log("selectedDate", selectedDate);
+                //   setDateValue(selectedDate);
+                // }}
+                onConfirm={(selectedDate) => {
                   console.log("selectedDate", selectedDate);
                   setDateValue(selectedDate);
+                  setDatePickerVisibility(false);
+                }}
+                onCancel={() => {
+                  setDatePickerVisibility(false);
                 }}
               />
             </View>
