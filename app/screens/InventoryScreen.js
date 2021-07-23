@@ -1,8 +1,8 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { TouchableOpacity, Button, StyleSheet, Text, View } from "react-native";
 import InventoryList from "../components/InventoryList";
 import { Header } from "react-native-elements";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import CategoryList from "../components/CategoryList";
 import { Feather } from "@expo/vector-icons";
 
@@ -55,8 +55,6 @@ const uneatenFilter = item => (item.status == "uneaten");
 
 export default function InventoryScreen(props) {
 
-  
-
   const { inventoryList, refreshInventory } = props;
 
   const [activeCategory, setActiveCategory] = React.useState(null);
@@ -87,9 +85,14 @@ export default function InventoryScreen(props) {
   React.useEffect(() => {
     if (inventoryList !== undefined)
     {
-      let filteredList = inventoryList.filter(item => uneatenFilter(item) && (activeCategory==null ? true : item.category==categories[activeCategory]));
-      filteredList.sort(sortComparator);
-      setVisibleInventory(filteredList);
+      let visibleList = JSON.parse(JSON.stringify(inventoryList));
+      visibleList.map((element, index) => {
+        element.global_key= index;
+      })
+      visibleList = visibleList.filter(item => uneatenFilter(item) && (activeCategory==null ? true : item.category==categories[activeCategory]));
+      visibleList.sort(sortComparator);
+      console.log(visibleList);
+      setVisibleInventory(visibleList);
     }
   }, [inventoryList, activeCategory, sortComparator])
 
@@ -130,7 +133,38 @@ export default function InventoryScreen(props) {
         }
       />
 
+      
+
       {CategoryList(updated_props)}
+
+
+
+      <View
+        style={{height:30, flexDirection: "row", marginHorizontal:30}}
+      >
+        {/* <Button
+          style={{backgroundColor: "#FAF6ED"}}
+          color="#FAF6ED"
+          title="Recently added"
+        /> */}
+
+        <FontAwesome name="sort-amount-asc" size={18} color="black" />
+
+        <TouchableOpacity
+            // style={{}}
+            onPress={() => console.log("Pressed")}
+          >
+        </TouchableOpacity>
+
+        <Text>
+          Recently Added
+        </Text>
+
+        
+          
+        
+      </View>
+
       {InventoryList(updated_props)}
     </View>
   );
