@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
-import DateTimePicker from "@react-native-community/datetimepicker";
+// import DateTimePicker from "@react-native-community/datetimepicker";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 import { Input } from "react-native-elements";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -50,23 +51,45 @@ export const AddModal = ({
 
   const [purchaseDateValue, setPurchaseDateValue] = useState(new Date());
 
+  const [isPurchaseDatePickerVisible, setPurchaseDatePickerVisibility] = useState(false);
+  const [isExpiryDatePickerVisible, setExpiryDatePickerVisibility] = useState(false);
+
   const DatePickerComponent = ({
     dateValue,
     setDateValue,
     setItem,
     itemParameter,
+    isDatePickerVisible,
+    setDatePickerVisibility,
   }) => (
-    <DateTimePicker
-      style={{ width: 200 }}
-      value={dateValue}
-      mode="date"
-      is24Hour={true}
-      display="default"
-      onChange={(e, selectedDate) => {
-        setDateValue(selectedDate);
-        setItem({ ...item, [itemParameter]: selectedDate });
-      }}
-    />
+    <TouchableOpacity
+      style={{flex:1}}
+      onPress={() => setDatePickerVisibility(true)}
+    >
+      <DateTimePickerModal
+        isVisible={isDatePickerVisible}
+        style={{ width: 200 }}
+        value={dateValue}
+        mode="date"
+        is24Hour={true}
+        display="default"
+        // onChange={(e, selectedDate) => {
+        //   setDateValue(selectedDate);
+        //   setItem({ ...item, [itemParameter]: selectedDate });
+        // }}
+        onConfirm={(selectedDate) => {
+          setDateValue(selectedDate);
+          setItem({ ...item, [itemParameter]: selectedDate });
+          setDatePickerVisibility(false);
+        }}
+        onCancel={() => {
+          setDatePickerVisibility(false);
+        }}
+      />
+      <Text
+        style={{fontSize: 18, marginVertical: 8}}
+      >{dateValue.toString().split(' ').slice(1,4).join(' ')}</Text>
+    </TouchableOpacity>
   );
 
   return (
@@ -82,7 +105,7 @@ export const AddModal = ({
         style={{
           flex: 1,
           width: "100%",
-          paddingTop: 100,
+          paddingTop: 30,
         }}
       >
         <View
@@ -140,14 +163,18 @@ export const AddModal = ({
           />
           <Input
             label="purchase date"
+            value="hello"
             InputComponent={() => (
               <DatePickerComponent
                 dateValue={purchaseDateValue}
                 setDateValue={setPurchaseDateValue}
                 setItem={setItem}
                 itemParameter="purchase_date"
+                isDatePickerVisible={isPurchaseDatePickerVisible}
+                setDatePickerVisibility={setPurchaseDatePickerVisibility}
               />
             )}
+            
           />
           <Input
             label="expiry date"
@@ -157,6 +184,8 @@ export const AddModal = ({
                 setDateValue={setExpiryDateValue}
                 setItem={setItem}
                 itemParameter="expiry_date"
+                isDatePickerVisible={isExpiryDatePickerVisible}
+                setDatePickerVisibility={setExpiryDatePickerVisibility}
               />
             )}
           />
