@@ -24,19 +24,6 @@ const InventoryList = (props) => {
     setAddModalVisible,
   } = props;
 
-<<<<<<< HEAD
-=======
-  const [refreshing, setRefreshing] = React.useState(false);
-
-  // const [inventorySort, setInventorySort] = React.useState( (a, b) => (a.) );
-
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    //Refreshing inventory by toggling a boolean
-    refreshInventory();
-    setRefreshing(false);
-  }, []);
->>>>>>> e6a1ed6d97c1e9668382422d31c19f6c1975fab4
 
   const keyExtractor = (item, index) => index.toString();
 
@@ -72,13 +59,6 @@ const InventoryList = (props) => {
     }
   };
 
-<<<<<<< HEAD
-=======
-  // const filterInventory = React.useCallback(() => {
-  //   if (activeCategory == null) { setVisibleInventory(inventoryList); }
-  //   else { setVisibleInventory(inventoryList.filter(item => item.category == categories[activeCategory])); }
-  // })
->>>>>>> e6a1ed6d97c1e9668382422d31c19f6c1975fab4
 
   return (
     <View style={styles.container}>
