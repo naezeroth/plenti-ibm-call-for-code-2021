@@ -1,21 +1,28 @@
 import React, { useState } from "react";
-import { Alert, RefreshControl, FlatList, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  RefreshControl,
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { ListItem, Avatar } from "react-native-elements";
 import TouchableScale from "react-native-touchable-scale";
 
-
-
-
-
-
-
-
 const InventoryList = (props) => {
-
-  const { inventoryList, refreshInventory,
-    visibleInventory, setVisibleInventory,
-    inventoryOrder, setInventoryOrder,
-    activeCategory, setActiveCategory } = props;
+  const {
+    inventoryList,
+    refreshInventory,
+    visibleInventory,
+    setVisibleInventory,
+    inventoryOrder,
+    setInventoryOrder,
+    activeCategory,
+    setActiveCategory,
+    setSelectedItem,
+    setAddModalVisible,
+  } = props;
 
   const [refreshing, setRefreshing] = React.useState(false);
 
@@ -28,7 +35,6 @@ const InventoryList = (props) => {
     setRefreshing(false);
   }, []);
 
-
   const keyExtractor = (item, index) => index.toString();
 
   const renderItem = ({ item }) => (
@@ -38,6 +44,10 @@ const InventoryList = (props) => {
       friction={90}
       tension={100}
       activeScale={0.95}
+      onPress={() => {
+        setSelectedItem(item.global_key);
+        setAddModalVisible(true);
+      }}
     >
       {item.emoji !== "" && <Text> {item.emoji} </Text>}
       <ListItem.Content>
@@ -50,11 +60,15 @@ const InventoryList = (props) => {
   );
 
   const inventoryFilter = () => {
-    if (activeCategory == null) { return inventoryList; }
-    else { return inventoryList.filter(item => item.category == categories[activeCategory]); }
-  }
+    if (activeCategory == null) {
+      return inventoryList;
+    } else {
+      return inventoryList.filter(
+        (item) => item.category == categories[activeCategory]
+      );
+    }
+  };
 
-  
   // const filterInventory = React.useCallback(() => {
   //   if (activeCategory == null) { setVisibleInventory(inventoryList); }
   //   else { setVisibleInventory(inventoryList.filter(item => item.category == categories[activeCategory])); }
@@ -76,11 +90,9 @@ const InventoryList = (props) => {
   );
 };
 
-
 // const ItemPage = (props, item) => {
 
 // }
-
 
 const styles = StyleSheet.create({
   container: {
