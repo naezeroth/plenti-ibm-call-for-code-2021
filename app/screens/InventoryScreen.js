@@ -18,15 +18,8 @@ const categories = [
 
 const priceComparator = (a, b) => b.price - a.price;
 
-<<<<<<< HEAD
-// const comparatorNames = ["Recently added", "Expiring soon"]
-
-
-export default function InventoryScreen(props) {
-=======
 const purchaseDateComparator = (a, b) => a.purchase_date - b.purchase_date;
 const recentComparator = (a, b) => b.purchase_date - a.purchase_date;
->>>>>>> e6a1ed6d97c1e9668382422d31c19f6c1975fab4
 
 const uneatenFilter = (item) => item.status == "uneaten";
 
