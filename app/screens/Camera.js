@@ -35,12 +35,13 @@ const testInventory = [
   {
     category: "dairy",
     expiry_date: null,
+    days_to_expiry: 5,
     frozen: false,
     item_class: null,
     name: "Milk",
     emoji: "🐮",
     price: 3,
-    purchase_date: null,
+    purchase_date: new Date(),
     quantity: 2,
     remove_date: null,
     status: "uneaten",
@@ -48,147 +49,47 @@ const testInventory = [
   {
     category: "meat",
     expiry_date: null,
+    days_to_expiry: 3,
     frozen: false,
     emoji: "🥩",
     item_class: null,
     name: "Chicken tenders",
-    price: 3,
-    purchase_date: null,
-    quantity: 2,
+    price: 10,
+    purchase_date: new Date(),
+    quantity: 5,
     remove_date: null,
     status: "uneaten",
   },
   {
     category: "grain",
     expiry_date: null,
+    days_to_expiry: 10,
     frozen: false,
     item_class: null,
-    // emoji: "🌾",
+    emoji: "🌾",
     name: "Bread",
-    price: 3,
-    purchase_date: null,
-    quantity: 2,
+    price: 2,
+    purchase_date: new Date(),
+    quantity: 3,
     remove_date: null,
     status: "uneaten",
   },
   {
     category: "beverage",
     expiry_date: null,
+    days_to_expiry: 20,
     emoji: "🥤",
     frozen: false,
     item_class: null,
     name: "Coca-cola",
-    price: 3,
-    purchase_date: null,
-    quantity: 2,
-    remove_date: null,
-    status: "uneaten",
-  },
-  {
-    category: "dairy",
-    expiry_date: null,
-    frozen: false,
-    item_class: null,
-    name: "Milk",
-    emoji: "🐮",
-    price: 3,
-    purchase_date: null,
-    quantity: 2,
-    remove_date: null,
-    status: "uneaten",
-  },
-  {
-    category: "meat",
-    expiry_date: null,
-    frozen: false,
-    emoji: "🥩",
-    item_class: null,
-    name: "Chicken tenders",
-    price: 3,
-    purchase_date: null,
-    quantity: 2,
-    remove_date: null,
-    status: "uneaten",
-  },
-  {
-    category: "grain",
-    expiry_date: null,
-    frozen: false,
-    item_class: null,
-    // emoji: "🌾",
-    name: "Bread",
-    price: 3,
-    purchase_date: null,
-    quantity: 2,
-    remove_date: null,
-    status: "uneaten",
-  },
-  {
-    category: "beverage",
-    expiry_date: null,
-    emoji: "🥤",
-    frozen: false,
-    item_class: null,
-    name: "Coca-cola",
-    price: 3,
-    purchase_date: null,
-    quantity: 2,
-    remove_date: null,
-    status: "uneaten",
-  },
-  {
-    category: "dairy",
-    expiry_date: null,
-    frozen: false,
-    item_class: null,
-    name: "Milk",
-    emoji: "🐮",
-    price: 3,
-    purchase_date: null,
-    quantity: 2,
-    remove_date: null,
-    status: "uneaten",
-  },
-  {
-    category: "meat",
-    expiry_date: null,
-    frozen: false,
-    emoji: "🥩",
-    item_class: null,
-    name: "Chicken tenders",
-    price: 3,
-    purchase_date: null,
-    quantity: 2,
-    remove_date: null,
-    status: "uneaten",
-  },
-  {
-    category: "grain",
-    expiry_date: null,
-    frozen: false,
-    item_class: null,
-    // emoji: "🌾",
-    name: "Bread",
-    price: 3,
-    purchase_date: null,
-    quantity: 2,
-    remove_date: null,
-    status: "uneaten",
-  },
-  {
-    category: "beverage",
-    expiry_date: null,
-    emoji: "🥤",
-    frozen: false,
-    item_class: null,
-    name: "Coca-cola",
-    price: 3,
-    purchase_date: null,
-    quantity: 2,
+    price: 1,
+    purchase_date: new Date(),
+    quantity: 10,
     remove_date: null,
     status: "uneaten",
   },
 ];
+
 export default function App(props) {
   const { inventoryList, setInventoryList } = props;
   const [startCamera, setStartCamera] = React.useState(false);
@@ -197,7 +98,7 @@ export default function App(props) {
   const [loading, setLoading] = React.useState(false);
   const [ocrsend, setOcrsend] = React.useState(false);
   const [arrow, setArrow] = React.useState("arrowup");
-  const [localInventoryList, setLocalInventoryList] = React.useState([]); //change to localinventory - hook into props
+  const [localInventoryList, setLocalInventoryList] = React.useState([]);
   const [allowDragging, setAllowDragging] = React.useState(true);
   const [selectedItem, setSelectedItem] = React.useState(-1);
   const [modalVisible, setModalVisible] = React.useState(false);
@@ -923,7 +824,9 @@ const ModalContent = ({
   };
 
   const [dateValue, setDateValue] = useState(
-    item && item.days_to_expiry ? new Date().addDays(expiry_date) : new Date()
+    item && item.days_to_expiry
+      ? new Date().addDays(days_to_expiry)
+      : new Date()
   );
 
   const DatePickerComponent = () => (

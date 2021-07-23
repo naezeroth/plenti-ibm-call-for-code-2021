@@ -1,21 +1,26 @@
 import React, { useState } from "react";
-import { Alert, RefreshControl, FlatList, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  RefreshControl,
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { ListItem, Avatar } from "react-native-elements";
 import TouchableScale from "react-native-touchable-scale";
 
-
-
-
-
-
-
-
 const InventoryList = (props) => {
-
-  const { inventoryList, refreshInventory,
-    visibleInventory, setVisibleInventory,
-    inventoryOrder, setInventoryOrder,
-    activeCategory, setActiveCategory } = props;
+  const {
+    inventoryList,
+    refreshInventory,
+    visibleInventory,
+    setVisibleInventory,
+    inventoryOrder,
+    setInventoryOrder,
+    activeCategory,
+    setActiveCategory,
+  } = props;
 
   const [refreshing, setRefreshing] = React.useState(false);
 
@@ -27,7 +32,6 @@ const InventoryList = (props) => {
     refreshInventory();
     setRefreshing(false);
   }, []);
-
 
   const keyExtractor = (item, index) => index.toString();
 
@@ -50,11 +54,15 @@ const InventoryList = (props) => {
   );
 
   const inventoryFilter = () => {
-    if (activeCategory == null) { return inventoryList; }
-    else { return inventoryList.filter(item => item.category == categories[activeCategory]); }
-  }
+    if (activeCategory == null) {
+      return inventoryList;
+    } else {
+      return inventoryList.filter(
+        (item) => item.category == categories[activeCategory]
+      );
+    }
+  };
 
-  
   // const filterInventory = React.useCallback(() => {
   //   if (activeCategory == null) { setVisibleInventory(inventoryList); }
   //   else { setVisibleInventory(inventoryList.filter(item => item.category == categories[activeCategory])); }
@@ -76,11 +84,9 @@ const InventoryList = (props) => {
   );
 };
 
-
 // const ItemPage = (props, item) => {
 
 // }
-
 
 const styles = StyleSheet.create({
   container: {
