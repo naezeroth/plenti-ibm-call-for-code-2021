@@ -21,24 +21,27 @@ const InventoryList = (props) => {
     setInventoryList,
     updateInventoryToggle,
     setUpdateInventoryToggle,
+    selectMode,
+    selected,
+    toggleSelected,
   } = props;
 
   const keyExtractor = (item, index) => String(item.global_key);
 
   const renderItem = ({ item }) => {
-    const itemStyle = item.frozen
-      ? { ...styles.listItem, backgroundColor: "#CDE7FB" }
-      : styles.listItem;
+
+    const itemStyle = (() => {
+      if (selected.has(item.global_key)) { return { ...styles.listItem, backgroundColor: "black" } }
+      else if (item.frozen) { return { ...styles.listItem, backgroundColor: "#CDE7FB" } }
+      else { return styles.listItem }
+    })();
 
     const expiryStyle = (() => {
       let daysLeft = Math.round((new Date(item.expiry_date) - new Date())/(1000*60*60*24))
-      console.log("DAYS LEFT ", daysLeft);
-
       if (daysLeft <= 2) { return { ...styles.expiryCircle, backgroundColor: "#F76D60" } }
       else if (daysLeft <= 7) { return { ...styles.expiryCircle, backgroundColor: "#FECC66" } }
       else { return { ...styles.expiryCircle, backgroundColor: "#4AC79F" } }
     })();
-
 
     return (
       <ListItem
@@ -47,10 +50,10 @@ const InventoryList = (props) => {
         friction={90}
         tension={100}
         activeScale={0.98}
-        onPress={() => {
+        onPress={ selectMode ? () => toggleSelected(item.global_key) : () => {
           setSelectedItem(item.global_key);
           setAddModalVisible(true);
-        }}
+         }}
       >
         {item.emoji !== "" && <Text style={{fontSize:24}}> {item.emoji} </Text>}
         <ListItem.Content>
@@ -100,7 +103,7 @@ const InventoryList = (props) => {
                 );
                 inventoryList[data.item.global_key].status = "discarded";
                 setInventoryList(inventoryList);
-                setUpdateInventoryToggle(!updateInventoryToggle);
+                setUpdateInventoryToggle(!updateInventoryToggle); // NOTE: what is this for?
               }}
             >
               <FontAwesome5 name="trash" size={24} color="white" />

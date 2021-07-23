@@ -17,7 +17,6 @@ const categories = [
 ];
 
 const priceComparator = (a, b) => b.price - a.price;
-
 const purchaseDateComparator = (a, b) => a.purchase_date - b.purchase_date;
 const recentComparator = (a, b) => b.purchase_date - a.purchase_date;
 
@@ -37,29 +36,33 @@ export default function InventoryScreen(props) {
   const [inventoryOrder, setInventoryOrder] = React.useState(null);
 
   const [addModalVisible, setAddModalVisible] = useState(false);
+
   //selectedItem of -1 means new item being added, otherwise editing exisiting item
   const [selectedItem, setSelectedItem] = React.useState(-1);
 
   const [visibleInventory, setVisibleInventory] = React.useState([]);
 
+  // If selection mode is true, items can be selected
+  const [selectMode, setSelectMode] = React.useState(false);
+
+  // Set of items which have been selected
+  const [selected, setSelected] = React.useState(new Set());
+
   const [sortComparator, setSortComparator] = React.useState(
     () => recentComparator
   );
 
-  // const [comparatorIndex, setComparatorIndex] = React.useState(0);
+  const toggleSelected = (globalKey) => {
+    let newSet = new Set(selected);
+    if (selected.has(globalKey)) { newSet.delete(globalKey); }
+    else { newSet.add(globalKey); }
+    setSelected(newSet);
+  }
 
-  // const updateVisibleInventory = React.useCallback((category) => {
-  //   let filteredList = inventoryList.filter(item =>  (category==null ? true : item.category==categories[category]));
-  //   filteredList.sort(purchaseDateComparator);
-  //   setVisibleInventory(filteredList);
-  // })
-
-  // const filterInventory = React.useCallback(() => {
-  //   if (activeCategory == null) { setVisibleInventory(inventoryList); }
-  //   else { setVisibleInventory(inventoryList.filter(item => item.category == categories[activeCategory])); }
-  // })
-
-  // filterInventory();
+  const toggleSelectMode = () => {
+    if (selectMode) { setSelected(new Set()) }
+    setSelectMode(!selectMode);
+  }
 
   React.useEffect(() => {
     if (inventoryList !== undefined) {
@@ -75,7 +78,6 @@ export default function InventoryScreen(props) {
             : item.category == categories[activeCategory])
       );
       visibleList.sort(sortComparator);
-      // console.log(visibleList);
       setVisibleInventory(visibleList);
     }
   }, [
@@ -84,7 +86,58 @@ export default function InventoryScreen(props) {
     sortComparator,
     addModalVisible,
     updateInventoryToggle,
+    selected,
   ]);
+ 
+
+  const changeSelectedStatus = (status) => {
+    if (selectMode)
+    {
+      for (let global_key of selected)
+      {
+        inventoryList[global_key].status = status;
+      }
+      toggleSelectMode();
+    }
+  }
+
+  const SelectActionBar = () => {
+    if (!selectMode) { return null }
+    return (
+      <View style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          paddingHorizontal: 90,
+          alignItems: "center",
+          // paddingRight: 20,
+          // backgroundColor: "#FAF6ED",
+          // backgroundColor: "white",
+          backgroundColor: '#4AC79F',
+          height: 50,
+        }}
+      >
+        <TouchableOpacity
+          onPress={ () => changeSelectedStatus("discarded")}
+        >
+          <View style={{alignItems: "center"}}>
+            <AntDesign name="delete" size={24} color="black" />
+            <Text style={{fontSize: 13, fontFamily: "SFProDisplay-Semibold"}}> throw out </Text>
+          </View>
+        </TouchableOpacity>        
+
+        <TouchableOpacity
+          onPress={ () => changeSelectedStatus("eaten")}
+        >
+          <View style={{alignItems: "center"}}>
+            <AntDesign name="check" size={24} color="black" />
+            <Text style={{fontSize: 13, fontFamily: "SFProDisplay-Semibold"}}> eat </Text>
+          </View>
+        </TouchableOpacity>
+
+      </View>
+    )
+  }
+
 
   let updated_props = Object.assign({}, props, {
     activeCategory: activeCategory,
@@ -99,6 +152,9 @@ export default function InventoryScreen(props) {
     inventoryList: inventoryList,
     setUpdateInventoryToggle: setUpdateInventoryToggle,
     updateInventoryToggle: updateInventoryToggle,
+    selectMode: selectMode,
+    selected: selected,
+    toggleSelected: toggleSelected,
   });
 
   return (
@@ -143,16 +199,18 @@ export default function InventoryScreen(props) {
               }}
             >
               <View
-                style={{paddingRight: 12}}
+                style={{paddingRight: 20}}
               >
-                <AntDesign name="pluscircleo" size={34} color="black" />
+                <AntDesign name="pluscircleo" size={31.5} color="black" />
               </View>
               
             </TouchableOpacity>
 
-            <TouchableOpacity>
-              <View style={styles.selectButton}>
-                <Text style={{fontSize: 18, fontFamily: "SFProDisplay-Semibold"}} >select</Text>
+            <TouchableOpacity
+              onPress={ toggleSelectMode }
+            >
+              <View style={selectMode ? { ...styles.selectButton, borderColor: '#4AC79F', backgroundColor: "#4AC79F" } : styles.selectButton}>
+                <Text style={{fontSize: 16, fontFamily: "SFProDisplay-Semibold"}} >{selectMode ? "cancel" : "select"}</Text>
               </View>
             </TouchableOpacity>
 
@@ -208,6 +266,8 @@ export default function InventoryScreen(props) {
       </View>
 
       {InventoryList(updated_props)}
+      
+      <SelectActionBar/>
     </View>
   );
 }
@@ -256,5 +316,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAF6ED',
     // justifyContent: 'center',
     marginRight: 30,
+  },
+  selectButtonSelected: {
+    borderRadius: 30,
+    // marginLeft: 10,
+    // marginTop: 7,
+    // marginBottom: 7,
+    borderWidth: 2,
+    borderColor: "#4AC79F",
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    backgroundColor: '#4AC79F',
   },
 });
