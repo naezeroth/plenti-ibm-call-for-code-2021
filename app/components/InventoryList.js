@@ -106,6 +106,11 @@ const InventoryList = (props) => {
           </ListItem.Title>
           {/* <ListItem.Subtitle>{item.subtitle}</ListItem.Subtitle> */}
         </ListItem.Content>
+        {item.frozen && (
+          <View style={{ marginRight: -10 }}>
+            <Text style={{ fontSize: 20 }}>🥶</Text>
+          </View>
+        )}
         <View style={expiryStyle} />
       </ListItem>
     );
@@ -195,20 +200,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "row",
   },
-  list: {
-    // borderRadius: 20,
-    // paddingTop: 50
-  },
   listItem: {
     borderRadius: 10,
     marginRight: 15,
     marginTop: 7,
     marginBottom: 7,
-    // justifyContent: "center",
-    // shadowOffset:{  width: 10,  height: 10,  },
-    // shadowColor: '#FFFFFF',
-    // shadowRadius: 100,
-    // shadowOpacity: 1,
   },
   text: {
     fontFamily: "SFProDisplay-Semibold",
