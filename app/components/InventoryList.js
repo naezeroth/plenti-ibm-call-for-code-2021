@@ -103,7 +103,6 @@ const InventoryList = (props) => {
           <ListItem.Title>
             <Text style={styles.text}>{item.name}</Text>
           </ListItem.Title>
-          {/* <ListItem.Subtitle>TEST</ListItem.Subtitle> */}
           <Subtitle />
         </ListItem.Content>
         {item.frozen && (
