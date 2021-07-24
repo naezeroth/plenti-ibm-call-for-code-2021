@@ -4,7 +4,7 @@ import { ListItem, Button, Image } from "react-native-elements";
 import TouchableScale from "react-native-touchable-scale";
 import { SwipeListView } from "react-native-swipe-list-view";
 import { TouchableOpacity } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, Entypo } from "@expo/vector-icons";
 
 const InventoryList = (props) => {
   const {
@@ -31,7 +31,7 @@ const InventoryList = (props) => {
   const renderItem = ({ item }) => {
     const itemStyle = (() => {
       if (selected.has(item.global_key)) {
-        return { ...styles.listItem, backgroundColor: "black" };
+        return { ...styles.listItem, backgroundColor: "#E5E5E5" };
       } else if (item.frozen) {
         return { ...styles.listItem, backgroundColor: "#CDE7FB" };
       } else {
@@ -68,6 +68,35 @@ const InventoryList = (props) => {
               }
         }
       >
+        {selected.has(item.global_key) && (
+          <View
+            style={{
+              position: "absolute",
+              top: 5,
+              right: 5,
+              height: 24,
+              width: 24,
+              borderRadius: 20,
+              backgroundColor: "white",
+              justifyContent: "center",
+              alignItems: "center",
+              zIndex: 2,
+            }}
+          >
+            <View
+              style={{
+                height: 20,
+                width: 20,
+                borderRadius: 20,
+                backgroundColor: "#4CBAF9",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Entypo name="check" size={16} color="white" />
+            </View>
+          </View>
+        )}
         {item.emoji !== "" && (
           <Text style={{ fontSize: 24 }}> {item.emoji} </Text>
         )}
