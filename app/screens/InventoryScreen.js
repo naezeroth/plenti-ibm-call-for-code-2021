@@ -4,7 +4,7 @@ import InventoryList from "../components/InventoryList";
 import { Header } from "react-native-elements";
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import CategoryList from "../components/CategoryList";
-import { Feather } from "@expo/vector-icons";
+import { Feather, MaterialIcons } from "@expo/vector-icons";
 import { AddModal } from "../components/AddModal";
 
 const categories = [
@@ -104,6 +104,21 @@ export default function InventoryScreen(props) {
     }
   };
 
+  const deleteItems = () => {
+    let newInventoryList = [];
+    if (selectMode) {
+      for (index in inventoryList) {
+        if (!selected.has(Number(index))) {
+          newInventoryList.push(inventoryList[index]);
+        }
+      }
+    }
+    console.log("Deleting!", newInventoryList, selected);
+    setInventoryList(newInventoryList);
+    toggleSelectMode();
+  };
+
+  //TODO fix issue of overlay on top of inventory items
   const SelectActionBar = () => {
     if (!selectMode) {
       return null;
@@ -112,22 +127,26 @@ export default function InventoryScreen(props) {
       <View
         style={{
           flexDirection: "row",
-          justifyContent: "space-between",
-          paddingHorizontal: 90,
+          justifyContent: "space-evenly",
           alignItems: "center",
-          // paddingRight: 20,
-          // backgroundColor: "#FAF6ED",
-          // backgroundColor: "white",
           backgroundColor: "#4AC79F",
-          height: 50,
+          padding: 10,
         }}
       >
-        <TouchableOpacity onPress={() => changeSelectedStatus("discarded")}>
+        <TouchableOpacity onPress={() => deleteItems()}>
           <View style={{ alignItems: "center" }}>
             <AntDesign name="delete" size={24} color="black" />
             <Text style={{ fontSize: 13, fontFamily: "SFProDisplay-Semibold" }}>
-              {" "}
-              throw out{" "}
+              delete
+            </Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => changeSelectedStatus("discarded")}>
+          <View style={{ alignItems: "center" }}>
+            <MaterialIcons name="access-time" size={24} color="black" />
+            <Text style={{ fontSize: 13, fontFamily: "SFProDisplay-Semibold" }}>
+              thrown
             </Text>
           </View>
         </TouchableOpacity>
@@ -136,8 +155,7 @@ export default function InventoryScreen(props) {
           <View style={{ alignItems: "center" }}>
             <AntDesign name="check" size={24} color="black" />
             <Text style={{ fontSize: 13, fontFamily: "SFProDisplay-Semibold" }}>
-              {" "}
-              eat{" "}
+              eaten
             </Text>
           </View>
         </TouchableOpacity>
@@ -165,22 +183,7 @@ export default function InventoryScreen(props) {
 
   return (
     <View style={styles.container}>
-      {/* <View style={styles.header}>
-        <Text style={styles.title}>Your Inventory</Text>
-        <Feather name="search" size={32} color="black" />
-        <TouchableOpacity
-          onPress={() => {
-            console.log("Opening modal");
-            setSelectedItem(-1);
-            setAddModalVisible(!addModalVisible);
-          }}
-        >
-          <AntDesign name="pluscircleo" size={30} color="black" />
-        </TouchableOpacity>
-      </View> */}
-
       <Header
-        // style={styles.header}
         placement="left"
         backgroundColor="#FAF6ED"
         leftComponent={{
@@ -192,11 +195,8 @@ export default function InventoryScreen(props) {
             style={{
               flex: 1,
               flexDirection: "row",
-              justifyContent: "space-between",
-              paddingRight: 20,
             }}
           >
-            {/* <Feather name="search" size={32} color="black" /> */}
             <TouchableOpacity
               onPress={() => {
                 console.log("Opening modal");
@@ -250,21 +250,13 @@ export default function InventoryScreen(props) {
           updateInventoryToggle={updateInventoryToggle}
         />
       </Modal>
+
       {CategoryList(updated_props)}
 
       <View style={styles.sortMethodRow}>
-        {/* <Button
-          style={{backgroundColor: "#FAF6ED"}}
-          color="#FAF6ED"
-          title="Recently added"
-        /> */}
-
-        <FontAwesome name="sort-amount-asc" size={18} color="black" />
-
-        <TouchableOpacity
-          // style={{}}
-          onPress={() => console.log("Pressed")}
-        ></TouchableOpacity>
+        <TouchableOpacity onPress={() => console.log("Pressed")}>
+          <FontAwesome name="sort-amount-asc" size={18} color="black" />
+        </TouchableOpacity>
 
         <Text style={styles.sortMethodHeader}>Recently added</Text>
 
@@ -286,14 +278,6 @@ export default function InventoryScreen(props) {
 }
 
 const styles = StyleSheet.create({
-  header: {
-    // marginVertical: 10,
-    // marginHorizontal: 30,
-    // // flex: 1,
-    // flexDirection: "row",
-    // justifyContent: "space-between",
-    // backgroundColor: "#FAF6ED",
-  },
   container: {
     flex: 1,
     backgroundColor: "#FAF6ED",
@@ -302,8 +286,9 @@ const styles = StyleSheet.create({
     fontFamily: "SFProDisplay-Heavy",
     fontSize: 24,
     color: "#000",
-    paddingBottom: 1,
+    paddingBottom: 3,
     paddingLeft: 20,
+    paddingRight: 30,
   },
   sortMethodRow: {
     marginTop: 5,
@@ -319,22 +304,15 @@ const styles = StyleSheet.create({
   },
   selectButton: {
     borderRadius: 30,
-    // marginLeft: 10,
-    // marginTop: 7,
-    // marginBottom: 7,
     borderWidth: 2,
     borderColor: "black",
     paddingHorizontal: 10,
     paddingVertical: 3,
     backgroundColor: "#FAF6ED",
-    // justifyContent: 'center',
     marginRight: 30,
   },
   selectButtonSelected: {
     borderRadius: 30,
-    // marginLeft: 10,
-    // marginTop: 7,
-    // marginBottom: 7,
     borderWidth: 2,
     borderColor: "#4AC79F",
     paddingHorizontal: 10,
