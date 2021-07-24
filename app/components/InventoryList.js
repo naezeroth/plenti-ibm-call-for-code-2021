@@ -4,7 +4,7 @@ import { ListItem, Button, Image } from "react-native-elements";
 import TouchableScale from "react-native-touchable-scale";
 import { SwipeListView } from "react-native-swipe-list-view";
 import { TouchableOpacity } from "react-native";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 
 const InventoryList = (props) => {
   const {
@@ -29,18 +29,27 @@ const InventoryList = (props) => {
   const keyExtractor = (item, index) => String(item.global_key);
 
   const renderItem = ({ item }) => {
-
     const itemStyle = (() => {
-      if (selected.has(item.global_key)) { return { ...styles.listItem, backgroundColor: "black" } }
-      else if (item.frozen) { return { ...styles.listItem, backgroundColor: "#CDE7FB" } }
-      else { return styles.listItem }
+      if (selected.has(item.global_key)) {
+        return { ...styles.listItem, backgroundColor: "black" };
+      } else if (item.frozen) {
+        return { ...styles.listItem, backgroundColor: "#CDE7FB" };
+      } else {
+        return styles.listItem;
+      }
     })();
 
     const expiryStyle = (() => {
-      let daysLeft = Math.round((new Date(item.expiry_date) - new Date())/(1000*60*60*24))
-      if (daysLeft <= 2) { return { ...styles.expiryCircle, backgroundColor: "#F76D60" } }
-      else if (daysLeft <= 7) { return { ...styles.expiryCircle, backgroundColor: "#FECC66" } }
-      else { return { ...styles.expiryCircle, backgroundColor: "#4AC79F" } }
+      let daysLeft = Math.round(
+        (new Date(item.expiry_date) - new Date()) / (1000 * 60 * 60 * 24)
+      );
+      if (daysLeft <= 2) {
+        return { ...styles.expiryCircle, backgroundColor: "#F76D60" };
+      } else if (daysLeft <= 7) {
+        return { ...styles.expiryCircle, backgroundColor: "#FECC66" };
+      } else {
+        return { ...styles.expiryCircle, backgroundColor: "#4AC79F" };
+      }
     })();
 
     return (
@@ -50,12 +59,18 @@ const InventoryList = (props) => {
         friction={90}
         tension={100}
         activeScale={0.98}
-        onPress={ selectMode ? () => toggleSelected(item.global_key) : () => {
-          setSelectedItem(item.global_key);
-          setAddModalVisible(true);
-         }}
+        onPress={
+          selectMode
+            ? () => toggleSelected(item.global_key)
+            : () => {
+                setSelectedItem(item.global_key);
+                setAddModalVisible(true);
+              }
+        }
       >
-        {item.emoji !== "" && <Text style={{fontSize:24}}> {item.emoji} </Text>}
+        {item.emoji !== "" && (
+          <Text style={{ fontSize: 24 }}> {item.emoji} </Text>
+        )}
         <ListItem.Content>
           <ListItem.Title>
             <Text style={styles.text}>{item.name}</Text>
@@ -85,7 +100,7 @@ const InventoryList = (props) => {
           >
             <TouchableOpacity
               style={{
-                backgroundColor: "#F76D60",
+                backgroundColor: "#4AC79F",
                 alignItems: "center",
                 justifyContent: "center",
                 marginTop: 7,
@@ -96,17 +111,17 @@ const InventoryList = (props) => {
               }}
               onPress={() => {
                 console.log(
-                  "Discarding",
+                  "Eatin",
                   data.item.global_key,
                   setInventoryList,
                   inventoryList
                 );
-                inventoryList[data.item.global_key].status = "discarded";
+                inventoryList[data.item.global_key].status = "eaten";
                 setInventoryList(inventoryList);
-                setUpdateInventoryToggle(!updateInventoryToggle); // NOTE: what is this for?
+                setUpdateInventoryToggle(!updateInventoryToggle);
               }}
             >
-              <FontAwesome5 name="trash" size={24} color="white" />
+              <AntDesign name="check" size={24} color="white" />
             </TouchableOpacity>
             <TouchableOpacity
               style={{
@@ -142,7 +157,6 @@ const InventoryList = (props) => {
   );
 };
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -175,9 +189,9 @@ const styles = StyleSheet.create({
   expiryCircle: {
     width: 20,
     height: 20,
-    borderRadius: 20/2,
+    borderRadius: 20 / 2,
     backgroundColor: "red",
-  }
+  },
 });
 
 export default InventoryList;
