@@ -17,6 +17,7 @@ import {
 import TouchableScale from "react-native-touchable-scale";
 import { ListItem, Avatar } from "react-native-elements";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 import { Camera } from "expo-camera";
 import { Header, Input } from "react-native-elements";
@@ -103,6 +104,7 @@ export default function App(props) {
   const [selectedItem, setSelectedItem] = React.useState(-1);
   const [modalVisible, setModalVisible] = React.useState(false);
   const panelRef = React.useRef(null);
+  const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
 
   //Automatically start camera and disable camera upon using scanner tab
   useFocusEffect(
@@ -341,6 +343,8 @@ export default function App(props) {
               setLocalInventoryList={setLocalInventoryList}
               inventoryList={inventoryList}
               setInventoryList={setInventoryList}
+              setIsDatePickerVisible={setIsDatePickerVisible}
+              isDatePickerVisible={isDatePickerVisible}
             />
           ) : (
             <Camera
@@ -442,15 +446,9 @@ const styles = StyleSheet.create({
   },
   listItem: {
     borderRadius: 10,
-    // marginRight: 30,
     marginHorizontal: 30,
     marginTop: 7,
     marginBottom: 7,
-    // flex: 1,
-    // shadowOffset:{  width: 10,  height: 10,  },
-    // shadowColor: '#FFFFFF',
-    // shadowRadius: 100,
-    // shadowOpacity: 1,
   },
   text: {
     fontFamily: "SFProDisplay-Semibold",
@@ -479,6 +477,8 @@ const CameraPreview = ({
   setLocalInventoryList,
   inventoryList,
   setInventoryList,
+  isDatePickerVisible,
+  setIsDatePickerVisible,
 }) => {
   return (
     <View
@@ -517,6 +517,8 @@ const CameraPreview = ({
               setSelectedItem={setSelectedItem}
               setModalVisible={setModalVisible}
               setLocalInventoryList={setLocalInventoryList}
+              setIsDatePickerVisible={setIsDatePickerVisible}
+              isDatePickerVisible={isDatePickerVisible}
             />
           </Modal>
           <SlidingUpPanel
@@ -797,6 +799,8 @@ const ModalContent = ({
   setSelectedItem,
   setModalVisible,
   setLocalInventoryList,
+  isDatePickerVisible,
+  setIsDatePickerVisible,
 }) => {
   const [item, setItem] = React.useState(
     selectedItem === -1
@@ -830,17 +834,46 @@ const ModalContent = ({
   );
 
   const DatePickerComponent = () => (
-    <DateTimePicker
-      style={{ width: 200 }}
-      value={dateValue}
-      mode="date"
-      is24Hour={true}
-      display="default"
-      onChange={(e, selectedDate) => {
-        setDateValue(selectedDate);
-        setItem({ ...item, expiry_date: selectedDate });
-      }}
-    />
+    <>
+      {Platform.OS === "ios" ? (
+        <DateTimePicker
+          style={{ width: 200 }}
+          value={dateValue}
+          mode="date"
+          is24Hour={true}
+          display="default"
+          onChange={(e, selectedDate) => {
+            setDateValue(selectedDate);
+            setItem({ ...item, expiry_date: selectedDate });
+          }}
+        />
+      ) : (
+        <TouchableOpacity
+          style={{ flex: 1 }}
+          onPress={() => setIsDatePickerVisible(true)}
+        >
+          <DateTimePickerModal
+            isVisible={isDatePickerVisible}
+            style={{ width: 200 }}
+            value={dateValue}
+            mode="time"
+            is24Hour={true}
+            display="default"
+            onConfirm={(selectedDate) => {
+              setDateValue(selectedDate);
+              setItem({ ...item, expiry_date: selectedDate });
+              setIsDatePickerVisible(false);
+            }}
+            onCancel={() => {
+              setIsDatePickerVisible(false);
+            }}
+          />
+          <Text style={{ fontSize: 18, marginVertical: 8 }}>
+            {dateValue.toString().split(" ").slice(1, 4).join(" ")}
+          </Text>
+        </TouchableOpacity>
+      )}
+    </>
   );
 
   return (

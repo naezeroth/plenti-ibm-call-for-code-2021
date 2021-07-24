@@ -11,6 +11,7 @@ import { Image } from "react-native-elements";
 import jwt_decode from "jwt-decode";
 import { AntDesign } from "@expo/vector-icons";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 export default function DashboardScreen(props) {
   const { token, inventoryList, setInventoryList } = props;
@@ -164,26 +165,47 @@ export default function DashboardScreen(props) {
               >
                 Your food waste in
               </Text>
-              <DateTimePickerModal
-                isVisible={isDatePickerVisible}
-                style={{ marginLeft: 10, width: 75 }}
-                value={dateValue}
-                mode="date"
-                is24Hour={true}
-                display="default"
-                // onChange={(e, selectedDate) => {
-                //   console.log("selectedDate", selectedDate);
-                //   setDateValue(selectedDate);
-                // }}
-                onConfirm={(selectedDate) => {
-                  console.log("selectedDate", selectedDate);
-                  setDateValue(selectedDate);
-                  setDatePickerVisibility(false);
-                }}
-                onCancel={() => {
-                  setDatePickerVisibility(false);
-                }}
-              />
+              {Platform.OS === "ios" ? (
+                <DateTimePicker
+                  style={{ marginLeft: 10, width: 75 }}
+                  value={dateValue}
+                  mode="date"
+                  is24Hour={true}
+                  display="default"
+                  onChange={(e, selectedDate) => {
+                    setDateValue(selectedDate);
+                  }}
+                />
+              ) : (
+                <TouchableOpacity
+                  style={{ flex: 1 }}
+                  onPress={() => setDatePickerVisibility(true)}
+                >
+                  <DateTimePickerModal
+                    isVisible={isDatePickerVisible}
+                    style={{ marginLeft: 10, width: 75 }}
+                    value={dateValue}
+                    mode="date"
+                    is24Hour={true}
+                    display="default"
+                    // onChange={(e, selectedDate) => {
+                    //   console.log("selectedDate", selectedDate);
+                    //   setDateValue(selectedDate);
+                    // }}
+                    onConfirm={(selectedDate) => {
+                      console.log("selectedDate", selectedDate);
+                      setDateValue(selectedDate);
+                      setDatePickerVisibility(false);
+                    }}
+                    onCancel={() => {
+                      setDatePickerVisibility(false);
+                    }}
+                  />
+                  <Text style={{ fontSize: 18, marginVertical: 8 }}>
+                    {dateValue.toString().split(" ").slice(1, 4).join(" ")}
+                  </Text>
+                </TouchableOpacity>
+              )}
             </View>
             <OverviewContent date={dateValue} inventoryList={inventoryList} />
           </View>
