@@ -29,6 +29,10 @@ const InventoryList = (props) => {
   const keyExtractor = (item, index) => String(item.global_key);
 
   const renderItem = ({ item }) => {
+    let daysLeft = Math.round(
+      (new Date(item.expiry_date) - new Date()) / (1000 * 60 * 60 * 24)
+    );
+
     const itemStyle = (() => {
       if (selected.has(item.global_key)) {
         return { ...styles.listItem, backgroundColor: "#E5E5E5" };
@@ -40,9 +44,6 @@ const InventoryList = (props) => {
     })();
 
     const expiryStyle = (() => {
-      let daysLeft = Math.round(
-        (new Date(item.expiry_date) - new Date()) / (1000 * 60 * 60 * 24)
-      );
       if (daysLeft <= 2) {
         return { ...styles.expiryCircle, backgroundColor: "#F76D60" };
       } else if (daysLeft <= 7) {
@@ -51,6 +52,31 @@ const InventoryList = (props) => {
         return { ...styles.expiryCircle, backgroundColor: "#4AC79F" };
       }
     })();
+
+    const Subtitle = () => {
+      if (item.frozen) {
+        return (
+          <ListItem.Subtitle
+            style={{
+              color: "rgba(0, 0, 0, 0.49)",
+              fontSize: 12,
+              fontWeight: "600",
+            }}
+          >
+            may expire soon
+          </ListItem.Subtitle>
+        );
+      } else if (daysLeft <= 2) {
+        return (
+          <ListItem.Subtitle
+            style={{ color: "#F76D60", fontSize: 12, fontWeight: "600" }}
+          >
+            check on it now!
+          </ListItem.Subtitle>
+        );
+      }
+      return null;
+    };
 
     return (
       <ListItem
@@ -69,13 +95,16 @@ const InventoryList = (props) => {
         }
       >
         {item.emoji !== "" && (
-          <Text style={{ fontSize: 24 }}> {item.emoji} </Text>
+          <Text style={{ fontSize: 30, marginRight: -10, marginLeft: -5 }}>
+            {item.emoji}
+          </Text>
         )}
         <ListItem.Content>
           <ListItem.Title>
             <Text style={styles.text}>{item.name}</Text>
           </ListItem.Title>
-          {/* <ListItem.Subtitle>{item.subtitle}</ListItem.Subtitle> */}
+          {/* <ListItem.Subtitle>TEST</ListItem.Subtitle> */}
+          <Subtitle />
         </ListItem.Content>
         {item.frozen && (
           <View style={{ marginRight: -10 }}>
