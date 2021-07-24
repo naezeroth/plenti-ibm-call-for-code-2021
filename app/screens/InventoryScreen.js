@@ -99,6 +99,7 @@ export default function InventoryScreen(props) {
       for (let global_key of selected) {
         inventoryList[global_key].status = status;
       }
+      setUpdateInventoryToggle(!updateInventoryToggle);
       toggleSelectMode();
     }
   };
