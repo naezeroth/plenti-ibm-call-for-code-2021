@@ -68,6 +68,20 @@ const InventoryList = (props) => {
               }
         }
       >
+        {item.emoji !== "" && (
+          <Text style={{ fontSize: 24 }}> {item.emoji} </Text>
+        )}
+        <ListItem.Content>
+          <ListItem.Title>
+            <Text style={styles.text}>{item.name}</Text>
+          </ListItem.Title>
+          {/* <ListItem.Subtitle>{item.subtitle}</ListItem.Subtitle> */}
+        </ListItem.Content>
+        {item.frozen && (
+          <View style={{ marginRight: -10 }}>
+            <Text style={{ fontSize: 20 }}>🥶</Text>
+          </View>
+        )}
         {selected.has(item.global_key) && (
           <View
             style={{
@@ -95,20 +109,6 @@ const InventoryList = (props) => {
             >
               <Entypo name="check" size={16} color="white" />
             </View>
-          </View>
-        )}
-        {item.emoji !== "" && (
-          <Text style={{ fontSize: 24 }}> {item.emoji} </Text>
-        )}
-        <ListItem.Content>
-          <ListItem.Title>
-            <Text style={styles.text}>{item.name}</Text>
-          </ListItem.Title>
-          {/* <ListItem.Subtitle>{item.subtitle}</ListItem.Subtitle> */}
-        </ListItem.Content>
-        {item.frozen && (
-          <View style={{ marginRight: -10 }}>
-            <Text style={{ fontSize: 20 }}>🥶</Text>
           </View>
         )}
         <View style={expiryStyle} />
