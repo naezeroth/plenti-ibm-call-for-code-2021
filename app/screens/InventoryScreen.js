@@ -37,7 +37,7 @@ export default function InventoryScreen(props) {
 
   const [addModalVisible, setAddModalVisible] = useState(false);
 
-  //selectedItem of -1 means new item being added, otherwise editing exisiting item
+  //selectedItem of -1 means new item being added, otherwise editing existing item
   const [selectedItem, setSelectedItem] = React.useState(-1);
 
   const [visibleInventory, setVisibleInventory] = React.useState([]);
@@ -54,15 +54,20 @@ export default function InventoryScreen(props) {
 
   const toggleSelected = (globalKey) => {
     let newSet = new Set(selected);
-    if (selected.has(globalKey)) { newSet.delete(globalKey); }
-    else { newSet.add(globalKey); }
+    if (selected.has(globalKey)) {
+      newSet.delete(globalKey);
+    } else {
+      newSet.add(globalKey);
+    }
     setSelected(newSet);
-  }
+  };
 
   const toggleSelectMode = () => {
-    if (selectMode) { setSelected(new Set()) }
+    if (selectMode) {
+      setSelected(new Set());
+    }
     setSelectMode(!selectMode);
-  }
+  };
 
   React.useEffect(() => {
     if (inventoryList !== undefined) {
@@ -88,23 +93,23 @@ export default function InventoryScreen(props) {
     updateInventoryToggle,
     selected,
   ]);
- 
 
   const changeSelectedStatus = (status) => {
-    if (selectMode)
-    {
-      for (let global_key of selected)
-      {
+    if (selectMode) {
+      for (let global_key of selected) {
         inventoryList[global_key].status = status;
       }
       toggleSelectMode();
     }
-  }
+  };
 
   const SelectActionBar = () => {
-    if (!selectMode) { return null }
+    if (!selectMode) {
+      return null;
+    }
     return (
-      <View style={{
+      <View
+        style={{
           flexDirection: "row",
           justifyContent: "space-between",
           paddingHorizontal: 90,
@@ -112,32 +117,32 @@ export default function InventoryScreen(props) {
           // paddingRight: 20,
           // backgroundColor: "#FAF6ED",
           // backgroundColor: "white",
-          backgroundColor: '#4AC79F',
+          backgroundColor: "#4AC79F",
           height: 50,
         }}
       >
-        <TouchableOpacity
-          onPress={ () => changeSelectedStatus("discarded")}
-        >
-          <View style={{alignItems: "center"}}>
+        <TouchableOpacity onPress={() => changeSelectedStatus("discarded")}>
+          <View style={{ alignItems: "center" }}>
             <AntDesign name="delete" size={24} color="black" />
-            <Text style={{fontSize: 13, fontFamily: "SFProDisplay-Semibold"}}> throw out </Text>
-          </View>
-        </TouchableOpacity>        
-
-        <TouchableOpacity
-          onPress={ () => changeSelectedStatus("eaten")}
-        >
-          <View style={{alignItems: "center"}}>
-            <AntDesign name="check" size={24} color="black" />
-            <Text style={{fontSize: 13, fontFamily: "SFProDisplay-Semibold"}}> eat </Text>
+            <Text style={{ fontSize: 13, fontFamily: "SFProDisplay-Semibold" }}>
+              {" "}
+              throw out{" "}
+            </Text>
           </View>
         </TouchableOpacity>
 
+        <TouchableOpacity onPress={() => changeSelectedStatus("eaten")}>
+          <View style={{ alignItems: "center" }}>
+            <AntDesign name="check" size={24} color="black" />
+            <Text style={{ fontSize: 13, fontFamily: "SFProDisplay-Semibold" }}>
+              {" "}
+              eat{" "}
+            </Text>
+          </View>
+        </TouchableOpacity>
       </View>
-    )
-  }
-
+    );
+  };
 
   let updated_props = Object.assign({}, props, {
     activeCategory: activeCategory,
@@ -198,23 +203,30 @@ export default function InventoryScreen(props) {
                 setAddModalVisible(!addModalVisible);
               }}
             >
-              <View
-                style={{paddingRight: 20}}
-              >
+              <View style={{ paddingRight: 20 }}>
                 <AntDesign name="pluscircleo" size={31.5} color="black" />
               </View>
-              
             </TouchableOpacity>
 
-            <TouchableOpacity
-              onPress={ toggleSelectMode }
-            >
-              <View style={selectMode ? { ...styles.selectButton, borderColor: '#4AC79F', backgroundColor: "#4AC79F" } : styles.selectButton}>
-                <Text style={{fontSize: 16, fontFamily: "SFProDisplay-Semibold"}} >{selectMode ? "cancel" : "select"}</Text>
+            <TouchableOpacity onPress={toggleSelectMode}>
+              <View
+                style={
+                  selectMode
+                    ? {
+                        ...styles.selectButton,
+                        borderColor: "#4AC79F",
+                        backgroundColor: "#4AC79F",
+                      }
+                    : styles.selectButton
+                }
+              >
+                <Text
+                  style={{ fontSize: 16, fontFamily: "SFProDisplay-Semibold" }}
+                >
+                  {selectMode ? "cancel" : "select"}
+                </Text>
               </View>
             </TouchableOpacity>
-
-
           </View>
         }
       />
@@ -266,8 +278,8 @@ export default function InventoryScreen(props) {
       </View>
 
       {InventoryList(updated_props)}
-      
-      <SelectActionBar/>
+
+      <SelectActionBar />
     </View>
   );
 }
@@ -313,7 +325,7 @@ const styles = StyleSheet.create({
     borderColor: "black",
     paddingHorizontal: 10,
     paddingVertical: 3,
-    backgroundColor: '#FAF6ED',
+    backgroundColor: "#FAF6ED",
     // justifyContent: 'center',
     marginRight: 30,
   },
@@ -326,6 +338,6 @@ const styles = StyleSheet.create({
     borderColor: "#4AC79F",
     paddingHorizontal: 10,
     paddingVertical: 3,
-    backgroundColor: '#4AC79F',
+    backgroundColor: "#4AC79F",
   },
 });

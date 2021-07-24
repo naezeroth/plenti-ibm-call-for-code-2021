@@ -86,7 +86,7 @@ export const AddModal = ({
             isVisible={isDatePickerVisible}
             style={{ width: 200 }}
             value={dateValue}
-            mode="time"
+            mode="date"
             is24Hour={true}
             display="default"
             onConfirm={(selectedDate) => {
