@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "app",
+    "name": "plenti",
     "owner": "aywjuowa",
     "slug": "ibm-call-for-code-2021",
     "version": "1.0.0",
@@ -31,6 +31,7 @@
     },
     "plugins": [
       "expo-camera"
-    ]
+    ],
+    "description": ""
   }
 }

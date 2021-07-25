@@ -183,6 +183,9 @@ export default function App() {
                   token={token}
                   inventoryList={inventoryList}
                   setInventoryList={setInventoryList}
+                  refreshInventory={refreshInventory}
+                  updateInventoryToggle={updateInventoryToggle}
+                  setUpdateInventoryToggle={setUpdateInventoryToggle}
                 />
               )}
             />

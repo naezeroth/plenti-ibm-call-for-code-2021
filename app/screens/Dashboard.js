@@ -12,9 +12,17 @@ import jwt_decode from "jwt-decode";
 import { AntDesign } from "@expo/vector-icons";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import BinModal from "../components/BinModal";
 
 export default function DashboardScreen(props) {
-  const { token, inventoryList, setInventoryList } = props;
+  const {
+    token,
+    inventoryList,
+    setInventoryList,
+    updateInventoryToggle,
+    setUpdateInventoryToggle,
+  } = props;
+
   const { name } = jwt_decode(token);
   const [dateValue, setDateValue] = useState(new Date());
   const [binModalVisible, setBinModalVisible] = React.useState(false);
@@ -31,7 +39,14 @@ export default function DashboardScreen(props) {
           setBinModalVisible(!binModalVisible);
         }}
       >
-        <BinModalContent setBinModalVisible={setBinModalVisible} />
+        <BinModal
+          setBinModalVisible={setBinModalVisible}
+          setInventoryList={setInventoryList}
+          updateInventoryToggle={updateInventoryToggle}
+          setUpdateInventoryToggle={setUpdateInventoryToggle}
+          inventoryList={inventoryList}
+        />
+        {/* <BinModalContent setBinModalVisible={setBinModalVisible} /> */}
       </Modal>
       <Modal
         animationType="slide"
