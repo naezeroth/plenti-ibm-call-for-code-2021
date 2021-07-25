@@ -229,9 +229,12 @@ export default function App(props) {
       {
         item.category = foodClasses[item.item_class]["category"];
         item.emoji = foodClasses[item.item_class]["emoji"];
-        let expiry_date = new Date();
-        expiry_date.addDays(foodClasses[item.item_class]["expiry"]);
-        item.expiry_date = expiry_date;
+        Date.prototype.addDays = function (days) {
+          const date = new Date(this.valueOf());
+          date.setDate(date.getDate() + days);
+          return date;
+        };
+        item.expiry_date = new Date().addDays(foodClasses[item.item_class]["expiry"]);
       }
     }
     setLocalInventoryList(items);
