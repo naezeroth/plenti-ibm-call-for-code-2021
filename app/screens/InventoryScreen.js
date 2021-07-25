@@ -195,6 +195,7 @@ export default function InventoryScreen(props) {
             style={{
               flex: 1,
               flexDirection: "row",
+              marginLeft: -15,
             }}
           >
             <TouchableOpacity
