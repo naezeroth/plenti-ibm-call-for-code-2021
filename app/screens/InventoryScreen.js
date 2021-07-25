@@ -7,6 +7,8 @@ import CategoryList from "../components/CategoryList";
 import { Feather, MaterialIcons } from "@expo/vector-icons";
 import { AddModal } from "../components/AddModal";
 
+
+
 const categories = [
   "meats",
   "dairy",

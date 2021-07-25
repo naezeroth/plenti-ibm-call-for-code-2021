@@ -12,7 +12,9 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "watson-developer-cloud": "^4.0.1"
+  },
   "devDependencies": {
     "webpack": "^5.43.0",
     "webpack-cli": "^4.7.2"
