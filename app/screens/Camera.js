@@ -28,6 +28,8 @@ import SlidingUpPanel from "rn-sliding-up-panel";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useFocusEffect } from "@react-navigation/native";
 
+import { foodClasses } from "../components/foodClasses";
+
 const { height } = Dimensions.get("window");
 
 let camera;
@@ -220,7 +222,19 @@ export default function App(props) {
       return;
     }
     console.log(parseResultObject);
-    setLocalInventoryList(parseResultObject.inventory_list);
+    let items = parseResultObject.inventory_list;
+    for (item of items)
+    {
+      if (item.item_class in foodClasses)
+      {
+        item.category = foodClasses[item.item_class]["category"];
+        item.emoji = foodClasses[item.item_class]["emoji"];
+        let expiry_date = new Date();
+        expiry_date.addDays(foodClasses[item.item_class]["expiry"]);
+        item.expiry_date = expiry_date;
+      }
+    }
+    setLocalInventoryList(items);
     setLoading(false);
   };
   const __retakePicture = () => {
