@@ -119,7 +119,7 @@ export const AddModal = ({
         style={{
           flex: 1,
           width: "100%",
-          paddingTop: 30,
+          paddingVertical: "25%",
         }}
       >
         <View
@@ -165,6 +165,7 @@ export const AddModal = ({
             keyboardType="numeric"
             onChangeText={(text) => setItem({ ...item, price: Number(text) })}
             value={String(item.price)}
+            returnKeyType="done"
           />
           <Input
             placeholder="quantity"
@@ -174,6 +175,7 @@ export const AddModal = ({
               setItem({ ...item, quantity: Number(text) })
             }
             value={String(item.quantity)}
+            returnKeyType="done"
           />
           <Input
             label="purchase date"

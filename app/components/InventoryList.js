@@ -9,13 +9,7 @@ import { AntDesign, Entypo } from "@expo/vector-icons";
 const InventoryList = (props) => {
   const {
     inventoryList,
-    refreshInventory,
     visibleInventory,
-    setVisibleInventory,
-    inventoryOrder,
-    setInventoryOrder,
-    activeCategory,
-    setActiveCategory,
     setSelectedItem,
     setAddModalVisible,
     setInventoryList,

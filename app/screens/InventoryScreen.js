@@ -109,7 +109,7 @@ export default function InventoryScreen(props) {
   const deleteItems = () => {
     let newInventoryList = [];
     if (selectMode) {
-      for (index in inventoryList) {
+      for (let index in inventoryList) {
         if (!selected.has(Number(index))) {
           newInventoryList.push(inventoryList[index]);
         }
