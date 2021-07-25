@@ -935,6 +935,7 @@ const ModalContent = ({
             keyboardType="numeric"
             onChangeText={(text) => setItem({ ...item, price: Number(text) })}
             value={String(item.price)}
+            returnKeyType="done"
           />
           <Input
             placeholder="quantity"
@@ -944,6 +945,7 @@ const ModalContent = ({
               setItem({ ...item, quantity: Number(text) })
             }
             value={String(item.quantity)}
+            returnKeyType="done"
           />
           <Input label="expiry date" InputComponent={DatePickerComponent} />
           <View style={{ flexDirection: "row" }}>
