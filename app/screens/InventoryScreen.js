@@ -12,6 +12,7 @@ const categories = [
   "dairy",
   "fruits",
   "vegetables",
+  "snacks",
   "grains",
   "beverages",
 ];

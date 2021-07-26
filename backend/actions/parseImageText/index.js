@@ -1,5 +1,6 @@
-// const { IamAuthenticator } = require('ibm-watson/auth');
-const NaturalLanguageClassifierV1 = require('watson-developer-cloud/natural-language-classifier/v1');
+require("dotenv").config({ path: "../.env" });
+
+const NaturalLanguageClassifierV1 = require("watson-developer-cloud/natural-language-classifier/v1");
 
 async function main(params) {
   //get text from params.__body and check that it exists.
@@ -10,13 +11,13 @@ async function main(params) {
       message: "Must supply text as body",
       failed: true,
     };
-  }  
+  }
 
   const text = JSON.parse(params.__ow_body).text;
 
   var naturalLanguageClassifier = new NaturalLanguageClassifierV1({
-    url: 'https://api.us-south.natural-language-classifier.watson.cloud.ibm.com/instances/badedd77-8003-48e6-943b-861ea34e66af',
-    iam_apikey: 'n2Se7LEGkNIQsVt3AGiS6mhvP7A_heT_PbAcU_PYJJW3'
+    url: process.env.WATSON_NLP_URL,
+    iam_apikey: process.env.WATSON_IAM_API_KEY,
   });
 
   const default_item = {
@@ -43,8 +44,7 @@ async function main(params) {
     for (const line of arr) {
       const split_line = line.split(" ");
 
-      if (line.toLowerCase().includes("subtotal"))
-      {
+      if (line.toLowerCase().includes("subtotal")) {
         break_flag = true;
         break;
       }
@@ -54,33 +54,34 @@ async function main(params) {
       if (regex.test(split_line[split_line.length - 1])) {
         let new_item = JSON.parse(JSON.stringify(default_item));
 
-        if (last_line == null || /^\d+$/.test(last_line[0]) == true || last_line.split(" ")[0] == 'Qty')
-        {
+        if (
+          last_line == null ||
+          /^\d+$/.test(last_line[0]) == true ||
+          last_line.split(" ")[0] == "Qty"
+        ) {
           new_item["name"] = split_line.slice(0, -1).join(" ");
-        }
-        else
-        {
+        } else {
           new_item["name"] = last_line;
           last_line = null;
         }
 
-        new_item["name"] = new_item["name"].replace(/[^\w ]/g, '');
-        new_item["price"] = parseFloat(split_line[split_line.length - 1].replace(/[, ]/, "."));
+        new_item["name"] = new_item["name"].replace(/[^\w ]/g, "");
+        new_item["price"] = parseFloat(
+          split_line[split_line.length - 1].replace(/[, ]/, ".")
+        );
         inventory_list.push(new_item);
         classify_list.push({ text: new_item["name"] });
-
       } else {
-        if (line.length > 8)
-        {
+        if (line.length > 8) {
           last_line = line;
-        } 
-        else
-        {
+        } else {
           last_line = null;
         }
       }
     }
-    if (break_flag) { break; }
+    if (break_flag) {
+      break;
+    }
   }
 
   // for (const arr of text) {
@@ -118,35 +119,34 @@ async function main(params) {
 
   const classifyParams = {
     collection: classify_list,
-    classifier_id: 'b9a0dbx961-nlc-19',
+    classifier_id: process.env.WATSON_CLASSIFIER_ID,
   };
 
-
-  const response = await naturalLanguageClassifier.classifyCollection(classifyParams)
-    .then(response => {
-      console.log("RESPONSE:")
-      console.log(response)
+  const response = await naturalLanguageClassifier
+    .classifyCollection(classifyParams)
+    .then((response) => {
+      console.log("RESPONSE:");
+      console.log(response);
       const classification = response.result;
-      
-      console.log(classification)
-      console.log(JSON.stringify(classification, null, 2)); 
+
+      console.log(classification);
+      console.log(JSON.stringify(classification, null, 2));
       return response;
     })
-    .catch(err => {
-      console.log('error:', err);
+    .catch((err) => {
+      console.log("error:", err);
     });
 
-  if (response != undefined)
-  {
+  if (response != undefined) {
     const collection = response.collection;
-  
-    if (collection.length != inventory_list.length)
-    {
-      console.log('error: classification results length does not match item list length')
+
+    if (collection.length != inventory_list.length) {
+      console.log(
+        "error: classification results length does not match item list length"
+      );
     }
 
-    for (let i=0; i<inventory_list.length; i++)
-    {
+    for (let i = 0; i < inventory_list.length; i++) {
       inventory_list[i].item_class = collection[i].top_class;
     }
   }
@@ -155,4 +155,3 @@ async function main(params) {
 }
 
 global.main = main;
-
