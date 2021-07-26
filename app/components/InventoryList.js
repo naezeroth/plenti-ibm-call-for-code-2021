@@ -88,11 +88,9 @@ const InventoryList = (props) => {
               }
         }
       >
-        {/* {item.emoji !== "" && ( */}
         <Text style={{ fontSize: 30, marginRight: -10, marginLeft: -5 }}>
           {item.emoji ? item.emoji : " "}
         </Text>
-        {/* )} */}
         <ListItem.Content>
           <ListItem.Title>
             <Text style={styles.text}>{item.name}</Text>

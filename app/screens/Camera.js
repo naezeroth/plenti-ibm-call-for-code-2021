@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useEffect, useState } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import {
   StyleSheet,
   Text,
@@ -95,22 +95,22 @@ const testInventory = [
 
 export default function App(props) {
   const { inventoryList, setInventoryList } = props;
-  const [startCamera, setStartCamera] = React.useState(false);
-  const [previewVisible, setPreviewVisible] = React.useState(false);
-  const [capturedImage, setCapturedImage] = React.useState(null);
-  const [loading, setLoading] = React.useState(false);
-  const [ocrsend, setOcrsend] = React.useState(false);
-  const [arrow, setArrow] = React.useState("arrowup");
-  const [localInventoryList, setLocalInventoryList] = React.useState([]);
-  const [allowDragging, setAllowDragging] = React.useState(true);
-  const [selectedItem, setSelectedItem] = React.useState(-1);
-  const [modalVisible, setModalVisible] = React.useState(false);
-  const panelRef = React.useRef(null);
+  const [startCamera, setStartCamera] = useState(false);
+  const [previewVisible, setPreviewVisible] = useState(false);
+  const [capturedImage, setCapturedImage] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [ocrsend, setOcrsend] = useState(false);
+  const [arrow, setArrow] = useState("arrowup");
+  const [localInventoryList, setLocalInventoryList] = useState([]);
+  const [allowDragging, setAllowDragging] = useState(true);
+  const [selectedItem, setSelectedItem] = useState(-1);
+  const [modalVisible, setModalVisible] = useState(false);
+  const panelRef = useRef(null);
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
 
   //Automatically start camera and disable camera upon using scanner tab
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       async function start() {
         await __startCamera();
       }
@@ -223,10 +223,8 @@ export default function App(props) {
     }
     console.log(parseResultObject);
     let items = parseResultObject.inventory_list;
-    for (item of items)
-    {
-      if (item.item_class in foodClasses)
-      {
+    for (item of items) {
+      if (item.item_class in foodClasses) {
         item.category = foodClasses[item.item_class]["category"];
         item.emoji = foodClasses[item.item_class]["emoji"];
         Date.prototype.addDays = function (days) {
@@ -234,7 +232,9 @@ export default function App(props) {
           date.setDate(date.getDate() + days);
           return date;
         };
-        item.expiry_date = new Date().addDays(foodClasses[item.item_class]["expiry"]);
+        item.expiry_date = new Date().addDays(
+          foodClasses[item.item_class]["expiry"]
+        );
       }
     }
     setLocalInventoryList(items);
@@ -819,7 +819,7 @@ const ModalContent = ({
   isDatePickerVisible,
   setIsDatePickerVisible,
 }) => {
-  const [item, setItem] = React.useState(
+  const [item, setItem] = useState(
     selectedItem === -1
       ? {
           category: "",
