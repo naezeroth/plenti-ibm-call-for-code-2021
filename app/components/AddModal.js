@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { Text, View, TouchableOpacity, Platform } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Platform } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 import { Input } from "react-native-elements";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
+import { foodClasses } from "./foodClasses";
 
 //For reusability implement onSave fn as a prop
 
@@ -17,6 +19,7 @@ export const AddModal = ({
   updateInventoryToggle,
   setUpdateInventoryToggle,
 }) => {
+
   const [item, setItem] = useState(
     selectedItem === -1
       ? {
@@ -35,6 +38,8 @@ export const AddModal = ({
         }
       : localInventoryList[selectedItem]
   );
+
+  const [expanded, setExpanded] = useState(false);
 
   Date.prototype.addDays = function (days) {
     const date = new Date(this.valueOf());
@@ -55,6 +60,36 @@ export const AddModal = ({
     useState(false);
   const [isExpiryDatePickerVisible, setExpiryDatePickerVisibility] =
     useState(false);
+
+  const classifyItem = async (inputItem) => {
+    const result = await fetch(
+      "https://api.us-south.natural-language-classifier.watson.cloud.ibm.com/instances/badedd77-8003-48e6-943b-861ea34e66af/v1/classifiers/b9a0dbx961-nlc-19/classify?" +
+        new URLSearchParams({
+          text: inputItem.name
+        }),
+      {
+        method: "GET",
+        headers: new Headers({
+          'Authorization': 'Basic '+btoa('apikey:n2Se7LEGkNIQsVt3AGiS6mhvP7A_heT_PbAcU_PYJJW3'),
+        })
+      }
+    );
+    if (!result.ok) {
+      const message = `An error has occured: ${result.status}`;
+      console.log(message);
+      return;
+    }
+    const classResult = await result.json();
+    console.log("CLASSIFICATION RESULT: ", classResult)
+    inputItem.item_class = classResult.top_class;
+    inputItem.category = foodClasses[inputItem.item_class]["category"];
+    inputItem.emoji = foodClasses[inputItem.item_class]["emoji"];
+    inputItem.category = foodClasses[inputItem.item_class]["category"];
+    inputItem.purchase_date = new Date();
+    inputItem.expiry_date = inputItem.purchase_date.addDays(foodClasses[inputItem.item_class]["expiry"]);
+    setUpdateInventoryToggle(!updateInventoryToggle);
+    return inputItem;
+  }
 
   const DatePickerComponent = ({
     dateValue,
@@ -141,23 +176,26 @@ export const AddModal = ({
             backgroundColor: "#FAF6ED",
           }}
         >
+          <TouchableOpacity onPress={ () => {setExpanded(!expanded)} }>
+            <View
+              style={
+                expanded
+                  ? styles.autoClassifyButton
+                  : styles.autoClassifyButtonSelected
+              }
+            >
+              <Text
+                style={{ fontFamily: "SFProDisplay-Semibold" }}
+              >
+                {expanded ? "auto-classify: off" : "auto-classify: on"}
+              </Text>
+            </View>
+          </TouchableOpacity>
           <Input
             placeholder="name"
             label="name"
             onChangeText={(text) => setItem({ ...item, name: text })}
             value={item.name}
-          />
-          <Input
-            placeholder="😎"
-            label="emoji"
-            onChangeText={(text) => setItem({ ...item, emoji: text })}
-            value={item.emoji}
-          />
-          <Input
-            placeholder="category"
-            label="category"
-            onChangeText={(text) => setItem({ ...item, category: text })}
-            value={item.category}
           />
           <Input
             placeholder="price"
@@ -177,33 +215,49 @@ export const AddModal = ({
             value={String(item.quantity)}
             returnKeyType="done"
           />
-          <Input
-            label="purchase date"
-            value="hello"
-            InputComponent={() => (
-              <DatePickerComponent
-                dateValue={purchaseDateValue}
-                setDateValue={setPurchaseDateValue}
-                setItem={setItem}
-                itemParameter="purchase_date"
-                isDatePickerVisible={isPurchaseDatePickerVisible}
-                setDatePickerVisibility={setPurchaseDatePickerVisibility}
+          {expanded ? (
+            <>
+              <Input
+                placeholder="😎"
+                label="emoji"
+                onChangeText={(text) => setItem({ ...item, emoji: text })}
+                value={item.emoji}
               />
-            )}
-          />
-          <Input
-            label="expiry date"
-            InputComponent={() => (
-              <DatePickerComponent
-                dateValue={expiryDateValue}
-                setDateValue={setExpiryDateValue}
-                setItem={setItem}
-                itemParameter="expiry_date"
-                isDatePickerVisible={isExpiryDatePickerVisible}
-                setDatePickerVisibility={setExpiryDatePickerVisibility}
+              <Input
+                placeholder="category"
+                label="category"
+                onChangeText={(text) => setItem({ ...item, category: text })}
+                value={item.category}
               />
-            )}
-          />
+              <Input
+                label="purchase date"
+                value="hello"
+                InputComponent={() => (
+                  <DatePickerComponent
+                    dateValue={purchaseDateValue}
+                    setDateValue={setPurchaseDateValue}
+                    setItem={setItem}
+                    itemParameter="purchase_date"
+                    isDatePickerVisible={isPurchaseDatePickerVisible}
+                    setDatePickerVisibility={setPurchaseDatePickerVisibility}
+                  />
+                )}
+              />
+              <Input
+                label="expiry date"
+                InputComponent={() => (
+                  <DatePickerComponent
+                    dateValue={expiryDateValue}
+                    setDateValue={setExpiryDateValue}
+                    setItem={setItem}
+                    itemParameter="expiry_date"
+                    isDatePickerVisible={isExpiryDatePickerVisible}
+                    setDatePickerVisibility={setExpiryDatePickerVisibility}
+                  />
+                )}
+              />
+            </>
+          ) : null }
           <View style={{ flexDirection: "row" }}>
             <TouchableOpacity
               onPress={() => {
@@ -211,7 +265,7 @@ export const AddModal = ({
                 setModalVisible(false);
               }}
               style={{
-                width: 130,
+                width: 100,
                 borderRadius: 4,
                 flexDirection: "row",
                 justifyContent: "center",
@@ -231,6 +285,9 @@ export const AddModal = ({
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
+                if (!expanded) {
+                  setItem(classifyItem(item));
+                }
                 if (selectedItem === -1) {
                   //new item - concat to array
                   setLocalInventoryList(localInventoryList.concat(item));
@@ -243,9 +300,11 @@ export const AddModal = ({
                 setModalVisible(false);
               }}
               style={{
+                width: 100,
                 borderRadius: 20,
                 borderWidth: 2,
-                paddingHorizontal: 30,
+                paddingHorizontal: 20,
+                // paddingVertical: 1,
                 borderColor: "black",
                 flexDirection: "row",
                 justifyContent: "center",
@@ -267,3 +326,22 @@ export const AddModal = ({
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  autoClassifyButton: {
+    borderRadius: 30,
+    borderWidth: 2,
+    borderColor: "black",
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    backgroundColor: "#FAF6ED", 
+  },
+  autoClassifyButtonSelected: {
+    borderRadius: 30,
+    borderWidth: 2,
+    borderColor: "#4AC79F",
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    backgroundColor: "#4AC79F",
+  },
+});
