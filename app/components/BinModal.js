@@ -15,13 +15,13 @@ export default BinModal = (props) => {
     setBinModalVisible,
   } = props;
 
-  const [visibleInventory, setVisibleInventory] = React.useState([]);
+  const [visibleInventory, setVisibleInventory] = useState([]);
 
   // If selection mode is true, items can be selected
-  const [selectMode, setSelectMode] = React.useState(true);
+  const [selectMode, setSelectMode] = useState(true);
 
   // Set of items which have been selected
-  const [selected, setSelected] = React.useState(new Set());
+  const [selected, setSelected] = useState(new Set());
 
   const toggleSelected = (globalKey) => {
     let newSet = new Set(selected);
@@ -46,7 +46,6 @@ export default BinModal = (props) => {
         element.global_key = index;
       });
       visibleList = visibleList.filter((item) => discardedFilter(item));
-      // visibleList.sort(sortComparator);
       setVisibleInventory(visibleList);
     }
   }, [inventoryList, updateInventoryToggle, selected]);

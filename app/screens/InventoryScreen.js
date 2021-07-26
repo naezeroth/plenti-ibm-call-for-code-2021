@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Modal, TouchableOpacity } from "react-native";
 import InventoryList from "../components/InventoryList";
 import { Header } from "react-native-elements";
@@ -6,7 +6,6 @@ import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import CategoryList from "../components/CategoryList";
 import { Feather, MaterialIcons } from "@expo/vector-icons";
 import { AddModal } from "../components/AddModal";
-
 
 const categories = [
   "meats",
@@ -26,32 +25,29 @@ const uneatenFilter = (item) => item.status == "uneaten";
 export default function InventoryScreen(props) {
   const {
     inventoryList,
-    refreshInventory,
     setInventoryList,
     updateInventoryToggle,
     setUpdateInventoryToggle,
   } = props;
 
-  const [activeCategory, setActiveCategory] = React.useState(null);
+  const [activeCategory, setActiveCategory] = useState(null);
 
-  const [inventoryOrder, setInventoryOrder] = React.useState(null);
+  const [inventoryOrder, setInventoryOrder] = useState(null);
 
   const [addModalVisible, setAddModalVisible] = useState(false);
 
   //selectedItem of -1 means new item being added, otherwise editing existing item
-  const [selectedItem, setSelectedItem] = React.useState(-1);
+  const [selectedItem, setSelectedItem] = useState(-1);
 
-  const [visibleInventory, setVisibleInventory] = React.useState([]);
+  const [visibleInventory, setVisibleInventory] = useState([]);
 
   // If selection mode is true, items can be selected
-  const [selectMode, setSelectMode] = React.useState(false);
+  const [selectMode, setSelectMode] = useState(false);
 
   // Set of items which have been selected
-  const [selected, setSelected] = React.useState(new Set());
+  const [selected, setSelected] = useState(new Set());
 
-  const [sortComparator, setSortComparator] = React.useState(
-    () => recentComparator
-  );
+  const [sortComparator, setSortComparator] = useState(() => recentComparator);
 
   const toggleSelected = (globalKey) => {
     let newSet = new Set(selected);
@@ -70,7 +66,7 @@ export default function InventoryScreen(props) {
     setSelectMode(!selectMode);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (inventoryList !== undefined) {
       let visibleList = JSON.parse(JSON.stringify(inventoryList));
       visibleList.map((element, index) => {

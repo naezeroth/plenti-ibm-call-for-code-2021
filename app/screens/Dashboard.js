@@ -25,8 +25,8 @@ export default function DashboardScreen(props) {
 
   const { name } = jwt_decode(token);
   const [dateValue, setDateValue] = useState(new Date());
-  const [binModalVisible, setBinModalVisible] = React.useState(false);
-  const [rankingModalVisible, setRankingModalVisible] = React.useState(false);
+  const [binModalVisible, setBinModalVisible] = useState(false);
+  const [rankingModalVisible, setRankingModalVisible] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   return (
@@ -46,7 +46,6 @@ export default function DashboardScreen(props) {
           setUpdateInventoryToggle={setUpdateInventoryToggle}
           inventoryList={inventoryList}
         />
-        {/* <BinModalContent setBinModalVisible={setBinModalVisible} /> */}
       </Modal>
       <Modal
         animationType="slide"
@@ -203,10 +202,6 @@ export default function DashboardScreen(props) {
                     mode="date"
                     is24Hour={true}
                     display="default"
-                    // onChange={(e, selectedDate) => {
-                    //   console.log("selectedDate", selectedDate);
-                    //   setDateValue(selectedDate);
-                    // }}
                     onConfirm={(selectedDate) => {
                       console.log("selectedDate", selectedDate);
                       setDateValue(selectedDate);
@@ -321,6 +316,7 @@ const Tile = ({ title, image, onPress }) => {
     </TouchableOpacity>
   );
 };
+
 //TODO add mock data for previous month
 const OverviewContent = ({ date, inventoryList }) => {
   //Get month from date
@@ -333,11 +329,7 @@ const OverviewContent = ({ date, inventoryList }) => {
   let lastMonthCost = 0;
   let lastMonthItems = 0;
   for (let item of inventoryList) {
-    let expiryDate = new Date(item.expiry_date);
-    if (
-      item.status === "discarded"
-      // || (item.status !== "eaten" && expiryDate < currentDate)
-    ) {
+    if (item.status === "discarded") {
       let itemDate = new Date(item.purchase_date);
       if (
         itemDate.getFullYear() === currentDate.getFullYear() &&
@@ -539,69 +531,6 @@ const OverviewContent = ({ date, inventoryList }) => {
   );
 };
 
-const BinModalContent = ({ setBinModalVisible }) => {
-  return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: "#4AC79F",
-      }}
-    >
-      <View
-        style={{
-          paddingTop: 50,
-          paddingBottom: 50,
-          width: "100%",
-          flex: 0,
-        }}
-      >
-        <TouchableOpacity
-          onPress={() => {
-            console.log("Closing bin modal!");
-            setBinModalVisible(false);
-          }}
-          style={{ padding: 25, position: "absolute", top: 20, zIndex: 100 }}
-        >
-          <AntDesign name={"close"} size={36} color="black" />
-        </TouchableOpacity>
-        <View style={{ justifyContent: "center" }}>
-          <Text
-            style={{
-              alignSelf: "center",
-              fontFamily: "SFProDisplay-Heavy",
-              fontSize: 24,
-              color: "#000",
-            }}
-          >
-            Bin
-          </Text>
-          <Text
-            style={{
-              alignSelf: "center",
-              fontFamily: "SFProDisplay-Semibold",
-              fontSize: 16,
-              color: "#000",
-              paddingTop: 5,
-            }}
-          >
-            Past 7 days
-          </Text>
-        </View>
-      </View>
-      <View
-        style={{
-          alignItems: "center",
-          flex: 1,
-          justifyContent: "center",
-          backgroundColor: "#4AC79F",
-        }}
-      >
-        <Text> TEST </Text>
-      </View>
-    </View>
-  );
-};
-
 const RankingModalContent = ({ setRankingModalVisible, name }) => {
   const today = new Date();
   return (
@@ -701,14 +630,11 @@ const RankingModalContent = ({ setRankingModalVisible, name }) => {
       </View>
       <View
         style={{
-          // paddingTop: 50,
-          // paddingBottom: 50,
           width: "100%",
           flex: 0,
           backgroundColor: "#FAF6ED",
           flexDirection: "row",
           paddingBottom: 20,
-          // height:,
         }}
       >
         <Image
