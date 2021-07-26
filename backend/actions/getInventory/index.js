@@ -1,9 +1,11 @@
+require("dotenv").config({ path: "../.env" });
 let service;
-const secret = "C.a~9J?w>pfh&?ke94|4Mcs2;2Jl!F";
 
 async function main(params) {
   const jwt = require("jsonwebtoken");
   console.log("Service", !service);
+
+  const secret = process.env.JWT_SECRET;
 
   if (!service) {
     service = await setupDb();
@@ -59,16 +61,14 @@ async function setupDb() {
   const { IamAuthenticator } = require("ibm-cloud-sdk-core");
 
   const authenticator = new IamAuthenticator({
-    apikey: "0ClBVmSnAKdOKuOt_69fQ5j9aWiT3n4t2DzkyV-WZHl7",
+    apikey: process.env.CLOUDANT_APIKEY,
   });
 
   const service = new CloudantV1({
     authenticator: authenticator,
   });
 
-  service.setServiceUrl(
-    "https://a859431b-1431-4549-9712-4dd14785f393-bluemix.cloudantnosqldb.appdomain.cloud"
-  );
+  service.setServiceUrl(process.env.CLOUDANT_SERVICE_URL);
   return service;
 }
 
