@@ -1,24 +1,25 @@
 require("dotenv").config({ path: "../.env" });
+
+//Service is defined outside in case function is triggered quickly
+//and database has been setup already
 let service;
 
 async function main(params) {
   const jwt = require("jsonwebtoken");
-  console.log("Service", !service);
 
   const secret = process.env.JWT_SECRET;
 
+  //Set up database if service is not defined
   if (!service) {
     service = await setupDb();
   }
+  //Check for JWT and validate
   if (!params.token) {
     return {
       message: "Please supply JWT",
       failed: true,
     };
   }
-
-  console.log("Jwt is", params.token);
-
   try {
     var decoded = jwt.verify(params.token, secret);
   } catch {
@@ -28,9 +29,8 @@ async function main(params) {
     };
   }
   const email = decoded.email;
-  console.log("Decoded email", email, decoded);
-  // update inventory db with email
 
+  // Get current inventory database with email
   const result = await service
     .getDocument({
       db: "users",
@@ -40,8 +40,6 @@ async function main(params) {
       return false;
     });
 
-  console.log("Result", result);
-
   if (!result) {
     return {
       message: "failed",
@@ -49,8 +47,7 @@ async function main(params) {
     };
   }
 
-  console.log("Result", result);
-
+  //Return inventory
   return {
     inventory: result.result.inventory,
   };
