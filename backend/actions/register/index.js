@@ -1,6 +1,10 @@
 require("dotenv").config({ path: "../.env" });
+
+//Service is defined outside in case function is triggered quickly
+//and database has been setup already
 let service;
 
+//Setup users with a testInventory so they get the feel of the application
 const testInventory = [
   {
     category: "dairy",
@@ -77,20 +81,22 @@ const testInventory = [
 async function main(params) {
   const bcrypt = require("bcryptjs");
   const jwt = require("jsonwebtoken");
-  console.log("Service", !service);
 
   const secret = process.env.JWT_SECRET;
 
+  //Set up database if service is not defined
   if (!service) {
     service = await setupDb();
   }
-
+  //Check that name email and password have been supplied
   if (!params.name || !params.email || !params.password) {
     return {
       error: "payload must have email, password and name",
       failed: true,
     };
   }
+
+  //Hash password to store in DB
   const hashedPassword = bcrypt.hashSync(params.password, 8);
 
   const userDoc = {
@@ -102,6 +108,7 @@ async function main(params) {
     inventory: testInventory,
   };
 
+  //Create user document and check if email is unique (since it is the docId)
   const result = await service
     .putDocument({
       db: "users",
@@ -122,6 +129,7 @@ async function main(params) {
 
   console.log("Result", result);
 
+  //Create a JWT and sign it
   var token = jwt.sign({ email: params.email, name: params.name }, secret, {
     expiresIn: "1h",
   });
@@ -147,11 +155,5 @@ async function setupDb() {
   service.setServiceUrl(process.env.CLOUDANT_SERVICE_URL);
   return service;
 }
-
-// main({
-//   name: "Apurva",
-//   email: "test@test5.com",
-//   password: "yolo",
-// });
 
 global.main = main;

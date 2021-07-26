@@ -1,17 +1,20 @@
 require("dotenv").config({ path: "../.env" });
+
+//Service is defined outside in case function is triggered quickly
+//and database has been setup already
 let service;
 
 async function main(params) {
   const bcrypt = require("bcryptjs");
   const jwt = require("jsonwebtoken");
-  console.log("Service", !service);
 
   const secret = process.env.JWT_SECRET;
 
+  //Set up database if service is not defined
   if (!service) {
     service = await setupDb();
   }
-
+  //Check for required parameters
   if (!params.email || !params.password) {
     return {
       message: "payload must have email and password",
@@ -19,7 +22,7 @@ async function main(params) {
     };
   }
 
-  //Get user from db
+  //Get user from database
   const result = await service
     .getDocument({
       db: "users",
@@ -29,8 +32,7 @@ async function main(params) {
       return false;
     });
 
-  console.log("Result", result);
-
+  //Error handle if user does not exist
   if (!result) {
     return {
       message: "username or password is incorrect",
@@ -38,9 +40,10 @@ async function main(params) {
     };
   }
 
-  // //Check if pw correct
+  //Check if password correct
   const correct = bcrypt.compareSync(params.password, result.result.password);
 
+  //Error handle if password is incorrect
   if (!correct) {
     return {
       error: "username or password is incorrect",
@@ -78,10 +81,5 @@ async function setupDb() {
   service.setServiceUrl(process.env.CLOUDANT_SERVICE_URL);
   return service;
 }
-
-// main({
-//   email: "test@test.com",
-//   password: "yolo2",
-// });
 
 global.main = main;
