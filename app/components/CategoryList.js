@@ -6,35 +6,8 @@ import { categoryEmoji } from './emoji';
 import InventoryList from './InventoryList';
 
 
-// const categories = [
-//   {
-//     name: 'meat',
-//     emoji: 'hi',
-//   },
-//   {
-//     name: 'dairy',
-//     emoji: '',
-//   },
-//   {
-//     name: 'grain',
-//     emoji: '',
-//   },
-//   {
-//     name: 'fruit',
-//     emoji: '',
-//   },
-//   {
-//     name: 'vegetables',
-//     emoji: '',
-//   },
-//   {
-//     name: 'beverages',
-//     emoji: '',
-//   },
-// ]
-
 const categories = [
-  'meats', 'dairy', 'fruits', 'vegetables', 'grains', 'beverages'
+  'meats', 'dairy', 'fruits', 'vegetables', 'snacks', 'grains', 'beverages'
 ]
 
 
