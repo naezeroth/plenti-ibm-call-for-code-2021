@@ -16,6 +16,10 @@ import Dashboard from "./screens/Dashboard";
 
 import * as SecureStore from "expo-secure-store";
 
+import {decode, encode} from 'base-64'
+if (!global.btoa) {  global.btoa = encode }
+if (!global.atob) { global.atob = decode } 
+
 const Tab = createBottomTabNavigator();
 
 export default function App() {
