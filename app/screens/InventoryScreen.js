@@ -4,8 +4,9 @@ import InventoryList from "../components/InventoryList";
 import { Header } from "react-native-elements";
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import CategoryList from "../components/CategoryList";
-import { Feather, MaterialIcons } from "@expo/vector-icons";
+import { Feather, MaterialIcons, Entypo } from "@expo/vector-icons";
 import { AddModal } from "../components/AddModal";
+
 
 const categories = [
   "meats",
@@ -133,7 +134,9 @@ export default function InventoryScreen(props) {
       >
         <TouchableOpacity onPress={() => deleteItems()}>
           <View style={{ alignItems: "center" }}>
-            <AntDesign name="delete" size={24} color="black" />
+            {/* <AntDesign name="delete" size={24} color="black" /> */}
+            <AntDesign name="close" size={24} color="black" />
+            {/* <Entypo name="cross" size={24} color="black" /> */}
             <Text style={{ fontSize: 13, fontFamily: "SFProDisplay-Semibold" }}>
               delete
             </Text>
@@ -142,7 +145,8 @@ export default function InventoryScreen(props) {
 
         <TouchableOpacity onPress={() => changeSelectedStatus("discarded")}>
           <View style={{ alignItems: "center" }}>
-            <MaterialIcons name="access-time" size={24} color="black" />
+            {/* <MaterialIcons name="access-time" size={24} color="black" /> */}
+            <AntDesign name="delete" size={24} color="black" />
             <Text style={{ fontSize: 13, fontFamily: "SFProDisplay-Semibold" }}>
               thrown
             </Text>
