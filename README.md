@@ -19,7 +19,7 @@ To get started with our application you will need to configure your IBM cloud.
 
 ![Solution Architecture](/images/solution-architecture.png)
 
-Create an IBM cloud account and set up 
+Create an IBM cloud account and set up the following services.
 
 #### Cloudant Database 
 
@@ -30,10 +30,16 @@ Create a Cloudant database and a non-partitioned table called "users". Create a 
 Create a cloud functions namespace and note down all the environment variables such as region and namespace. Ensure you have downloaded the IBM CLI tool on your device, downloaded the [cloud functions plugin](https://cloud.ibm.com/functions/learn/cli) set the correct namespace. 
 #### Natural Language Classifier 
 
-???? Ensure you have noted down the service credentials
+???? Ensure you have noted down the service credentials 
+
+
+#### OCR 
+
+[Follow instructions](https://developer.ibm.com/technologies/artificial-intelligence/models/max-ocr/) to deploy your own OCR in your IBM cloud environment or use the sample provided by IBM for testing purposes.
+
 ### Initial Configuration
 
-Simply clone the repo and inside /backend/actions/ copy the .env.dist to a .env file and fill out the specified information. 
+Simply clone the repo and inside /backend/actions/ copy the .env.sample to a .env file and fill out the specified information. 
 
 Now inside /backend run an ```npm install``` and for each folder in actions run ```npm run build``` (this builds the index.js file with dependencies into a single file) and run ```npm run deploy``` which will deploy each of the functions to your IBM Cloud Functions Namespace. 
 
@@ -41,8 +47,7 @@ Inside the IBM Cloud Functions dashboard, head to API and click create API. From
 
 ![API Specification](/images/api-spec.png)
 
-TODO - also another .env for app/ for the API url. 
-
+Go to /app and copy app.json.sample to app.json and fill out the apiUrl from the Cloud Functions page and add the OCR endpoint.
 
 We're all set up now!
 

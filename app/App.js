@@ -8,6 +8,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AppLoading from "expo-app-loading";
+import Constants from "expo-constants";
 
 import Camera from "./screens/Camera";
 import InventoryScreen from "./screens/InventoryScreen";
@@ -16,11 +17,16 @@ import Dashboard from "./screens/Dashboard";
 
 import * as SecureStore from "expo-secure-store";
 
-import {decode, encode} from 'base-64'
-if (!global.btoa) {  global.btoa = encode }
-if (!global.atob) { global.atob = decode } 
+import { decode, encode } from "base-64";
+if (!global.btoa) {
+  global.btoa = encode;
+}
+if (!global.atob) {
+  global.atob = decode;
+}
 
 const Tab = createBottomTabNavigator();
+const apiUrl = Constants.manifest.extra.apiUrl;
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -50,7 +56,7 @@ export default function App() {
   useEffect(() => {
     async function getInventory() {
       const result = await fetch(
-        "https://02f401bd.au-syd.apigw.appdomain.cloud/api/getInventory?" +
+        `${apiUrl}/getInventory?` +
           new URLSearchParams({
             token: token,
           })
@@ -77,7 +83,7 @@ export default function App() {
   useEffect(() => {
     async function updateInventory() {
       const result = await fetch(
-        "https://02f401bd.au-syd.apigw.appdomain.cloud/api/updateInventory?" +
+        `${apiUrl}/updateInventory?` +
           new URLSearchParams({
             token: token,
           }),

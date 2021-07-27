@@ -20,7 +20,8 @@ const categories = [
 
 const priceComparator = (a, b) => b.price - a.price;
 const purchaseDateComparator = (a, b) => a.purchase_date - b.purchase_date;
-const recentComparator = (a, b) => b.purchase_date - a.purchase_date;
+const recentComparator = (a, b) =>
+  new Date(b.purchase_date) - new Date(a.purchase_date);
 
 const uneatenFilter = (item) => item.status == "uneaten";
 

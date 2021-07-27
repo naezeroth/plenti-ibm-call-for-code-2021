@@ -5,6 +5,9 @@ import { Header, Button, Input, Text } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
 import jwt_decode from "jwt-decode";
 import * as SecureStore from "expo-secure-store";
+import Constants from "expo-constants";
+
+const apiUrl = Constants.manifest.extra.apiUrl;
 
 export default function Auth(props) {
   const [authState, setAuthState] = useState(false);
@@ -19,7 +22,7 @@ export default function Auth(props) {
 
   async function onLogin() {
     const result = await fetch(
-      "https://02f401bd.au-syd.apigw.appdomain.cloud/api/login?" +
+      `${apiUrl}/login?` +
         new URLSearchParams({
           email: email,
           password: password,
@@ -51,7 +54,7 @@ export default function Auth(props) {
     }
     console.log(email, password, name);
     const result = await fetch(
-      "https://02f401bd.au-syd.apigw.appdomain.cloud/api/register?" +
+      `${apiUrl}/register?` +
         new URLSearchParams({
           email: email,
           password: password,

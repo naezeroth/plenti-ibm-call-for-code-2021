@@ -27,10 +27,13 @@ import { AntDesign } from "@expo/vector-icons";
 import SlidingUpPanel from "rn-sliding-up-panel";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useFocusEffect } from "@react-navigation/native";
+import Constants from "expo-constants";
 
 import { foodClasses } from "../components/foodClasses";
 
 const { height } = Dimensions.get("window");
+const apiUrl = Constants.manifest.extra.apiUrl;
+const ocrEndpoint = Constants.manifest.extra.ocrEndpoint;
 
 let camera;
 
@@ -178,17 +181,14 @@ export default function App(props) {
       name: filename,
       type: "image/jpg",
     });
-    const ocrResult = await fetch(
-      "http://max-ocr.codait-prod-41208c73af8fca213512856c7a09db52-0000.us-east.containers.appdomain.cloud/model/predict",
-      {
-        method: "POST",
-        body: formData,
-        header: {
-          "content-type": "multipart/form-data",
-          accept: "application/json",
-        },
-      }
-    );
+    const ocrResult = await fetch(ocrEndpoint, {
+      method: "POST",
+      body: formData,
+      header: {
+        "content-type": "multipart/form-data",
+        accept: "application/json",
+      },
+    });
     const ocrResultObject = await ocrResult.json();
     if (ocrResultObject.status !== "ok") {
       Alert.alert("Something went wrong scanning your image");
@@ -198,17 +198,14 @@ export default function App(props) {
     const text = ocrResultObject.text;
     console.log("Text from OCR", ocrResultObject);
     // openShareDialogAsync(photo.uri);
-    const parseResult = await fetch(
-      "https://02f401bd.au-syd.apigw.appdomain.cloud/api/parseImageText",
-      {
-        method: "POST",
-        body: JSON.stringify({ text: text }),
-        header: {
-          "content-type": "application/json",
-          accept: "application/json",
-        },
-      }
-    );
+    const parseResult = await fetch(`${apiUrl}/parseImageText`, {
+      method: "POST",
+      body: JSON.stringify({ text: text }),
+      header: {
+        "content-type": "application/json",
+        accept: "application/json",
+      },
+    });
     const parseResultObject = await parseResult.json();
     if (
       parseResultObject.error ||
