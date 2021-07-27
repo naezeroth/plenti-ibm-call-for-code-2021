@@ -1,0 +1,165 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: API
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /register:
+    post:
+      operationId: postRegister
+      x-openwhisk:
+        namespace: 09d40aa4-be03-4974-a926-571e54d6797c
+        action: register
+        package: default
+        url: >-
+          https://au-syd.functions.appdomain.cloud/api/v1/web/09d40aa4-be03-4974-a926-571e54d6797c/default/register.json
+        auth: 97417feb-723c-4429-9dba-53917b345789
+      responses:
+        '200':
+          description: A successful invocation response
+      parameters:
+        - name: body
+          in: body
+          description: Request body
+          required: false
+          schema:
+            type: object
+  /login:
+    get:
+      operationId: getLogin
+      x-openwhisk:
+        namespace: 09d40aa4-be03-4974-a926-571e54d6797c
+        action: login
+        package: default
+        url: >-
+          https://au-syd.functions.appdomain.cloud/api/v1/web/09d40aa4-be03-4974-a926-571e54d6797c/default/login.json
+        auth: 10f97baa-6373-4c73-93ef-15afaf867ec2
+      responses:
+        '200':
+          description: A successful invocation response
+  /parseImageText:
+    post:
+      operationId: postParseimagetext
+      x-openwhisk:
+        namespace: 09d40aa4-be03-4974-a926-571e54d6797c
+        action: parseImageText
+        package: default
+        url: >-
+          https://au-syd.functions.appdomain.cloud/api/v1/web/09d40aa4-be03-4974-a926-571e54d6797c/default/parseImageText.json
+        auth: bde8d333-4e74-4569-932b-faaa7f9fd9d1
+      responses:
+        '200':
+          description: A successful invocation response
+      parameters:
+        - name: body
+          in: body
+          description: Request body
+          required: false
+          schema:
+            type: object
+  /getInventory:
+    get:
+      operationId: getGetinventory
+      x-openwhisk:
+        namespace: 09d40aa4-be03-4974-a926-571e54d6797c
+        action: getInventory
+        package: default
+        url: >-
+          https://au-syd.functions.appdomain.cloud/api/v1/web/09d40aa4-be03-4974-a926-571e54d6797c/default/getInventory.json
+        auth: c00209a9-6947-4a81-bdf7-cbf26fb33461
+      responses:
+        '200':
+          description: A successful invocation response
+  /updateInventory:
+    post:
+      operationId: postUpdateinventory
+      x-openwhisk:
+        namespace: 09d40aa4-be03-4974-a926-571e54d6797c
+        action: updateInventory
+        package: default
+        url: >-
+          https://au-syd.functions.appdomain.cloud/api/v1/web/09d40aa4-be03-4974-a926-571e54d6797c/default/updateInventory.json
+        auth: f9c75f09-26e3-4f35-bc41-a4aee1f951d4
+      responses:
+        '200':
+          description: A successful invocation response
+      parameters:
+        - name: body
+          in: body
+          description: Request body
+          required: false
+          schema:
+            type: object
+x-ibm-configuration:
+  assembly:
+    execute:
+      - operation-switch:
+          case:
+            - operations:
+                - postRegister
+              execute:
+                - set-variable:
+                    actions:
+                      - set: message.headers.X-Require-Whisk-Auth
+                        value: 97417feb-723c-4429-9dba-53917b345789
+                - invoke:
+                    target-url: >-
+                      https://au-syd.functions.appdomain.cloud/api/v1/web/09d40aa4-be03-4974-a926-571e54d6797c/default/register.json
+                    verb: keep
+            - operations:
+                - getLogin
+              execute:
+                - set-variable:
+                    actions:
+                      - set: message.headers.X-Require-Whisk-Auth
+                        value: 10f97baa-6373-4c73-93ef-15afaf867ec2
+                - invoke:
+                    target-url: >-
+                      https://au-syd.functions.appdomain.cloud/api/v1/web/09d40aa4-be03-4974-a926-571e54d6797c/default/login.json
+                    verb: keep
+            - operations:
+                - postParseimagetext
+              execute:
+                - set-variable:
+                    actions:
+                      - set: message.headers.X-Require-Whisk-Auth
+                        value: bde8d333-4e74-4569-932b-faaa7f9fd9d1
+                - invoke:
+                    target-url: >-
+                      https://au-syd.functions.appdomain.cloud/api/v1/web/09d40aa4-be03-4974-a926-571e54d6797c/default/parseImageText.json
+                    verb: keep
+            - operations:
+                - getGetinventory
+              execute:
+                - set-variable:
+                    actions:
+                      - set: message.headers.X-Require-Whisk-Auth
+                        value: c00209a9-6947-4a81-bdf7-cbf26fb33461
+                - invoke:
+                    target-url: >-
+                      https://au-syd.functions.appdomain.cloud/api/v1/web/09d40aa4-be03-4974-a926-571e54d6797c/default/getInventory.json
+                    verb: keep
+            - operations:
+                - postUpdateinventory
+              execute:
+                - set-variable:
+                    actions:
+                      - set: message.headers.X-Require-Whisk-Auth
+                        value: f9c75f09-26e3-4f35-bc41-a4aee1f951d4
+                - invoke:
+                    target-url: >-
+                      https://au-syd.functions.appdomain.cloud/api/v1/web/09d40aa4-be03-4974-a926-571e54d6797c/default/updateInventory.json
+                    verb: keep
+          otherwise: []
+          title: whisk-invoke
+  cors:
+    enabled: true
+basePath: /api
+securityDefinitions: {}
+security:
+  - {}
