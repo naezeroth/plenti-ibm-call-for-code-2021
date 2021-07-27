@@ -70,9 +70,12 @@ const InventoryList = (props) => {
         );
       }
       return null;
+      // (
+      //   <ListItem.Subtitle
+      //     style={{ color: "#F76D60", fontSize: 12, fontWeight: "600" }}
+      //   ></ListItem.Subtitle>
+      // );
     };
-
-
 
     return (
       <ListItem
@@ -155,67 +158,70 @@ const InventoryList = (props) => {
         data={visibleInventory}
         extraData={visibleInventory}
         renderItem={renderItem}
+        recalculateHiddenLayout
         contentContainerStyle={styles.list}
-        renderHiddenItem={(data, rowMap) => (
-          <View
-            style={{
-              flex: 1,
-              flexDirection: "row",
-              justifyContent: "space-between",
-            }}
-          >
-            <TouchableOpacity
+        renderHiddenItem={(data, rowMap) => {
+          return (
+            <View
               style={{
-                backgroundColor: "#4AC79F",
-                alignItems: "center",
-                justifyContent: "center",
-                marginTop: 7,
-                marginBottom: 7,
-                borderTopLeftRadius: 10,
-                borderBottomLeftRadius: 10,
-                width: 80,
-              }}
-              onPress={() => {
-                console.log(
-                  "Eatin",
-                  data.item.global_key,
-                  setInventoryList,
-                  inventoryList
-                );
-                inventoryList[data.item.global_key].status = "eaten";
-                setInventoryList(inventoryList);
-                setUpdateInventoryToggle(!updateInventoryToggle);
+                flex: 1,
+                flexDirection: "row",
+                justifyContent: "space-between",
               }}
             >
-              <AntDesign name="check" size={24} color="white" />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                backgroundColor: "#4CBAF9",
-                alignItems: "center",
-                justifyContent: "center",
-                marginRight: 15,
-                marginTop: 7,
-                marginBottom: 7,
-                borderTopRightRadius: 10,
-                borderBottomRightRadius: 10,
-                width: 80,
-              }}
-              onPress={() => {
-                console.log("Freezing", data.item.global_key);
-                inventoryList[data.item.global_key].frozen =
-                  !inventoryList[data.item.global_key].frozen;
-                setInventoryList(inventoryList);
-                setUpdateInventoryToggle(!updateInventoryToggle);
-              }}
-            >
-              <Image
-                source={require("../assets/freeze.png")}
-                style={{ width: 30, height: 30 }}
-              />
-            </TouchableOpacity>
-          </View>
-        )}
+              <TouchableOpacity
+                style={{
+                  backgroundColor: "#4AC79F",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginTop: 7,
+                  marginBottom: 7,
+                  borderTopLeftRadius: 10,
+                  borderBottomLeftRadius: 10,
+                  width: 80,
+                }}
+                onPress={() => {
+                  console.log(
+                    "Eatin",
+                    data.item.global_key,
+                    setInventoryList,
+                    inventoryList
+                  );
+                  inventoryList[data.item.global_key].status = "eaten";
+                  setInventoryList(inventoryList);
+                  setUpdateInventoryToggle(!updateInventoryToggle);
+                }}
+              >
+                <AntDesign name="check" size={24} color="white" />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: "#4CBAF9",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginRight: 15,
+                  marginTop: 7,
+                  marginBottom: 7,
+                  borderTopRightRadius: 10,
+                  borderBottomRightRadius: 10,
+                  width: 80,
+                }}
+                onPress={() => {
+                  console.log("Freezing", data.item.global_key);
+                  inventoryList[data.item.global_key].frozen =
+                    !inventoryList[data.item.global_key].frozen;
+                  setInventoryList(inventoryList);
+                  setUpdateInventoryToggle(!updateInventoryToggle);
+                }}
+              >
+                <Image
+                  source={require("../assets/freeze.png")}
+                  style={{ width: 30, height: 30 }}
+                />
+              </TouchableOpacity>
+            </View>
+          );
+        }}
         leftOpenValue={75}
         rightOpenValue={-75}
       />

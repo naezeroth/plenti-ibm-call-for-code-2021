@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Platform } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Platform,
+} from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
@@ -19,7 +25,6 @@ export const AddModal = ({
   updateInventoryToggle,
   setUpdateInventoryToggle,
 }) => {
-
   const [item, setItem] = useState(
     selectedItem === -1
       ? {
@@ -49,9 +54,7 @@ export const AddModal = ({
 
   //TODO implement lookup table for
   const [expiryDateValue, setExpiryDateValue] = useState(
-    item && item.days_to_expiry
-      ? new Date().addDays(item.days_to_expiry)
-      : new Date()
+    item && item.expiry_date !== null ? new Date(item.expiry_date) : new Date()
   );
 
   const [purchaseDateValue, setPurchaseDateValue] = useState(new Date());
@@ -65,13 +68,15 @@ export const AddModal = ({
     const result = await fetch(
       "https://api.us-south.natural-language-classifier.watson.cloud.ibm.com/instances/badedd77-8003-48e6-943b-861ea34e66af/v1/classifiers/b9a0dbx961-nlc-19/classify?" +
         new URLSearchParams({
-          text: inputItem.name
+          text: inputItem.name,
         }),
       {
         method: "GET",
         headers: new Headers({
-          'Authorization': 'Basic '+btoa('apikey:n2Se7LEGkNIQsVt3AGiS6mhvP7A_heT_PbAcU_PYJJW3'),
-        })
+          Authorization:
+            "Basic " +
+            btoa("apikey:n2Se7LEGkNIQsVt3AGiS6mhvP7A_heT_PbAcU_PYJJW3"),
+        }),
       }
     );
     if (!result.ok) {
@@ -80,16 +85,18 @@ export const AddModal = ({
       return;
     }
     const classResult = await result.json();
-    console.log("CLASSIFICATION RESULT: ", classResult)
+    console.log("CLASSIFICATION RESULT: ", classResult);
     inputItem.item_class = classResult.top_class;
     inputItem.category = foodClasses[inputItem.item_class]["category"];
     inputItem.emoji = foodClasses[inputItem.item_class]["emoji"];
     inputItem.category = foodClasses[inputItem.item_class]["category"];
     inputItem.purchase_date = new Date();
-    inputItem.expiry_date = inputItem.purchase_date.addDays(foodClasses[inputItem.item_class]["expiry"]);
+    inputItem.expiry_date = inputItem.purchase_date.addDays(
+      foodClasses[inputItem.item_class]["expiry"]
+    );
     setUpdateInventoryToggle(!updateInventoryToggle);
     return inputItem;
-  }
+  };
 
   const DatePickerComponent = ({
     dateValue,
@@ -176,7 +183,11 @@ export const AddModal = ({
             backgroundColor: "#FAF6ED",
           }}
         >
-          <TouchableOpacity onPress={ () => {setExpanded(!expanded)} }>
+          <TouchableOpacity
+            onPress={() => {
+              setExpanded(!expanded);
+            }}
+          >
             <View
               style={
                 expanded
@@ -184,9 +195,7 @@ export const AddModal = ({
                   : styles.autoClassifyButtonSelected
               }
             >
-              <Text
-                style={{ fontFamily: "SFProDisplay-Semibold" }}
-              >
+              <Text style={{ fontFamily: "SFProDisplay-Semibold" }}>
                 {expanded ? "auto-classify: off" : "auto-classify: on"}
               </Text>
             </View>
@@ -257,7 +266,7 @@ export const AddModal = ({
                 )}
               />
             </>
-          ) : null }
+          ) : null}
           <View style={{ flexDirection: "row" }}>
             <TouchableOpacity
               onPress={() => {
@@ -334,7 +343,7 @@ const styles = StyleSheet.create({
     borderColor: "black",
     paddingHorizontal: 10,
     paddingVertical: 3,
-    backgroundColor: "#FAF6ED", 
+    backgroundColor: "#FAF6ED",
   },
   autoClassifyButtonSelected: {
     borderRadius: 30,

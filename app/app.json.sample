@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "plenti",
-    "owner": "aywjuowa",
+    "owner": "",
     "slug": "ibm-call-for-code-2021",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -33,8 +33,8 @@
       "expo-camera"
     ],
     "extra": {
-      "apiUrl": "https://02f401bd.au-syd.apigw.appdomain.cloud/api",
-      "ocrEndpoint": "http://max-ocr.codait-prod-41208c73af8fca213512856c7a09db52-0000.us-east.containers.appdomain.cloud/model/predict"
+      "apiUrl": "",
+      "ocrEndpoint": ""
     },
     "description": ""
   }

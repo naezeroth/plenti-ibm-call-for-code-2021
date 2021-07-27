@@ -141,7 +141,7 @@ export default function DashboardScreen(props) {
           >
             <Text style={styles.overviewText}>{name}'s </Text>
             <Text style={{ ...styles.overviewText, color: "#4AC79F" }}>
-              Food Waste{" "}
+              food waste{" "}
             </Text>
             <Text style={styles.overviewText}>overview</Text>
           </View>
