@@ -794,8 +794,17 @@ const ListItems = ({
         )}
         <ListItem.Content>
           <ListItem.Title>
-            <Text style={styles.text}>{item.name}</Text>
+            <Text style={styles.text}>{item.item_class}</Text>
           </ListItem.Title>
+          <ListItem.Subtitle
+            style={{
+              color: "black",
+              fontSize: 12,
+              fontWeight: "600",
+            }}
+          >
+            {item.name}
+          </ListItem.Subtitle>
         </ListItem.Content>
         <TouchableOpacity
           onPress={() => deleteInventoryItem(key)}

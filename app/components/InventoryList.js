@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Alert, RefreshControl, StyleSheet, Text, View } from "react-native";
+import { Alert, StyleSheet, Text, View } from "react-native";
 import { ListItem, Button, Image } from "react-native-elements";
 import TouchableScale from "react-native-touchable-scale";
 import { SwipeListView } from "react-native-swipe-list-view";
@@ -72,6 +72,8 @@ const InventoryList = (props) => {
       return null;
     };
 
+
+
     return (
       <ListItem
         containerStyle={itemStyle}
@@ -93,8 +95,18 @@ const InventoryList = (props) => {
         </Text>
         <ListItem.Content>
           <ListItem.Title>
-            <Text style={styles.text}>{item.name}</Text>
+            <Text style={styles.text}>{item.item_class}</Text>
+            {/* <Text style={styles.text}>{item.item_class.charAt(0).toUpperCase() + item.item_class.slice(1)}</Text> */}
           </ListItem.Title>
+          <ListItem.Subtitle
+            style={{
+              color: "black",
+              fontSize: 12,
+              fontWeight: "600",
+            }}
+          >
+            {item.name}
+          </ListItem.Subtitle>
           <Subtitle />
         </ListItem.Content>
         {item.frozen && (
