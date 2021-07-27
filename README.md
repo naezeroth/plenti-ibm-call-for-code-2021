@@ -1,9 +1,8 @@
-![Logo of the project](https://raw.githubusercontent.com/jehna/readme-best-practices/master/sample-logo.png)
+//TODO add logo?
 
-
-//Another example https://github.com/dbader/readme-template
+//TODO add screenshots of application
 # Plenti - clever eating, greener living.
-> Additional information or tagline
+
 Plenti is a mobile application which digitises the kitchen inventory and uses expiry date approximations to remind people to finish their food on time. The application prioritises usability by minimising the manual input required by the user; this is an issue which many existing solutions fail to address. A user can input data into the application through receipt scanning, which scans products off a store receipt through a text recognition model, and classifies specific store products into general food item categories through a natural language classifier implemented using IBM Watson. 
 
 Insights on one’s level of food waste in terms of amounts, types of food wasted and costs are also provided to help consumers make smarter decisions. Users can see both personal and Plenti community insights, while a leaderboard displays users that have most improved their food savings. This quantifies the positive environmental impact each person can make while using the app and integrates social elements to engage users. 
