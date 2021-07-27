@@ -286,6 +286,9 @@ export const AddModal = ({
             <TouchableOpacity
               onPress={() => {
                 if (!expanded) {
+                  const itemCopy = item;
+                  itemCopy.item_class = "classifying";
+                  setItem(itemCopy);
                   setItem(classifyItem(item));
                 }
                 if (selectedItem === -1) {

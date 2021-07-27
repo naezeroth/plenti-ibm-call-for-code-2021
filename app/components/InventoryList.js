@@ -96,7 +96,6 @@ const InventoryList = (props) => {
         <ListItem.Content>
           <ListItem.Title>
             <Text style={styles.text}>{item.item_class}</Text>
-            {/* <Text style={styles.text}>{item.item_class.charAt(0).toUpperCase() + item.item_class.slice(1)}</Text> */}
           </ListItem.Title>
           <ListItem.Subtitle
             style={{
