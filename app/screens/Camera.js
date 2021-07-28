@@ -36,7 +36,7 @@ const apiUrl = Constants.manifest.extra.apiUrl;
 const ocrEndpoint = Constants.manifest.extra.ocrEndpoint;
 
 let camera;
-
+console.log("APIURL AND OCRENDPOINT", apiUrl, ocrEndpoint);
 const testInventory = [
   {
     category: "dairy",
