@@ -70,11 +70,6 @@ const InventoryList = (props) => {
         );
       }
       return null;
-      // (
-      //   <ListItem.Subtitle
-      //     style={{ color: "#F76D60", fontSize: 12, fontWeight: "600" }}
-      //   ></ListItem.Subtitle>
-      // );
     };
 
     return (
