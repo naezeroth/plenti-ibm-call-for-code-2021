@@ -18,7 +18,7 @@ The front-end user interface of the application is developed in React Native, al
 
 ## Installing / Getting started
 
-Our repository is split between our mobile application built with Expo and React Native and our backend deployed as individual functions on IBM's CLoud Functions.
+Our repository is split between our mobile application built with Expo and React Native and our backend deployed as individual functions on IBM's Cloud Functions.
 
 To get started with our application you will need to configure your IBM cloud. 
 
