@@ -18,7 +18,7 @@ The front-end user interface of the application is developed in React Native, al
 <img src="/images/leaderboard.jpeg" alt="Leaderboard" width="23%"/>
 </p>
 
-## Installing / Getting started
+## Installation / Getting Started
 
 Our repository is split between our mobile application built with Expo and React Native and our backend deployed as individual functions on IBM's Cloud Functions.
 
@@ -37,11 +37,12 @@ Create a Cloudant database and a non-partitioned table called "users". Create a 
 #### Cloud Functions and API Gateway
 
 Create a cloud functions namespace and note down all the environment variables such as region and namespace. Ensure you have downloaded the IBM CLI tool on your device, downloaded the [cloud functions plugin](https://cloud.ibm.com/functions/learn/cli) set the correct namespace. 
+
 #### Natural Language Classifier 
 
-???? Ensure you have noted down the service credentials 
+Create a Watson Natural Language Classifier instance. To train the classifier, first load a dataset of training samples and labels in a csv format into your data assets. Our dataset consists of approximately 5000 training samples spanning 54 different food classes, collected from various Australian supermarkets. This dataset can be accessed in the dataset folder of this repository. After loading the dataset, train the model on the data. This training process may take some time. Note down the API key, service URL and classifier ID for the model instance, as this is needed for external access to the classifier.
 
-#### OCR 
+#### Optical Character Recognition (OCR)
 
 [Follow instructions](https://developer.ibm.com/technologies/artificial-intelligence/models/max-ocr/) to deploy your own OCR in your IBM cloud environment using the Kubernetes Cluster service or use the sample provided by IBM for testing purposes.
 
