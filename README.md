@@ -1,11 +1,3 @@
-![Inventory](/images/inventory.jpeg "Inventory")
-![Scanner](/images/scanner.jpeg "Scanner")
-![Scanned result](/images/scanned-result.jpeg "Scanned Result")
-![Select](/images/select.jpeg "Select")
-![Dashboard](/images/dashboard.jpeg "Dashboard")
-![Bin](/images/bin.jpeg "Bin")
-![Leaderboard](/images/leaderboard.jpeg "Leaderboard")
-
 # Plenti - clever eating, greener living.
 
 Plenti is a mobile application which digitises the kitchen inventory and uses expiry date approximations to remind people to finish their food on time. The application prioritises usability by minimising the manual input required by the user; this is an issue which many existing solutions fail to address. A user can input data into the application through receipt scanning, which scans products off a store receipt through a text recognition model, and classifies specific store products into general food item categories through a natural language classifier implemented using IBM Watson. 
@@ -13,6 +5,16 @@ Plenti is a mobile application which digitises the kitchen inventory and uses ex
 Insights on one’s level of food waste in terms of amounts, types of food wasted and costs are also provided to help consumers make smarter decisions. Users can see both personal and Plenti community insights, while a leaderboard displays users that have most improved their food savings. This quantifies the positive environmental impact each person can make while using the app and integrates social elements to engage users. 
 
 The front-end user interface of the application is developed in React Native, allowing for cross-platform compatibility. This mobile user interface communicates with a cloud-based back-end hosted on IBM Cloud Functions, which interacts with a Cloudant database to store user data. 
+
+<p float="left">
+<img src="/images/inventory.jpeg" alt="Inventory" width="200"/>
+<img src="/images/scanner.jpeg" alt="Scanner" width="200"/>
+<img src="/images/scanned-result.jpeg" alt="Scanned Result" width="200"/>
+<img src="/images/select.jpeg" alt="Select" width="200"/>
+<img src="/images/dashboard.jpeg" alt="Dashboard" width="200"/>
+<img src="/images/bin.jpeg" alt="Bin" width="200"/>
+<img src="/images/leaderboard.jpeg" alt="Leaderboard" width="200"/>
+</p>
 
 ## Installing / Getting started
 
