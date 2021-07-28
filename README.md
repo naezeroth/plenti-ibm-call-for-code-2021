@@ -61,4 +61,4 @@ Simply go to /app and run ```npm install``` and ```npm start``` to view the appl
 
 ## Licensing
 
-"The code in this project is licensed under MIT license."
+The code in this project is licensed under MIT license.
