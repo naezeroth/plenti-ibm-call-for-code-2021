@@ -8,6 +8,18 @@ Insights on one’s level of food waste in terms of amounts, types of food waste
 
 The front-end user interface of the application is developed in React Native, allowing for cross-platform compatibility. This mobile user interface communicates with a cloud-based back-end hosted on IBM Cloud Functions, which interacts with a Cloudant database to store user data. 
 
+
+## Contents 
+
+01. [Video Demo](#Video-Demo)
+02. [App Usage](#App-Usage)
+03. [Solution Architecture](#Solution-Architecture)
+04. [Installation / Getting Started](#Installation)
+05. [Project Roadmap](#Project-Roadmap)
+06. [Authors](#Authors)
+07. [License](#License)
+
+
 <p float="left">
 <img src="/images/inventory.jpeg" alt="Inventory" width="23%"/>
 <img src="/images/scanner.jpeg" alt="Scanner" width="23%"/>
@@ -18,7 +30,42 @@ The front-end user interface of the application is developed in React Native, al
 <img src="/images/leaderboard.jpeg" alt="Leaderboard" width="23%"/>
 </p>
 
-## Installation / Getting Started
+## Video Demo <a name="Video-Demo"></a>
+
+
+## App Usage <a name="App-Usage"></a>
+The Plenti app is divided into three primary screens: the inventory, scanner and dashboard. 
+
+### Inventory
+The inventory screen allows the user to manage their food inventory, 
+
+#### Add Items
+Items can be added to the inventory using the add button at the top of the screen. 
+
+#### Edit Items
+
+#### Freeze Items
+
+#### Eat, Throw Out, Delete
+
+### Scanner
+
+### Dashboard
+
+
+## Solution Architecture <a name="Solution-Architecture"></a>
+
+![Solution Architecture](/images/solution-architecture.png)
+
+1. The user interacts with a mobile application to view and manage their food inventory.
+1. The React Native application communicates with the back end through an API managed by API Gateway.
+1. API Gateway accesses a serverless back end implemented through various actions in Cloud Functions.
+1. Each Cloud Functions action may interact with other cloud services to perform data processing and store information in the database.
+1. The Cloudant database stores user data for back-end access.
+1. An optical character recognition (OCR) model is deployed in the cloud to convert user-scanned receipt images to text data.
+1. Watson Natural Language Classifier is used to semantically classify products into different food categories.
+
+## Installation / Getting Started <a name="Installation"></a>
 
 Our repository is split between our mobile application built with Expo and React Native and our backend deployed as individual functions on IBM's Cloud Functions.
 
@@ -26,11 +73,9 @@ To get started with our application you will need to configure your IBM cloud.
 
 ### IBM Cloud
 
-![Solution Architecture](/images/solution-architecture.png)
-
 Create an IBM cloud account and set up the following services.
 
-#### Cloudant Database 
+#### Cloudant Database
 
 Create a Cloudant database and a non-partitioned table called "users". Create a service credential and note down the apiKey and Service URL. 
 
@@ -62,6 +107,18 @@ We're all set up now!
 
 Simply go to /app and run ```npm install``` and ```npm start``` to view the application on your device with Expo Go. 
 
-## Licensing
+## Authors <a name="Authors"></a>
+* Apurva Shukla
+* David Young
+* Christina Liu
+* James Macintyre
+* Vivian Yu
+<!-- * [*Apurva Shukla*](https://www.linkedin.com/in/apurva-shukla/)
+* [*David Young*](https://www.linkedin.com/in/dy27/)
+* [*Christina Liu*](https://www.linkedin.com/in/christinaliu123/)
+* [*James Macintyre*](https://www.linkedin.com/in/jameslmacintyre/)
+* [*Vivian Yu*](https://www.linkedin.com/in/vivian-yu-914a56152/) -->
 
-The code in this project is licensed under MIT license.
+## License <a name="License"></a>
+This project is licensed under the {Apache 2 License}/{MIT License} - see the [ LICENSE ](https://github.com/naezeroth/plenti-ibm-call-for-code-2021/blob/master/LICENSE) for details.
+<!-- The code in this project is licensed under MIT license. -->
