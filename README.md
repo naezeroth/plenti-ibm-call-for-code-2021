@@ -8,6 +8,15 @@ Insights on one’s level of food waste in terms of amounts, types of food waste
 
 The front-end user interface of the application is developed in React Native, allowing for cross-platform compatibility. This mobile user interface communicates with a cloud-based back-end hosted on IBM Cloud Functions, which interacts with a Cloudant database to store user data. 
 
+<p float="left">
+<img src="/images/inventory.jpeg" alt="Inventory" width="23%"/>
+<img src="/images/scanner.jpeg" alt="Scanner" width="23%"/>
+<img src="/images/scanned-result.jpeg" alt="Scanned Result" width="23%"/>
+<img src="/images/select.jpeg" alt="Select" width="23%"/>
+<img src="/images/dashboard.jpeg" alt="Dashboard" width="23%"/>
+<img src="/images/bin.jpeg" alt="Bin" width="23%"/>
+<img src="/images/leaderboard.jpeg" alt="Leaderboard" width="23%"/>
+</p>
 
 ## Contents 
 
@@ -18,17 +27,6 @@ The front-end user interface of the application is developed in React Native, al
 05. [Project Roadmap](#Project-Roadmap)
 06. [Authors](#Authors)
 07. [License](#License)
-
-
-<p float="left">
-<img src="/images/inventory.jpeg" alt="Inventory" width="23%"/>
-<img src="/images/scanner.jpeg" alt="Scanner" width="23%"/>
-<img src="/images/scanned-result.jpeg" alt="Scanned Result" width="23%"/>
-<img src="/images/select.jpeg" alt="Select" width="23%"/>
-<img src="/images/dashboard.jpeg" alt="Dashboard" width="23%"/>
-<img src="/images/bin.jpeg" alt="Bin" width="23%"/>
-<img src="/images/leaderboard.jpeg" alt="Leaderboard" width="23%"/>
-</p>
 
 ## Video Demo <a name="Video-Demo"></a>
 
@@ -120,5 +118,4 @@ Simply go to /app and run ```npm install``` and ```npm start``` to view the appl
 * [*Vivian Yu*](https://www.linkedin.com/in/vivian-yu-914a56152/) -->
 
 ## License <a name="License"></a>
-This project is licensed under the {Apache 2 License}/{MIT License} - see the [ LICENSE ](https://github.com/naezeroth/plenti-ibm-call-for-code-2021/blob/master/LICENSE) for details.
-<!-- The code in this project is licensed under MIT license. -->
+This project is licensed under the Apache 2 License - see the [ LICENSE ](https://github.com/naezeroth/plenti-ibm-call-for-code-2021/blob/master/LICENSE) for details.
