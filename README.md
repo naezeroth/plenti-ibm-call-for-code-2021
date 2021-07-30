@@ -4,7 +4,7 @@
 <img src="/images/plenti-logo.png" width="100%"/>
 </p>
 
-Plenti is a mobile application that applies the 2 principles of preventing food waste used by small cafes - inventory tracking and waste measurement. This solution aims to remind consumers about what’s in their kitchen by providing greater visibility on food items that can be tucked away for too long, as well as allowing consumers to measure what they’re throwing out to access personalised insights on how to improve their wasteful behaviours. Where consumers previously needed to track their inventory on lists or spreadsheets, our solution aims to provide an easy way for consumers to stay on top of their groceries and reduce waste. An added social element motivates users and aims to reinforce that tackling food waste is a collective effort. 
+Plenti is a mobile application that applies the two principles of preventing food waste used by small cafes - inventory tracking and waste measurement. This solution aims to remind consumers about what’s in their kitchen by providing greater visibility on food items that can be tucked away for too long, as well as allowing consumers to measure what they’re throwing out to access personalised insights on how to improve their wasteful behaviours. Where consumers previously needed to track their inventory on lists or spreadsheets, our solution aims to provide an easy way for consumers to stay on top of their groceries and reduce waste. An added social element motivates users and aims to reinforce that tackling food waste is a collective effort. 
 
 To do so, Plenti digitises the kitchen inventory and uses expiry date approximations to remind people to finish their food on time. A user can input data into the application through receipt scanning, which scans products off a store receipt through a text recognition model, and classifies specific store products into general food item categories through a natural language classifier implemented using IBM Watson. 
 
@@ -38,25 +38,40 @@ The front-end user interface of the application is developed in React Native, al
 ## App Usage <a name="App-Usage"></a>
 The Plenti app is divided into three primary screens: the inventory, scanner and dashboard. 
 
-### Create Account
-
-
+### Account Creation
+To get started with using the app, first create an account. This can be done by clicking the register button on the login screen, and filling in the required details. 
 
 ### Inventory
-The inventory screen allows the user to manage their food inventory, 
+The inventory screen allows the user to manage their food inventory. The following functionalities are accessible from this screen:
 
 #### Add Items
-Items can be added to the inventory using the add button at the top of the screen. 
+Items can be added to the inventory using the add button at the top of the screen. By default, the item will be added with the auto-classify functionality turned on. When auto-classify is on, only the name, price and quantity fields for the item need to be filled out; this information is fed to the classification model, and the results of the classication are used to automatically determine additional information on the product (e.g. food class, category, expiry date, emoji etc.). The auto-classify feature is designed to significantly reduce manual user input. This feature can also be turned off by toggling the auto-classify button at the top of the add item screen.
 
 #### Edit Items
+Clicking on an item in the inventory screen will bring up the edit screen. Here, all the stored information on the item can be viewed, and modifications can be made to any of the item fields.
 
 #### Freeze Items
+A common method to deal with uneaten food which is almost at expiry is to store it in the freezer. Plenti provides the freeze feature to continue tracking food which has been moved to the freezer. Updating a food item to the frozen state will appropriately modify the expiry approximation. To freeze an item, swipe left on the item and click the freeze button.
 
-#### Eat, Throw Out, Delete
+#### Item Expiry Indicators
+Each item in the inventory displays a coloured circle representing the time left until the item expires, which is determined using the purchase date, the classifier model predictions, and a database of food expirations for various food types. These expiry approximations application may not be completely representive of the actual expiry date, as the actual expiry date of an item is subject to many additional factors which aren't accounted for in our model. Instead, these indicators should serve solely as a reminder to check on food items that might be expiring soon.
+
+#### Removing Items
+There are three actions for removing items from the inventory: eat, throw out, and delete. Eat should be used for items which the user has consumed. Throw out moves the item to the bin, and should be used for food which has been thrown away by the user. Delete should be used for items which have been mistakenly added to the inventory, such that the removal of the item should not be counted for waste tracking.
 
 ### Scanner
+The scanner screen handles the app's receipt scanning functionality, which scans in grocery store receipts, detects text from the scanned image, parses the text to extract item information (product names, prices, quantities) and runs each item through the classification model, before automatically filling out information item information for all items.
 
 ### Dashboard
+
+#### Food Waste Overview
+
+#### Bin
+
+#### Ranking
+
+#### Settings
+
 
 
 ## Solution Architecture <a name="Solution-Architecture"></a>
@@ -113,17 +128,26 @@ We're all set up now!
 
 Simply go to /app and run ```npm install``` and ```npm start``` to view the application on your device with Expo Go. 
 
+## Project Roadmap <a name="Project-Roadmap"></a>
+
+Receipt scanning is only our first step towards reducing the amount of the manual user input. In the future, we plan to introduce interfacing with digital receipt services, and acquire partnerships with supermarkets to achieve seamless integration with the consumer shopping experience.
+
 ## Authors <a name="Authors"></a>
-* Apurva Shukla
+<!-- * Apurva Shukla
 * David Young
 * Christina Liu
 * James Macintyre
-* Vivian Yu
-<!-- * [*Apurva Shukla*](https://www.linkedin.com/in/apurva-shukla/)
-* [*David Young*](https://www.linkedin.com/in/dy27/)
-* [*Christina Liu*](https://www.linkedin.com/in/christinaliu123/)
-* [*James Macintyre*](https://www.linkedin.com/in/jameslmacintyre/)
-* [*Vivian Yu*](https://www.linkedin.com/in/vivian-yu-914a56152/) -->
+* Vivian Yu -->
+<!-- * Apurva Shukla ([LinkedIn](https://www.linkedin.com/in/apurva-shukla/))
+* David Young ([LinkedIn](https://www.linkedin.com/in/dy27/))
+* Christina Liu ([LinkedIn](https://www.linkedin.com/in/christinaliu123/))
+* James Macintyre ([LinkedIn](https://www.linkedin.com/in/jameslmacintyre/))
+* Vivian Yu ([LinkedIn](https://www.linkedin.com/in/vivian-yu-914a56152/)) -->
+* [Apurva Shukla](https://www.linkedin.com/in/apurva-shukla/)
+* [David Young](https://www.linkedin.com/in/dy27/)
+* [Christina Liu](https://www.linkedin.com/in/christinaliu123/)
+* [James Macinture](https://www.linkedin.com/in/jameslmacintyre/)
+* [Vivian Yu](https://www.linkedin.com/in/vivian-yu-914a56152/)
 
 ## License <a name="License"></a>
 This project is licensed under the Apache 2 License - see the [ LICENSE ](https://github.com/naezeroth/plenti-ibm-call-for-code-2021/blob/master/LICENSE) for details.
