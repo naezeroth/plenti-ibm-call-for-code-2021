@@ -1,5 +1,7 @@
 # Plenti - clever eating, greener living.
 
+<img src="/images/logo.png" width="100%"/>
+
 Plenti is a mobile application that applies the 2 principles of preventing food waste used by small cafes - inventory tracking and waste measurement. This solution aims to remind consumers about what’s in their kitchen by providing greater visibility on food items that can be tucked away for too long, as well as allowing consumers to measure what they’re throwing out to access personalised insights on how to improve their wasteful behaviours. Where consumers previously needed to track their inventory on lists or spreadsheets, our solution aims to provide an easy way for consumers to stay on top of their groceries and reduce waste. An added social element motivates users and aims to reinforce that tackling food waste is a collective effort. 
 
 To do so, Plenti digitises the kitchen inventory and uses expiry date approximations to remind people to finish their food on time. A user can input data into the application through receipt scanning, which scans products off a store receipt through a text recognition model, and classifies specific store products into general food item categories through a natural language classifier implemented using IBM Watson. 
@@ -33,6 +35,10 @@ The front-end user interface of the application is developed in React Native, al
 
 ## App Usage <a name="App-Usage"></a>
 The Plenti app is divided into three primary screens: the inventory, scanner and dashboard. 
+
+### Create Account
+
+
 
 ### Inventory
 The inventory screen allows the user to manage their food inventory, 
