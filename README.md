@@ -27,7 +27,7 @@ The front-end user interface of the application is developed in React Native, al
 01. [Video Demo](#Video-Demo)
 02. [App Usage](#App-Usage)
 03. [Solution Architecture](#Solution-Architecture)
-04. [Installation / Getting Started](#Installation)
+04. [Installation / Deployment](#Installation)
 05. [Project Roadmap](#Project-Roadmap)
 06. [Authors](#Authors)
 07. [License](#License)
@@ -86,7 +86,7 @@ The scanner screen handles the app's receipt scanning functionality, which scans
 1. An optical character recognition (OCR) model is deployed in the cloud to convert user-scanned receipt images to text data.
 1. Watson Natural Language Classifier is used to semantically classify products into different food categories.
 
-## Installation / Getting Started <a name="Installation"></a>
+## Installation / Deployment <a name="Installation"></a>
 
 Our repository is split between our mobile application built with Expo and React Native and our backend deployed as individual functions on IBM's Cloud Functions.
 
@@ -130,7 +130,7 @@ Simply go to /app and run ```npm install``` and ```npm start``` to view the appl
 
 ## Project Roadmap <a name="Project-Roadmap"></a>
 
-Receipt scanning is only our first step towards reducing the amount of the manual user input. In the future, we plan to introduce interfacing with digital receipt services, and acquire partnerships with supermarkets to achieve seamless integration with the consumer shopping experience.
+Receipt scanning is only our first step towards reducing manual user input. In the future, we plan to introduce interfacing with digital receipt services, and acquire partnerships with supermarkets to achieve seamless integration with the consumer shopping experience.
 
 ## Authors <a name="Authors"></a>
 <!-- * Apurva Shukla
