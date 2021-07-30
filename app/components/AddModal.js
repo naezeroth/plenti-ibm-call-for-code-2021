@@ -14,6 +14,9 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 
 import { foodClasses } from "./foodClasses";
 
+import Constants from "expo-constants";
+const apiUrl = Constants.manifest.extra.apiUrl;
+
 //For reusability implement onSave fn as a prop
 
 export const AddModal = ({
@@ -65,25 +68,15 @@ export const AddModal = ({
     useState(false);
 
   const classifyItem = async (inputItem) => {
-    const result = await fetch(
-      "https://api.us-south.natural-language-classifier.watson.cloud.ibm.com/instances/badedd77-8003-48e6-943b-861ea34e66af/v1/classifiers/b9a0dbx961-nlc-19/classify?" +
-        new URLSearchParams({
-          text: inputItem.name,
-        }),
-      {
-        method: "GET",
-        headers: new Headers({
-          Authorization:
-            "Basic " +
-            btoa("apikey:n2Se7LEGkNIQsVt3AGiS6mhvP7A_heT_PbAcU_PYJJW3"),
-        }),
-      }
-    );
-    if (!result.ok) {
-      const message = `An error has occured: ${result.status}`;
-      console.log(message);
-      return;
-    }
+    console.log(apiUrl);
+    const result = await fetch(`${apiUrl}/classify`, {
+      method: "POST",
+      body: JSON.stringify({ text: inputItem.name }),
+      header: {
+        "content-type": "application/json",
+        accept: "application/json",
+      },
+    });
     const classResult = await result.json();
     console.log("CLASSIFICATION RESULT: ", classResult);
     inputItem.item_class = classResult.top_class;
@@ -296,7 +289,7 @@ export const AddModal = ({
               onPress={() => {
                 if (!expanded) {
                   const itemCopy = item;
-                  itemCopy.item_class = "classifying";
+                  itemCopy.item_class = "classifying...";
                   setItem(itemCopy);
                   setItem(classifyItem(item));
                 }
