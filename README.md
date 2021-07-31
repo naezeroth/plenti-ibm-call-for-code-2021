@@ -1,6 +1,12 @@
 # Plenti - clever eating, greener living.
 
+<<<<<<< HEAD
 ![Logo](/images/plenti-logo.png)
+=======
+<p float="left">
+<img src="/images/Coverphoto_Github.png" width="100%"/>
+</p>
+>>>>>>> ae1054ee3f6bb2bf5537d6f19155bb9c59ceaea8
 
 Plenti is a mobile application that applies the two principles of preventing food waste used by small cafes - inventory tracking and waste measurement. This solution aims to remind consumers about what’s in their kitchen by providing greater visibility on food items that can be tucked away for too long, as well as allowing consumers to measure what they’re throwing out to access personalised insights on how to improve their wasteful behaviours. Where consumers previously needed to track their inventory on lists or spreadsheets, our solution aims to provide an easy way for consumers to stay on top of their groceries and reduce waste. An added social element motivates users and aims to reinforce that tackling food waste is a collective effort. 
 
@@ -10,15 +16,11 @@ Insights on one’s level of food waste in terms of amounts, types of food waste
 
 The front-end user interface of the application is developed in React Native, allowing for cross-platform compatibility. This mobile user interface communicates with a cloud-based back-end hosted on IBM Cloud Functions, which interacts with a Cloudant database to store user data. 
 
-<p float="left">
-<img src="/images/inventory.jpeg" alt="Inventory" width="23%"/>
-<img src="/images/scanner.jpeg" alt="Scanner" width="23%"/>
-<img src="/images/scanned-result.jpeg" alt="Scanned Result" width="23%"/>
-<img src="/images/select.jpeg" alt="Select" width="23%"/>
-<img src="/images/dashboard.jpeg" alt="Dashboard" width="23%"/>
-<img src="/images/bin.jpeg" alt="Bin" width="23%"/>
-<img src="/images/leaderboard.jpeg" alt="Leaderboard" width="23%"/>
-</p>
+<img src="/images/Screens_1.png"/>
+<img src="/images/Screens_2.png"/>
+<img src="/images/Screens_3.png"/>
+<img src="/images/Screens_4.png"/>
+
 
 ## Contents 
 
@@ -31,7 +33,8 @@ The front-end user interface of the application is developed in React Native, al
 07. [License](#License)
 
 ## Video Demo <a name="Video-Demo"></a>
-[![Video Demo](https://github.com/ajinkyadatalkar1/Agrolly/blob/master/Youtube_video.jpgn.jpg)](https://www.youtube.com/watch?v=VT4RKHwQ1hQ&t=65s "DEMO VIDEO")
+
+[Watch it here!](https://www.youtube.com/watch?v=HgRR0vTlvBo)
 
 ## App Usage <a name="App-Usage"></a>
 The Plenti app is divided into three primary screens: the inventory, scanner and dashboard. 
@@ -133,16 +136,6 @@ Simply go to /app and run ```npm install``` and ```npm start``` to view the appl
 Receipt scanning is only our first step towards reducing manual user input. In the future, we plan to introduce interfacing with digital receipt services, and acquire partnerships with supermarkets to achieve seamless integration with the consumer shopping experience.
 
 ## Authors <a name="Authors"></a>
-<!-- * Apurva Shukla
-* David Young
-* Christina Liu
-* James Macintyre
-* Vivian Yu -->
-<!-- * Apurva Shukla ([LinkedIn](https://www.linkedin.com/in/apurva-shukla/))
-* David Young ([LinkedIn](https://www.linkedin.com/in/dy27/))
-* Christina Liu ([LinkedIn](https://www.linkedin.com/in/christinaliu123/))
-* James Macintyre ([LinkedIn](https://www.linkedin.com/in/jameslmacintyre/))
-* Vivian Yu ([LinkedIn](https://www.linkedin.com/in/vivian-yu-914a56152/)) -->
 * [Apurva Shukla](https://www.linkedin.com/in/apurva-shukla/)
 * [David Young](https://www.linkedin.com/in/dy27/)
 * [Christina Liu](https://www.linkedin.com/in/christinaliu123/)
