@@ -13,13 +13,16 @@ Insights on one’s level of food waste in terms of amounts, types of food waste
 The front-end user interface of the application is developed in React Native, allowing for cross-platform compatibility. This mobile user interface communicates with a cloud-based back-end hosted on IBM Cloud Functions, which interacts with a Cloudant database to store user data. 
 
 <p float="left">
-<img src="/images/inventory.jpeg" alt="Inventory" width="23%"/>
-<img src="/images/scanner.jpeg" alt="Scanner" width="23%"/>
-<img src="/images/scanned-result.jpeg" alt="Scanned Result" width="23%"/>
-<img src="/images/select.jpeg" alt="Select" width="23%"/>
-<img src="/images/dashboard.jpeg" alt="Dashboard" width="23%"/>
-<img src="/images/bin.jpeg" alt="Bin" width="23%"/>
-<img src="/images/leaderboard.jpeg" alt="Leaderboard" width="23%"/>
+<img src="/images/login.PNG" alt="Login" width="23%"/>
+<img src="/images/register.PNG" alt="Register" width="23%"/>
+<img src="/images/inventory.PNG" alt="Inventory" width="23%"/>
+<img src="/images/quick-add.PNG" alt="Quick Add" width="23%"/>
+<img src="/images/scanner.PNG" alt="Scanner" width="23%"/>
+<img src="/images/scanned-result.PNG" alt="Scanned Result" width="23%"/>
+<img src="/images/select.PNG" alt="Select" width="23%"/>
+<img src="/images/dashboard.PNG" alt="Dashboard" width="23%"/>
+<img src="/images/bin.PNG" alt="Bin" width="23%"/>
+<img src="/images/leaderboard.png" alt="Leaderboard" width="23%"/>
 </p>
 
 ## Contents 
