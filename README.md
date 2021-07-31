@@ -12,11 +12,6 @@ Insights on one’s level of food waste in terms of amounts, types of food waste
 
 The front-end user interface of the application is developed in React Native, allowing for cross-platform compatibility. This mobile user interface communicates with a cloud-based back-end hosted on IBM Cloud Functions, which interacts with a Cloudant database to store user data. 
 
-<img src="/images/Screens_1.png"/>
-<img src="/images/Screens_2.png"/>
-<img src="/images/Screens_3.png"/>
-<img src="/images/Screens_4.png"/>
-
 
 ## Contents 
 
@@ -33,6 +28,11 @@ The front-end user interface of the application is developed in React Native, al
 [Watch it here!](https://www.youtube.com/watch?v=HgRR0vTlvBo)
 
 ## App Usage <a name="App-Usage"></a>
+<img src="/images/Screens_1.png"/>
+<img src="/images/Screens_2.png"/>
+<img src="/images/Screens_3.png"/>
+<img src="/images/Screens_4.png"/>
+
 The Plenti app is divided into three primary screens: the inventory, scanner and dashboard. 
 
 ### Account Creation
