@@ -1,12 +1,8 @@
 # Plenti - clever eating, greener living.
 
-<<<<<<< HEAD
-![Logo](/images/plenti-logo.png)
-=======
 <p float="left">
 <img src="/images/Coverphoto_Github.png" width="100%"/>
 </p>
->>>>>>> ae1054ee3f6bb2bf5537d6f19155bb9c59ceaea8
 
 Plenti is a mobile application that applies the two principles of preventing food waste used by small cafes - inventory tracking and waste measurement. This solution aims to remind consumers about what’s in their kitchen by providing greater visibility on food items that can be tucked away for too long, as well as allowing consumers to measure what they’re throwing out to access personalised insights on how to improve their wasteful behaviours. Where consumers previously needed to track their inventory on lists or spreadsheets, our solution aims to provide an easy way for consumers to stay on top of their groceries and reduce waste. An added social element motivates users and aims to reinforce that tackling food waste is a collective effort. 
 
