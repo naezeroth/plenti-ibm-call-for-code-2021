@@ -1,8 +1,6 @@
 # Plenti - clever eating, greener living.
 
-<p float="left">
-<img src="/images/plenti-logo.png" width="100%"/>
-</p>
+![Logo](/images/plenti-logo.png)
 
 Plenti is a mobile application that applies the two principles of preventing food waste used by small cafes - inventory tracking and waste measurement. This solution aims to remind consumers about what’s in their kitchen by providing greater visibility on food items that can be tucked away for too long, as well as allowing consumers to measure what they’re throwing out to access personalised insights on how to improve their wasteful behaviours. Where consumers previously needed to track their inventory on lists or spreadsheets, our solution aims to provide an easy way for consumers to stay on top of their groceries and reduce waste. An added social element motivates users and aims to reinforce that tackling food waste is a collective effort. 
 
@@ -33,7 +31,7 @@ The front-end user interface of the application is developed in React Native, al
 07. [License](#License)
 
 ## Video Demo <a name="Video-Demo"></a>
-
+[![Video Demo](https://github.com/ajinkyadatalkar1/Agrolly/blob/master/Youtube_video.jpgn.jpg)](https://www.youtube.com/watch?v=VT4RKHwQ1hQ&t=65s "DEMO VIDEO")
 
 ## App Usage <a name="App-Usage"></a>
 The Plenti app is divided into three primary screens: the inventory, scanner and dashboard. 
@@ -129,6 +127,8 @@ We're all set up now!
 Simply go to /app and run ```npm install``` and ```npm start``` to view the application on your device with Expo Go. 
 
 ## Project Roadmap <a name="Project-Roadmap"></a>
+
+![Roadmap](/images/roadmap.png)
 
 Receipt scanning is only our first step towards reducing manual user input. In the future, we plan to introduce interfacing with digital receipt services, and acquire partnerships with supermarkets to achieve seamless integration with the consumer shopping experience.
 
