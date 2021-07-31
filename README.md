@@ -135,7 +135,7 @@ Receipt scanning is only our first step towards reducing manual user input. In t
 * [Apurva Shukla](https://www.linkedin.com/in/apurva-shukla/)
 * [David Young](https://www.linkedin.com/in/dy27/)
 * [Christina Liu](https://www.linkedin.com/in/christinaliu123/)
-* [James Macinture](https://www.linkedin.com/in/jameslmacintyre/)
+* [James Macintyre](https://www.linkedin.com/in/jameslmacintyre/)
 * [Vivian Yu](https://www.linkedin.com/in/vivian-yu-914a56152/)
 
 ## License <a name="License"></a>
