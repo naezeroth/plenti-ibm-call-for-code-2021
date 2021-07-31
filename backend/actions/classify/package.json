@@ -1,0 +1,20 @@
+{
+  "name": "ibm-cloud-functions-classify",
+  "version": "1.0.0",
+  "description": "",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "build": "webpack --config webpack.config.js",
+    "deploy": "ibmcloud fn action update classify dist/bundle.js --kind nodejs:12"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv-webpack": "^7.0.3"
+  },
+  "devDependencies": {
+    "webpack-cli": "^4.7.2"
+  }
+}
