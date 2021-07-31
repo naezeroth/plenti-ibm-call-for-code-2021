@@ -161,7 +161,7 @@ export const AddModal = ({
         style={{
           flex: 1,
           width: "100%",
-          paddingVertical: "5%", // Modal overflows on smaller screen if value is too high
+          paddingVertical: "25%", // Modal overflows on smaller screen if value is too high
         }}
       >
         <View

@@ -595,6 +595,7 @@ const RankingModalContent = ({ setRankingModalVisible, name }) => {
             backgroundColor: "#FAF6ED",
             borderRadius: 13,
             flexDirection: "row",
+            marginBottom: 10,
           }}
         >
           <Image
@@ -602,8 +603,8 @@ const RankingModalContent = ({ setRankingModalVisible, name }) => {
             style={{ width: 45, height: 55, margin: 10, marginLeft: 20 }}
           />
           <View style={{ width: "50%", justifyContent: "center" }}>
-            <Text style={styles.name}>Random Person</Text>
-            <Text style={styles.name}> 💚 20 {"    "} 💔 18</Text>
+            <Text style={styles.name}>Olivia Peters</Text>
+            <Text style={styles.name}> 💚 35 {"    "} 💔 10</Text>
           </View>
           <View
             style={{
@@ -624,6 +625,162 @@ const RankingModalContent = ({ setRankingModalVisible, name }) => {
               }}
             >
               1
+            </Text>
+          </View>
+        </View>
+        <View
+          style={{
+            width: "90%",
+            backgroundColor: "#FAF6ED",
+            borderRadius: 13,
+            flexDirection: "row",
+            marginVertical: 10,
+          }}
+        >
+          <Image
+            source={require("../assets/leader5.png")}
+            style={{ width: 45, height: 55, margin: 10, marginLeft: 20 }}
+          />
+          <View style={{ width: "50%", justifyContent: "center" }}>
+            <Text style={styles.name}>Angela Huang</Text>
+            <Text style={styles.name}> 💚 27 {"    "} 💔 14</Text>
+          </View>
+          <View
+            style={{
+              width: 50,
+              height: 50,
+              borderRadius: 50,
+              backgroundColor: "#F97569",
+              justifyContent: "center",
+              alignItems: "center",
+              alignSelf: "center",
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: "SFProDisplay-Heavy",
+                fontSize: 20,
+                color: "#fff",
+              }}
+            >
+              2
+            </Text>
+          </View>
+        </View>
+        <View
+          style={{
+            width: "90%",
+            backgroundColor: "#FAF6ED",
+            borderRadius: 13,
+            flexDirection: "row",
+            marginVertical: 10,
+          }}
+        >
+          <Image
+            source={require("../assets/leader4.png")}
+            style={{ width: 45, height: 55, margin: 10, marginLeft: 20 }}
+          />
+          <View style={{ width: "50%", justifyContent: "center" }}>
+            <Text style={styles.name}>Apurva Shukla</Text>
+            <Text style={styles.name}> 💚 20 {"    "} 💔 20</Text>
+          </View>
+          <View
+            style={{
+              width: 50,
+              height: 50,
+              borderRadius: 50,
+              backgroundColor: "#F97569",
+              justifyContent: "center",
+              alignItems: "center",
+              alignSelf: "center",
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: "SFProDisplay-Heavy",
+                fontSize: 20,
+                color: "#fff",
+              }}
+            >
+              3
+            </Text>
+          </View>
+        </View>
+        <View
+          style={{
+            width: "90%",
+            backgroundColor: "#FAF6ED",
+            borderRadius: 13,
+            flexDirection: "row",
+            marginVertical: 10,
+          }}
+        >
+          <Image
+            source={require("../assets/leader2.png")}
+            style={{ width: 45, height: 55, margin: 10, marginLeft: 20 }}
+          />
+          <View style={{ width: "50%", justifyContent: "center" }}>
+            <Text style={styles.name}>Christina Liu</Text>
+            <Text style={styles.name}> 💚 15 {"    "} 💔 23</Text>
+          </View>
+          <View
+            style={{
+              width: 50,
+              height: 50,
+              borderRadius: 50,
+              backgroundColor: "#F97569",
+              justifyContent: "center",
+              alignItems: "center",
+              alignSelf: "center",
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: "SFProDisplay-Heavy",
+                fontSize: 20,
+                color: "#fff",
+              }}
+            >
+              4
+            </Text>
+          </View>
+        </View>
+        <View
+          style={{
+            width: "90%",
+            backgroundColor: "#FAF6ED",
+            borderRadius: 13,
+            flexDirection: "row",
+            marginVertical: 10,
+          }}
+        >
+          <Image
+            source={require("../assets/leader3.png")}
+            style={{ width: 45, height: 55, margin: 10, marginLeft: 20 }}
+          />
+          <View style={{ width: "50%", justifyContent: "center" }}>
+            <Text style={styles.name}>James Macintyre</Text>
+            <Text style={styles.name}> 💚 13 {"    "} 💔 25</Text>
+          </View>
+          <View
+            style={{
+              width: 50,
+              height: 50,
+              borderRadius: 50,
+              backgroundColor: "#F97569",
+              justifyContent: "center",
+              alignItems: "center",
+              alignSelf: "center",
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: "SFProDisplay-Heavy",
+                fontSize: 20,
+                color: "#fff",
+              }}
+            >
+              5
             </Text>
           </View>
         </View>
