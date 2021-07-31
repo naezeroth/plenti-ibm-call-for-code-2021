@@ -30,6 +30,7 @@ The front-end user interface of the application is developed in React Native, al
 
 ## Video Demo <a name="Video-Demo"></a>
 
+[Watch it here!](https://www.youtube.com/watch?v=HgRR0vTlvBo)
 
 ## App Usage <a name="App-Usage"></a>
 The Plenti app is divided into three primary screens: the inventory, scanner and dashboard. 
