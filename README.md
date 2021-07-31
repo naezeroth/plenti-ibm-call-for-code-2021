@@ -10,7 +10,7 @@ To do so, Plenti digitises the kitchen inventory and uses expiry date approximat
 
 Insights on one’s level of food waste in terms of amounts, types of food wasted and costs are also provided to help consumers make smarter decisions. Users can see both personal and Plenti community insights, while a leaderboard displays users that have most improved their food savings. This quantifies the positive environmental impact each person can make while using the app and integrates social elements to engage consumers. 
 
-The front-end user interface of the application is developed in React Native, allowing for cross-platform compatibility. This mobile user interface communicates with a cloud-based back-end hosted on IBM Cloud Functions, which interacts with a Cloudant database to store user data. 
+<!-- The front-end user interface of the application is developed in React Native, allowing for cross-platform compatibility. This mobile user interface communicates with a cloud-based back-end hosted on IBM Cloud Functions, which interacts with a Cloudant database to store user data.  -->
 
 
 ## Contents 
@@ -33,8 +33,6 @@ The front-end user interface of the application is developed in React Native, al
 <img src="/images/Screens_3.png"/>
 <img src="/images/Screens_4.png"/>
 
-The Plenti app is divided into three primary screens: the inventory, scanner and dashboard. 
-
 ### Account Creation
 To get started with using the app, first create an account. This can be done by clicking the register button on the login screen, and filling in the required details. 
 
@@ -42,7 +40,7 @@ To get started with using the app, first create an account. This can be done by 
 The inventory screen allows the user to manage their food inventory. The following functionalities are accessible from this screen:
 
 #### Add Items
-Items can be added to the inventory using the add button at the top of the screen. By default, the item will be added with the auto-classify functionality turned on. When auto-classify is on, only the name, price and quantity fields for the item need to be filled out; this information is fed to the classification model, and the results of the classication are used to automatically determine additional information on the product (e.g. food class, category, expiry date, emoji etc.). The auto-classify feature is designed to significantly reduce manual user input. This feature can also be turned off by toggling the auto-classify button at the top of the add item screen.
+Items can be added to the inventory using the add button at the top of the screen. By default, the item will be added with the auto-classify functionality turned on. When auto-classify is on, only the name, price and quantity fields for the item need to be filled out; this information is fed to the classification model, and the results of the classication are used to automatically determine additional information on the product (e.g. food class, category, expiry date, emoji etc.). The auto-classify feature is designed to significantly reduce manual user input. This feature can also be turned off by toggling the auto-classify button at the top of the add item screen. Plenti's classification model currently supports 54 different food classes, and is trained on product data collected from various Australian supermarkets.
 
 #### Edit Items
 Clicking on an item in the inventory screen will bring up the edit screen. Here, all the stored information on the item can be viewed, and modifications can be made to any of the item fields.
@@ -51,24 +49,28 @@ Clicking on an item in the inventory screen will bring up the edit screen. Here,
 A common method to deal with uneaten food which is almost at expiry is to store it in the freezer. Plenti provides the freeze feature to continue tracking food which has been moved to the freezer. Updating a food item to the frozen state will appropriately modify the expiry approximation. To freeze an item, swipe left on the item and click the freeze button.
 
 #### Item Expiry Indicators
-Each item in the inventory displays a coloured circle representing the time left until the item expires, which is determined using the purchase date, the classifier model predictions, and a database of food expirations for various food types. These expiry approximations application may not be completely representive of the actual expiry date, as the actual expiry date of an item is subject to many additional factors which aren't accounted for in our model. Instead, these indicators should serve solely as a reminder to check on food items that might be expiring soon.
+Each item in the inventory displays a coloured circle representing the time left until the item expires, which is calculated using the purchase date, the classifier model predictions, and a database of food expirations for various food types. These expiry approximations may not be completely representive of the actual expiry date, as the actual expiry date of an item is subject to many additional factors which aren't accounted for in our model. Instead, these indicators should serve solely as a reminder to check on food items that might be expiring soon.
 
 #### Removing Items
 There are three actions for removing items from the inventory: eat, throw out, and delete. Eat should be used for items which the user has consumed. Throw out moves the item to the bin, and should be used for food which has been thrown away by the user. Delete should be used for items which have been mistakenly added to the inventory, such that the removal of the item should not be counted for waste tracking.
 
 ### Scanner
-The scanner screen handles the app's receipt scanning functionality, which scans in grocery store receipts, detects text from the scanned image, parses the text to extract item information (product names, prices, quantities) and runs each item through the classification model, before automatically filling out information item information for all items.
+The scanner screen handles the app's receipt scanning functionality, which scans in grocery store receipts, detects text from the scanned image, parses the text to extract item information (product names, prices, quantities) and runs each item through the classification model, before automatically filling out information item information for all items. To use the scanner, take a photo of a receipt from the scanner screen, and click the scan button. Once the image has been processed, the scanned items will appear on the screen. The items can then be edited to change any potential mistakes made by the text recognition and classification models, before transfering scanned items to the main inventory using the "add all items" button.
 
 ### Dashboard
+The dashboard screen provides insights into the user's food waste, a bin feature to view wasted food, and a community leaderboard.
 
 #### Food Waste Overview
+The food waste overview section of the dashboard screen displays user food waste trends for the month, and shows a comparison with food wasted in previous months. By clicking on the month, the user can select previous months to revisit their food waste history. The bar below the food waste trends visualises the distribution of wasted food across different food categories, so the user can monitor which types of food are contributing to the most waste.
 
 #### Bin
+The bin allows for users to view food items which were recently wasted, and retrieve items back to the inventory in case an item was mistakenly moved to the bin.
 
 #### Ranking
+The ranking/leaderboard screen is accessed by clicking the ranking button on the dashboard. This displays a community leaderboard of food waste rankings to further incentivise users to contribute towards the collective effort to reduce food waste.
 
 #### Settings
-
+The settings functionality is currently not implemented. This page will be used for users to manage their account details, and will be implemented before the application is made publicly available.
 
 
 ## Solution Architecture <a name="Solution-Architecture"></a>
