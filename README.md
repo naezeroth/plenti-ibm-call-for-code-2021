@@ -1,7 +1,7 @@
 # Plenti - clever eating, greener living.
 
 <p float="left">
-<img src="/images/plenti-logo.png" width="100%"/>
+<img src="/images/Coverphoto_Github.png" width="100%"/>
 </p>
 
 Plenti is a mobile application that applies the two principles of preventing food waste used by small cafes - inventory tracking and waste measurement. This solution aims to remind consumers about what’s in their kitchen by providing greater visibility on food items that can be tucked away for too long, as well as allowing consumers to measure what they’re throwing out to access personalised insights on how to improve their wasteful behaviours. Where consumers previously needed to track their inventory on lists or spreadsheets, our solution aims to provide an easy way for consumers to stay on top of their groceries and reduce waste. An added social element motivates users and aims to reinforce that tackling food waste is a collective effort. 
@@ -12,18 +12,11 @@ Insights on one’s level of food waste in terms of amounts, types of food waste
 
 The front-end user interface of the application is developed in React Native, allowing for cross-platform compatibility. This mobile user interface communicates with a cloud-based back-end hosted on IBM Cloud Functions, which interacts with a Cloudant database to store user data. 
 
-<p float="left">
-<img src="/images/login.PNG" alt="Login" width="23%"/>
-<img src="/images/register.PNG" alt="Register" width="23%"/>
-<img src="/images/inventory.PNG" alt="Inventory" width="23%"/>
-<img src="/images/quick-add.PNG" alt="Quick Add" width="23%"/>
-<img src="/images/scanner.PNG" alt="Scanner" width="23%"/>
-<img src="/images/scanned-result.PNG" alt="Scanned Result" width="23%"/>
-<img src="/images/select.PNG" alt="Select" width="23%"/>
-<img src="/images/dashboard.PNG" alt="Dashboard" width="23%"/>
-<img src="/images/bin.PNG" alt="Bin" width="23%"/>
-<img src="/images/leaderboard.png" alt="Leaderboard" width="23%"/>
-</p>
+<img src="/images/Screens_1.png"/>
+<img src="/images/Screens_2.png"/>
+<img src="/images/Screens_3.png"/>
+<img src="/images/Screens_4.png"/>
+
 
 ## Contents 
 
