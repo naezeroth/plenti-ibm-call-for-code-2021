@@ -37,6 +37,9 @@ Insights on one’s level of food waste in terms of amounts, types of food waste
 To get started with using the app, first create an account. This can be done by clicking the register button on the login screen, and filling in the required details. 
 
 ### Inventory
+<p align="center">
+  <img src="/images/inventory-flow.gif" width=25%/>
+</p>
 The inventory screen allows the user to manage their food inventory. The following functionalities are accessible from this screen:
 
 #### Add Items
@@ -55,6 +58,9 @@ Each item in the inventory displays a coloured circle representing the time left
 There are three actions for removing items from the inventory: eat, throw out, and delete. Eat should be used for items which the user has consumed. Throw out moves the item to the bin, and should be used for food which has been thrown away by the user. Delete should be used for items which have been mistakenly added to the inventory, such that the removal of the item should not be counted for waste tracking.
 
 ### Scanner
+<p align="center">
+  <img src="/images/scanner-flow.gif" width=25%/>
+</p>
 The scanner screen handles the app's receipt scanning functionality, which scans in grocery store receipts, detects text from the scanned image, parses the text to extract item information (product names, prices, quantities) and runs each item through the classification model, before automatically filling out information item information for all items. To use the scanner, take a photo of a receipt from the scanner screen, and click the scan button. Once the image has been processed, the scanned items will appear on the screen. The items can then be edited to change any potential mistakes made by the text recognition and classification models, before transfering scanned items to the main inventory using the "add all items" button.
 
 ### Dashboard
