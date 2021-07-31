@@ -4,13 +4,13 @@
 <img src="/images/Coverphoto_Github.png" width="100%"/>
 </p>
 
-Plenti is a mobile application that applies the two principles of preventing food waste used by small cafes - inventory tracking and waste measurement. This solution aims to remind consumers about what’s in their kitchen by providing greater visibility on food items that can be tucked away for too long, as well as allowing consumers to measure what they’re throwing out to access personalised insights on how to improve their wasteful behaviours. Where consumers previously needed to track their inventory on lists or spreadsheets, our solution aims to provide an easy way for consumers to stay on top of their groceries and reduce waste. An added social element motivates users and aims to reinforce that tackling food waste is a collective effort. 
+Plenti is a mobile application that applies the two principles of preventing food waste used by many small cafes - inventory tracking and waste measurement. This solution aims to remind consumers about what’s in their kitchen by providing greater visibility on food items that can be tucked away for too long, as well as allowing consumers to measure what they’re throwing out to access personalised insights on how to improve their wasteful behaviours. Where consumers previously needed to track their inventory on lists or spreadsheets, our solution aims to provide an easy way for consumers to stay on top of their groceries and reduce waste. An added social element motivates users and aims to reinforce that tackling food waste is a collective effort. 
 
 To do so, Plenti digitises the kitchen inventory and uses expiry date approximations to remind people to finish their food on time. A user can input data into the application through receipt scanning, which scans products off a store receipt through a text recognition model, and classifies specific store products into general food item categories through a natural language classifier implemented using IBM Watson. 
 
-Insights on one’s level of food waste in terms of amounts, types of food wasted and costs are also provided to help consumers make smarter decisions. Users can see both personal and Plenti community insights, while a leaderboard displays users that have most improved their food savings. This quantifies the positive environmental impact each person can make while using the app and integrates social elements to engage consumers. 
+Insights on one’s level of food waste in terms of amounts, types of food wasted and costs are also provided to help consumers make smarter decisions. Users can see both personal and community insights, while a leaderboard displays users that have most improved their food savings. This quantifies the positive environmental impact each person can make while using the app and integrates social elements to engage consumers. 
 
-<!-- The front-end user interface of the application is developed in React Native, allowing for cross-platform compatibility. This mobile user interface communicates with a cloud-based back-end hosted on IBM Cloud Functions, which interacts with a Cloudant database to store user data.  -->
+Existing food tracking solutions all suffer from the same problem: adding and managing items requires too much manual effort, as the average consumer purchases a large number of food products each week. As a result, many consumers are discouraged from incorporating food tracking and waste management solutions into their daily lifestyle. Plenti's AI-driven categorisation, expiry approximation and receipt scanning features improve on existing solutions by providing more in-depth tracking and insights while requiring significantly less manual input. This is simply our first step towards making food tracking an easy and efficient process which consumers can readily adopt. In the future, we plan to introduce interfacing with digital receipt services, and acquire partnerships with supermarkets to achieve seamless integration with the consumer shopping experience.
 
 
 ## Contents 
@@ -38,7 +38,7 @@ To get started with using the app, first create an account. This can be done by 
 
 ### Inventory
 <p align="center">
-  <img src="/images/inventory-flow.gif" width=25%/>
+  <img src="/images/inventory-flow.gif" width=30%/>
 </p>
 The inventory screen allows the user to manage their food inventory. The following functionalities are accessible from this screen:
 
@@ -59,7 +59,7 @@ There are three actions for removing items from the inventory: eat, throw out, a
 
 ### Scanner
 <p align="center">
-  <img src="/images/scanner-flow.gif" width=25%/>
+  <img src="/images/scanner-flow.gif" width=30%/>
 </p>
 The scanner screen handles the app's receipt scanning functionality, which scans in grocery store receipts, detects text from the scanned image, parses the text to extract item information (product names, prices, quantities) and runs each item through the classification model, before automatically filling out information item information for all items. To use the scanner, take a photo of a receipt from the scanner screen, and click the scan button. Once the image has been processed, the scanned items will appear on the screen. The items can then be edited to change any potential mistakes made by the text recognition and classification models, before transfering scanned items to the main inventory using the "add all items" button.
 
@@ -136,8 +136,6 @@ Simply go to /app and run ```npm install``` and ```npm start``` to view the appl
 ## Project Roadmap <a name="Project-Roadmap"></a>
 
 ![Roadmap](/images/roadmap.png)
-
-Receipt scanning is only our first step towards reducing manual user input. In the future, we plan to introduce interfacing with digital receipt services, and acquire partnerships with supermarkets to achieve seamless integration with the consumer shopping experience.
 
 ## Authors <a name="Authors"></a>
 * [Apurva Shukla](https://www.linkedin.com/in/apurva-shukla/)
