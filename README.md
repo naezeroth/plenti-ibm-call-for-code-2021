@@ -1,8 +1,23 @@
+![License](https://img.shields.io/badge/License-Apache2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+
 # Plenti - clever eating, greener living.
 
 <p float="left">
 <img src="/images/Coverphoto_Github.png" width="100%"/>
 </p>
+
+## Contents 
+
+01. [Description](#Description)
+02. [Video Demo](#Video-Demo)
+03. [App Usage](#App-Usage)
+04. [Solution Architecture](#Solution-Architecture)
+05. [Installation / Deployment](#Installation)
+06. [Project Roadmap](#Project-Roadmap)
+07. [Authors](#Authors)
+08. [License](#License)
+
+## Description <a name="Description"></a>
 
 Plenti is a mobile application that applies the two principles of preventing food waste used by many small cafes - inventory tracking and waste measurement. This solution aims to remind consumers about what’s in their kitchen by providing greater visibility on food items that can be tucked away for too long, as well as allowing consumers to measure what they’re throwing out to access personalised insights on how to improve their wasteful behaviours. Where consumers previously needed to track their inventory on lists or spreadsheets, our solution aims to provide an easy way for consumers to stay on top of their groceries and reduce waste. An added social element motivates users and aims to reinforce that tackling food waste is a collective effort. 
 
@@ -10,18 +25,7 @@ To do so, Plenti digitises the kitchen inventory and uses expiry date approximat
 
 Insights on one’s level of food waste in terms of amounts, types of food wasted and costs are also provided to help consumers make smarter decisions. Users can see both personal and community insights, while a leaderboard displays users that have most improved their food savings. This quantifies the positive environmental impact each person can make while using the app and integrates social elements to engage consumers. 
 
-Existing food tracking solutions all suffer from the same problem: adding and managing items requires too much manual effort, as the average consumer purchases a large number of food products each week. As a result, many consumers are discouraged from incorporating food tracking and waste management solutions into their daily lifestyle. Plenti's AI-driven categorisation, expiry approximation and receipt scanning features improve on existing solutions by providing more in-depth tracking and insights while requiring significantly less manual input. This is simply our first step towards making food tracking an easy and efficient process which consumers can readily adopt. In the future, we plan to introduce interfacing with digital receipt services, and acquire partnerships with supermarkets to achieve seamless integration with the consumer shopping experience.
-
-
-## Contents 
-
-01. [Video Demo](#Video-Demo)
-02. [App Usage](#App-Usage)
-03. [Solution Architecture](#Solution-Architecture)
-04. [Installation / Deployment](#Installation)
-05. [Project Roadmap](#Project-Roadmap)
-06. [Authors](#Authors)
-07. [License](#License)
+Existing food tracking solutions all suffer from the same problem: as the average consumer purchases a large number of food products each week, adding and managing items requires too much manual effort. As a result, many consumers are discouraged from incorporating food tracking and waste management solutions into their daily lifestyle. Plenti's AI-driven categorisation, expiry approximation and receipt scanning features improve on existing solutions by providing more in-depth tracking and insights while requiring significantly less manual input. This is simply our first step towards making food tracking an easy and efficient process which consumers can readily adopt. In the future, we plan to introduce interfacing with digital receipt services, and acquire partnerships with supermarkets to achieve seamless integration with the consumer shopping experience.
 
 ## Video Demo <a name="Video-Demo"></a>
 
