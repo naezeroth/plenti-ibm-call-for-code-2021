@@ -3,25 +3,25 @@ require("dotenv").config({ path: "../.env" });
 const NaturalLanguageClassifierV1 = require("watson-developer-cloud/natural-language-classifier/v1");
 
 async function main(params) {
-  // const jwt = require("jsonwebtoken");
+  const jwt = require("jsonwebtoken");
 
-  // const secret = process.env.JWT_SECRET;
+  const secret = process.env.JWT_SECRET;
 
-  // //Check for JWT and validate
-  // if (!params.token) {
-  //   return {
-  //     message: "Please supply JWT",
-  //     failed: true,
-  //   };
-  // }
-  // try {
-  //   var decoded = jwt.verify(params.token, secret);
-  // } catch {
-  //   return {
-  //     message: "JWT validation failed",
-  //     failed: true,
-  //   };
-  // }
+  //Check for JWT and validate
+  if (!params.token) {
+    return {
+      message: "Please supply JWT",
+      failed: true,
+    };
+  }
+  try {
+    var decoded = jwt.verify(params.token, secret);
+  } catch {
+    return {
+      message: "JWT validation failed",
+      failed: true,
+    };
+  }
 
   var naturalLanguageClassifier = new NaturalLanguageClassifierV1({
     url: process.env.WATSON_NLP_URL,

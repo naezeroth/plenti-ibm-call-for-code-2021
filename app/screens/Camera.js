@@ -36,7 +36,6 @@ const apiUrl = Constants.manifest.extra.apiUrl;
 const ocrEndpoint = Constants.manifest.extra.ocrEndpoint;
 
 let camera;
-console.log("APIURL AND OCRENDPOINT", apiUrl, ocrEndpoint);
 const testInventory = [
   {
     category: "dairy",
@@ -97,7 +96,7 @@ const testInventory = [
 ];
 
 export default function App(props) {
-  const { inventoryList, setInventoryList } = props;
+  const { inventoryList, setInventoryList, token } = props;
   const [startCamera, setStartCamera] = useState(false);
   const [previewVisible, setPreviewVisible] = useState(false);
   const [capturedImage, setCapturedImage] = useState(null);
@@ -167,7 +166,7 @@ export default function App(props) {
     ];
     if (Platform.OS === "ios" && capturedImage.exif.Orientation === -90) {
       console.log("Flipping!", photo.uri);
-      //Fix iOS specific issue to send image
+      //Fixes iOS specific issue to send image
       maninpOptions.push({
         rotate: -photo.exif.Orientation,
       });
@@ -198,14 +197,20 @@ export default function App(props) {
     const text = ocrResultObject.text;
     console.log("Text from OCR", ocrResultObject);
     // openShareDialogAsync(photo.uri);
-    const parseResult = await fetch(`${apiUrl}/parseImageText`, {
-      method: "POST",
-      body: JSON.stringify({ text: text }),
-      header: {
-        "content-type": "application/json",
-        accept: "application/json",
-      },
-    });
+    const parseResult = await fetch(
+      `${apiUrl}/parseImageText?` +
+        new URLSearchParams({
+          token: token,
+        }),
+      {
+        method: "POST",
+        body: JSON.stringify({ text: text }),
+        header: {
+          "content-type": "application/json",
+          accept: "application/json",
+        },
+      }
+    );
     const parseResultObject = await parseResult.json();
     if (
       parseResultObject.error ||

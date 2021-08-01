@@ -27,6 +27,7 @@ export const AddModal = ({
   setLocalInventoryList,
   updateInventoryToggle,
   setUpdateInventoryToggle,
+  token,
 }) => {
   const [item, setItem] = useState(
     selectedItem === -1
@@ -69,14 +70,20 @@ export const AddModal = ({
 
   const classifyItem = async (inputItem) => {
     console.log(apiUrl);
-    const result = await fetch(`${apiUrl}/classify`, {
-      method: "POST",
-      body: JSON.stringify({ text: inputItem.name }),
-      header: {
-        "content-type": "application/json",
-        accept: "application/json",
-      },
-    });
+    const result = await fetch(
+      `${apiUrl}/classify?` +
+        new URLSearchParams({
+          token: token,
+        }),
+      {
+        method: "POST",
+        body: JSON.stringify({ text: inputItem.name }),
+        header: {
+          "content-type": "application/json",
+          accept: "application/json",
+        },
+      }
+    );
     const classResult = await result.json();
     console.log("CLASSIFICATION RESULT: ", classResult);
     inputItem.item_class = classResult.top_class;

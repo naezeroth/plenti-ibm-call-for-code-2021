@@ -7,7 +7,6 @@ import CategoryList from "../components/CategoryList";
 import { Feather, MaterialIcons, Entypo } from "@expo/vector-icons";
 import { AddModal } from "../components/AddModal";
 
-
 const categories = [
   "meats",
   "dairy",
@@ -31,6 +30,7 @@ export default function InventoryScreen(props) {
     setInventoryList,
     updateInventoryToggle,
     setUpdateInventoryToggle,
+    token,
   } = props;
 
   const [activeCategory, setActiveCategory] = useState(null);
@@ -252,6 +252,7 @@ export default function InventoryScreen(props) {
           setLocalInventoryList={setInventoryList}
           setUpdateInventoryToggle={setUpdateInventoryToggle}
           updateInventoryToggle={updateInventoryToggle}
+          token={token}
         />
       </Modal>
 
