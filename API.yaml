@@ -95,6 +95,26 @@ paths:
           required: false
           schema:
             type: object
+  /classify:
+    post:
+      operationId: postClassify
+      x-openwhisk:
+        namespace: 09d40aa4-be03-4974-a926-571e54d6797c
+        action: classify
+        package: default
+        url: >-
+          https://au-syd.functions.appdomain.cloud/api/v1/web/09d40aa4-be03-4974-a926-571e54d6797c/default/classify.json
+        auth: b517a336-c348-48c8-8065-84c50c06cc88
+      responses:
+        '200':
+          description: A successful invocation response
+      parameters:
+        - name: body
+          in: body
+          description: Request body
+          required: false
+          schema:
+            type: object
 x-ibm-configuration:
   assembly:
     execute:
@@ -154,6 +174,17 @@ x-ibm-configuration:
                 - invoke:
                     target-url: >-
                       https://au-syd.functions.appdomain.cloud/api/v1/web/09d40aa4-be03-4974-a926-571e54d6797c/default/updateInventory.json
+                    verb: keep
+            - operations:
+                - postClassify
+              execute:
+                - set-variable:
+                    actions:
+                      - set: message.headers.X-Require-Whisk-Auth
+                        value: b517a336-c348-48c8-8065-84c50c06cc88
+                - invoke:
+                    target-url: >-
+                      https://au-syd.functions.appdomain.cloud/api/v1/web/09d40aa4-be03-4974-a926-571e54d6797c/default/classify.json
                     verb: keep
           otherwise: []
           title: whisk-invoke
