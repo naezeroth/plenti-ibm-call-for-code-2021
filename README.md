@@ -21,13 +21,13 @@ An application to easily manage your food to reduce waste and shop economically.
 ## Description <a name="Description"></a>
 
 ### The Problem 
-One third of the world’s food is wasted, with Australia's largest driver of food waste being consumer households. Reducing food waste plays a critical component in tackling climate change as the processing and disposal of food wastes resources such as water, land, energy and increases carbon dioxide emissions. 
+One third of the world’s food is wasted, with Australia's largest driver of food waste being consumer households. Reducing food waste plays a critical component in tackling climate change as the processing and disposal of food wastes resources such as water, land, energy and increases carbon dioxide emissions. It is more important now, than ever, to ensure we have responsible consumption and production (UN Goal 12).
 
 ### Existing Solutions
 Existing food tracking solutions all suffer from the same problem: as the average consumer purchases a large number of food products each week, adding and managing items requires too much manual effort. As a result, many consumers are discouraged from incorporating food tracking and waste management solutions into their daily lifestyle. 
 
 ### Our Solution - Plenti 
-Plenti is a mobile application that applies the two principles of preventing food waste used by many small cafes - inventory tracking and waste measurement. This solution aims to remind consumers about what’s in their kitchen by providing greater visibility on food items that can be tucked away for too long, as well as allowing consumers to measure what they’re throwing out to access personalised insights on how to improve their wasteful behaviours. Where consumers previously needed to track their inventory on lists or spreadsheets, our solution aims to provide an easy way for consumers to stay on top of their groceries and reduce waste. An added social element motivates users and aims to reinforce that tackling food waste is a collective effort. 
+Plenti is a mobile application that aims to address the UN Sustainable Goal of Responsible Consumption and Production. We apply the two principles of preventing food waste used by many small cafes - inventory tracking and waste measurement. This solution aims to remind consumers about what’s in their kitchen by providing greater visibility on food items that can be tucked away for too long, as well as allowing consumers to measure what they’re throwing out to access personalised insights on how to improve their wasteful behaviours. Where consumers previously needed to track their inventory on lists or spreadsheets, our solution aims to provide an easy way for consumers to stay on top of their groceries and reduce waste. An added social element motivates users and aims to reinforce that tackling food waste is a collective effort. 
 
 #### Making Tracking Simple 
 Plenti's AI-driven categorisation, expiry approximation and receipt scanning features improve on existing solutions by providing more in-depth tracking and insights while requiring significantly less manual input. This is simply our first step towards making food tracking an easy and efficient process which consumers can readily adopt. In the future, we plan to introduce interfacing with digital receipt services, and acquire partnerships with supermarkets to achieve seamless integration with the consumer shopping experience.
@@ -155,7 +155,7 @@ With funding, we will continue to develop our application to ensure it will be r
 Our goal is to launch Plenti on app stores in late 2021, around October/November. 
 
 ### Business Model 
-Our app will operate with a freemium model, where users can purchase our pro offerings. 
+Our app will operate with a freemium model, where users can purchase our pro offerings such as syncing to multiple accounts. 
 
 ### Future Expansions 
 Digital receipts are the future. We aim to integrate this into Plenti by building partnerships with digital receipt fintechs like Slyp. To further streamline the process for our users, we will seek partnerships to build further direct connectivity to retailer’s Point-of-Sale systems. 
