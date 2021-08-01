@@ -5,7 +5,7 @@
 </p>
 
 # Plenti - clever eating, for greener living.
-An application to easily manage your kitchen to save money and waste less.
+An application to easily manage your food to reduce waste and shop economically.
 
 ## Contents 
 
