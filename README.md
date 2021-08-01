@@ -39,7 +39,7 @@ Insights on one’s level of food waste in terms of amounts, types of food waste
 
 ## Video Demo <a name="Video-Demo"></a>
 
-[Watch it here!](https://www.youtube.com/watch?v=HgRR0vTlvBo)
+[Watch it here!](https://www.youtube.com/watch?v=bBdi9iqqvCw)
 
 ## App Usage <a name="App-Usage"></a>
 <img src="/images/All_Screens.png"/>
