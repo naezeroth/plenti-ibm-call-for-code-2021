@@ -163,7 +163,7 @@ Digital receipts are the future. We aim to integrate this into Plenti by buildin
 ### Scalability
 Once we collect additional data, Plenti can be scaled to different countries for household food waste. We also envision the technology to be applied to different industries, such as the hospitality industry or other inventory management use cases for perishable items. 
 
-Food problems are planet problems, and our vision is to become the solution for sustainable decision-making. There is plenti of food in our homes so let’s all adopt clever eating for greener living 🌱
+Food problems are planet problems, and our vision is to become the solution for sustainable decision-making. There is plenti of food in our homes, so let’s all adopt clever eating for greener living 🌱
 
 ## Authors <a name="Authors"></a>
 * [Apurva Shukla](https://www.linkedin.com/in/apurva-shukla/)
