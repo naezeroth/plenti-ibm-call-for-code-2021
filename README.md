@@ -127,7 +127,7 @@ Create a Watson Natural Language Classifier instance. To train the classifier, f
 
 #### Optical Character Recognition (OCR)
 
-[Follow instructions](https://developer.ibm.com/technologies/artificial-intelligence/models/max-ocr/) to deploy your own OCR in your IBM cloud environment using the Kubernetes Cluster service or use the sample provided by IBM for testing purposes.
+[Follow instructions](https://developer.ibm.com/technologies/artificial-intelligence/models/max-ocr/) to deploy your own OCR in your IBM cloud environment using the Kubernetes Cluster service or use the sample provided by IBM for testing purposes. Note down the endpoint to access the service. 
 
 ### Configuration
 
