@@ -91,8 +91,9 @@ The settings functionality is currently not implemented. This page will be used 
 
 
 ## Solution Architecture <a name="Solution-Architecture"></a>
-
-![Solution Architecture](/images/solution-architecture.png)
+<p align="center">
+<img src="/images/solution-architecture.png" alt="Solution Architecture" width=75%/>
+</p>
 
 1. The user interacts with a mobile application to view and manage their food inventory.
 1. The React Native application communicates with the back end through an API managed by API Gateway.
