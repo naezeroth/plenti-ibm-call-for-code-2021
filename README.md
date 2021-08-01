@@ -32,10 +32,7 @@ Existing food tracking solutions all suffer from the same problem: as the averag
 [Watch it here!](https://www.youtube.com/watch?v=HgRR0vTlvBo)
 
 ## App Usage <a name="App-Usage"></a>
-<img src="/images/Screens_1.png"/>
-<img src="/images/Screens_2.png"/>
-<img src="/images/Screens_3.png"/>
-<img src="/images/Screens_4.png"/>
+<img src="/images/All_Screens.png"/>
 
 ### Account Creation
 To get started with using the app, first create an account. This can be done by clicking the register button on the login screen, and filling in the required details. 
