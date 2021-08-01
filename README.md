@@ -1,10 +1,11 @@
 [![License](https://img.shields.io/badge/License-Apache2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
-# Plenti - clever eating, for greener living
-
 <p float="left">
 <img src="/images/Coverphoto_Github.png" width="100%"/>
 </p>
+
+# Plenti - clever eating, for greener living.
+An application to easily manage your kitchen to save money and waste less.
 
 ## Contents 
 
@@ -19,13 +20,22 @@
 
 ## Description <a name="Description"></a>
 
+### The Problem 
+One third of the world’s food is wasted, with Australia's largest driver of food waste being consumer households. Reducing food waste plays a critical component in tackling climate change as the processing and disposal of food wastes resources such as water, land, energy and increases carbon dioxide emissions. 
+
+### Existing Solutions
+Existing food tracking solutions all suffer from the same problem: as the average consumer purchases a large number of food products each week, adding and managing items requires too much manual effort. As a result, many consumers are discouraged from incorporating food tracking and waste management solutions into their daily lifestyle. 
+
+### Our Solution - Plenti 
 Plenti is a mobile application that applies the two principles of preventing food waste used by many small cafes - inventory tracking and waste measurement. This solution aims to remind consumers about what’s in their kitchen by providing greater visibility on food items that can be tucked away for too long, as well as allowing consumers to measure what they’re throwing out to access personalised insights on how to improve their wasteful behaviours. Where consumers previously needed to track their inventory on lists or spreadsheets, our solution aims to provide an easy way for consumers to stay on top of their groceries and reduce waste. An added social element motivates users and aims to reinforce that tackling food waste is a collective effort. 
 
+#### Making Tracking Simple 
+Plenti's AI-driven categorisation, expiry approximation and receipt scanning features improve on existing solutions by providing more in-depth tracking and insights while requiring significantly less manual input. This is simply our first step towards making food tracking an easy and efficient process which consumers can readily adopt. In the future, we plan to introduce interfacing with digital receipt services, and acquire partnerships with supermarkets to achieve seamless integration with the consumer shopping experience.
+
+#### How We Reduce Waste
 To do so, Plenti digitises the kitchen inventory and uses expiry date approximations to remind people to finish their food on time. A user can input data into the application through receipt scanning, which scans products off a store receipt through a text recognition model, and classifies specific store products into general food item categories through a natural language classifier implemented using IBM Watson. 
 
 Insights on one’s level of food waste in terms of amounts, types of food wasted and costs are also provided to help consumers make smarter decisions. Users can see both personal and community insights, while a leaderboard displays users that have most improved their food savings. This quantifies the positive environmental impact each person can make while using the app and integrates social elements to engage consumers. 
-
-Existing food tracking solutions all suffer from the same problem: as the average consumer purchases a large number of food products each week, adding and managing items requires too much manual effort. As a result, many consumers are discouraged from incorporating food tracking and waste management solutions into their daily lifestyle. Plenti's AI-driven categorisation, expiry approximation and receipt scanning features improve on existing solutions by providing more in-depth tracking and insights while requiring significantly less manual input. This is simply our first step towards making food tracking an easy and efficient process which consumers can readily adopt. In the future, we plan to introduce interfacing with digital receipt services, and acquire partnerships with supermarkets to achieve seamless integration with the consumer shopping experience.
 
 ## Video Demo <a name="Video-Demo"></a>
 
