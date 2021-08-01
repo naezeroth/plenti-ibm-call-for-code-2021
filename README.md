@@ -149,6 +149,22 @@ Simply go to /app and run ```npm install``` and ```npm start``` to view the appl
 
 ![Roadmap](/images/roadmap.png)
 
+### Plenti Launch
+With funding, we will continue to develop our application to ensure it will be ready for launch. 
+
+Our goal is to launch Plenti on app stores in late 2021, around October/November. 
+
+### Business Model 
+Our app will operate with a freemium model, where users can purchase our pro offerings. 
+
+### Future Expansions 
+Digital receipts are the future. We aim to integrate this into Plenti by building partnerships with digital receipt fintechs like Slyp. To further streamline the process for our users, we will seek partnerships to build further direct connectivity to retailer’s Point-of-Sale systems. 
+
+### Scalability
+Once we collect additional data, Plenti can be scaled to different countries for household food waste. We also envision the technology to be applied to different industries, such as the hospitality industry or other inventory management use cases for perishable items. 
+
+Food problems are planet problems, and our vision is to become the solution for sustainable decision-making. There is plenti of food in our homes so let’s all adopt clever eating for greener living 🌱
+
 ## Authors <a name="Authors"></a>
 * [Apurva Shukla](https://www.linkedin.com/in/apurva-shukla/)
 * [David Young](https://www.linkedin.com/in/dy27/)
